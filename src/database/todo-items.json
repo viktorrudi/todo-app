@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "text": "1. This HTML file is a template. If you open it directly in the browser, you will see an empty page. You can add webfonts, meta tags, or analytics to this file.",
+    "folder": 1,
+    "completed": false,
+    "timeCreated": "15:15",
+    "dateCreated": "01-02-2005",
+    "creationStamp": "Thu May 30 2019 16:41:42 GMT+0200 (Central European Summer Time)"
+  },
+
+  {
+    "id": 2,
+    "text": "3. This HTSL file is a template. If you open it directly in the browser, you will see an empty page. You can add webfonts, meta tags, or analytics to this file.",
+    "folder": 2,
+    "completed": true,
+    "timeCreated": "15:15",
+    "dateCreated": "01-02-2005",
+    "creationStamp": "Thu May 30 2012 16:41:42 GMT+0200 (Central European Summer Time)"
+  },
+  {
+    "id": 3,
+    "text": "2",
+    "folder": 2,
+    "completed": false,
+    "timeCreated": "23:01",
+    "dateCreated": "15-05-1996",
+    "creationStamp": "Thu May 30 2016 16:41:42 GMT+0200 (Central European Summer Time)"
+  },
+  {
+    "id": 4,
+    "text": "4",
+    "folder": 4,
+    "completed": false,
+    "timeCreated": "23:01",
+    "dateCreated": "15-05-1996",
+    "creationStamp": "hu May 30 2011 16:41:42 GMT+0200 (Central European Summer Time)"
+  }
+]

@@ -1,0 +1,22 @@
+.AddTodo {
+  display: flex;
+  position: relative;
+  &__addTodoField {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.6rem;
+    float: left;
+    position: relative;
+  }
+  &__action {
+    &--add {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      border: none;
+      background: none;
+    }
+  }
+}
