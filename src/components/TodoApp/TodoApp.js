@@ -3,13 +3,17 @@ import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'
 import TodoFolders from './TodoFolders/TodoFolders'
 import { findItemInState } from '../utilities/utilities'
-import * as data from '../../database/todo-items.json'
+import * as DBtodoItems from '../../database/todo-items.json'
+import * as DBtodoFolders from '../../database/todo-folders.json'
+
+//TODO: Consider setting folders and items as context instead
 
 class Todo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      items: data.default,
+      items: DBtodoItems.default,
+      folders: DBtodoFolders.default,
     }
     this.handleAddTodo = this.handleAddTodo.bind(this)
     this.handleDeleteTodo = this.handleDeleteTodo.bind(this)

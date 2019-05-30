@@ -8,7 +8,7 @@ class TodoFolders extends Component {
     return (
       <aside className={type}>
         <h3>Folders</h3>
-        <div class={`${type}--createFolder`}>Create folder</div>
+        <div className={`${type}--createFolder`}>Create folder</div>
         <Folders />
       </aside>
     )

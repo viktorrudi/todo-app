@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import TodoItem from './TodoItem'
 import _ from 'lodash'
 
@@ -8,7 +8,6 @@ class TodoItems extends Component {
 
     // FIXME: Sort by date created (new Date() stamp)
     const dateFilter = _.sortBy(items, item => {
-      console.log(item.creationStamp)
       return new Date(item.creationStamp)
     })
 
