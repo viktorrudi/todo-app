@@ -21,6 +21,8 @@ class AddTodo extends React.Component {
 
   handleSubmit(e) {
     if (this.state.todoText.length > 0) {
+      //TODO: Create DB function to store new todo item
+
       const nowStamp = new Date()
       // Use function in props to add to parents items state
       this.props.newTodo({

@@ -4,16 +4,13 @@ import TodoItems from './TodoItems/TodoItems'
 import TodoFolders from './TodoFolders/TodoFolders'
 import { findItemInState } from '../utilities/utilities'
 import * as DBtodoItems from '../../database/todo-items.json'
-import * as DBtodoFolders from '../../database/todo-folders.json'
-
-//TODO: Consider setting folders and items as context instead
+// Keeping DBtodoItems in TodoApp (global) because of badges in folders
 
 class Todo extends Component {
   constructor(props) {
     super(props)
     this.state = {
       items: DBtodoItems.default,
-      folders: DBtodoFolders.default,
       // TODO: Create login feature
       loggedIn: true,
       // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
@@ -57,7 +54,8 @@ class Todo extends Component {
   }
 
   setSelectedFolder(id) {
-    // Lifing state up from Folder selection - to set the ID of the clicked on folder
+    // Lifing state up from Folder selection
+    // To set the ID of the clicked on folder
     this.setState({
       openFolder: id,
     })
@@ -69,7 +67,9 @@ class Todo extends Component {
       <Fragment>
         <TodoFolders
           getSelectedFolder={this.setSelectedFolder}
-          itemsCount={this.state.items.length}
+          items={this.state.items}
+          // folders={this.state.folders}
+          createFolder={this.createFolder}
         />
         <div className="TodoSheet">
           <AddTodo newTodo={this.handleAddTodo} items={items} />

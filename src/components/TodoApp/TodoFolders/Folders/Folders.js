@@ -1,25 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import Folder from './Folder'
 import './Folders.scss'
-import * as data from '../../../../database/todo-folders.json'
 
 class Folders extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      folders: data.default,
-    }
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
   render() {
-    const foldersData = this.state.folders
-    let folders = foldersData.map(folder => (
-      <Folder
-        key={folder.id}
-        id={folder.id}
-        name={folder.name}
-        color={folder.color}
-        getSelectedFolder={this.props.getSelectedFolder}
-      />
+    let folders = this.props.folders.map(folder => (
+      <Folder key={folder.id} folder={folder} getSelectedFolder={this.props.getSelectedFolder} />
     ))
     return (
       <Fragment>

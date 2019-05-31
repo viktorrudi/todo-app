@@ -20,3 +20,21 @@ export function findItemsInFolder(propsItems, folderID) {
   const filteredItems = propsItems.filter(propItem => propItem.folder === folderID)
   return filteredItems
 }
+
+export function randomColor() {
+  const colors = [
+    'red',
+    'blue',
+    'orange',
+    'purple',
+    'pink',
+    'yellow',
+    'brown',
+    'black',
+    'gray',
+    'lightblue',
+    'magenta',
+  ]
+  const randomColor = Math.floor(Math.floor(Math.random() * colors.length) + 0)
+  return colors[randomColor]
+}
