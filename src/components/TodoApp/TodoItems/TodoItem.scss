@@ -1,17 +1,40 @@
 .TodoItem {
   display: flex;
+  position: relative;
+  flex-wrap: wrap;
   border-radius: 5px;
   box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.1);
-  margin: 10px;
+  margin: 10px 15px;
   padding: 10px;
   cursor: pointer;
   transition: box-shadow 0.1s ease-in-out;
   &:hover {
     box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.3);
   }
+  &__action--done {
+  }
+  &__action--delete {
+    content: '';
+    position: absolute;
+    padding: 1px;
+    right: -5px;
+    top: -5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    text-align: center;
+    background: #ff605c;
+    box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.3);
+    svg {
+      position: relative;
+      top: 1px;
+    }
+  }
+
   &__item {
     padding: 0 10px;
-    width: 85%;
+    width: 100%;
     &--time {
       float: right;
       color: gray;
@@ -19,17 +42,12 @@
       width: 100%;
     }
   }
-  &__aside {
-    width: 10%;
+  &__footer {
+    flex: 1;
+    background: rgb(227, 227, 227);
+    padding: 5px;
   }
-  &__action {
-    &--done {
-      border-bottom: 1px solid rgb(184, 184, 184);
-      padding: 15px 0;
-      width: 5%;
-    }
-    &--delete {
-      float: right;
-    }
-  }
+  // &__aside {
+  //   width: 10%;
+  // }
 }
