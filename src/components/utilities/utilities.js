@@ -15,3 +15,8 @@ export function currentDate(dateObject) {
   const date = dateObject
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 }
+
+export function findItemsInFolder(propsItems, folderID) {
+  const filteredItems = propsItems.filter(propItem => propItem.folder === folderID)
+  return filteredItems
+}

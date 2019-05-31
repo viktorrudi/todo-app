@@ -7,16 +7,8 @@ class Folders extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isHovered: false,
       folders: data.default,
     }
-    this.handleHover = this.handleHover.bind(this)
-  }
-  handleHover(e) {
-    this.setState(prevState => ({
-      isHovered: !prevState.isHovered,
-    }))
-    console.log(e)
   }
   render() {
     const foldersData = this.state.folders

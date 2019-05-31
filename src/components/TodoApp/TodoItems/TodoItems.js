@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import TodoItem from './TodoItem'
 import _ from 'lodash'
+import { findItemsInFolder } from '../../utilities/utilities'
 
 class TodoItems extends Component {
   render() {
-    const items = this.props.items
+    // Finds and returns todo items associated with the folder
+    let openedFolder
+    if (this.props.openFolder) {
+      openedFolder = findItemsInFolder(this.props.items, this.props.openFolder)
+    }
 
     // FIXME: Sort by date created (new Date() stamp)
-    const dateFilter = _.sortBy(items, item => {
+    const dateFilter = _.sortBy(openedFolder || this.props.items, item => {
       return new Date(item.creationStamp)
     })
 

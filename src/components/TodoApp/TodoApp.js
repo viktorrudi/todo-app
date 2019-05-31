@@ -14,6 +14,10 @@ class Todo extends Component {
     this.state = {
       items: DBtodoItems.default,
       folders: DBtodoFolders.default,
+      // TODO: Create login feature
+      loggedIn: true,
+      // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
+      openFolder: null,
     }
     this.handleAddTodo = this.handleAddTodo.bind(this)
     this.handleDeleteTodo = this.handleDeleteTodo.bind(this)
@@ -64,6 +68,7 @@ class Todo extends Component {
             items={items}
             deleteTodo={this.handleDeleteTodo}
             toggleCompletedTodo={this.handleToggleCompletedTodo}
+            openFolder={this.state.openFolder}
           />
         </div>
       </Fragment>
