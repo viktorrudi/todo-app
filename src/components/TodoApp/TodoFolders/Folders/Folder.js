@@ -3,14 +3,10 @@ import React, { Component } from 'react'
 class Folder extends Component {
   constructor(props) {
     super(props)
-    this.handleHover = this.handleHover.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
   handleClick(e) {
-    console.log(e)
-  }
-  handleHover(e) {
-    console.log(e)
+    this.props.getSelectedFolder(parseInt(e.target.id))
   }
   render() {
     const type = 'Folder'
@@ -21,6 +17,7 @@ class Folder extends Component {
         onMouseOver={this.handleHover}
         onMouseLeave={this.handleHover}
         onClick={this.handleClick}
+        id={this.props.id}
       >
         <span className={`${type}--icon`} style={{ backgroundColor: color }} />
         <p className={`${type}--name`}>{this.props.name}</p>

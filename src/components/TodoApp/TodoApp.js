@@ -22,6 +22,7 @@ class Todo extends Component {
     this.handleAddTodo = this.handleAddTodo.bind(this)
     this.handleDeleteTodo = this.handleDeleteTodo.bind(this)
     this.handleToggleCompletedTodo = this.handleToggleCompletedTodo.bind(this)
+    this.setSelectedFolder = this.setSelectedFolder.bind(this)
   }
 
   handleAddTodo(newItem) {
@@ -50,10 +51,15 @@ class Todo extends Component {
         }
         return prevItem
       })
-      return {
-        // Updates states items with toggled completed todos
-        updatedItems,
-      }
+      // Updates states items with toggled completed todos
+      return updatedItems
+    })
+  }
+
+  setSelectedFolder(id) {
+    // Lifing state up from Folder selection - to set the ID of the clicked on folder
+    this.setState({
+      openFolder: id,
     })
   }
 
@@ -61,7 +67,10 @@ class Todo extends Component {
     const items = this.state.items
     return (
       <Fragment>
-        <TodoFolders />
+        <TodoFolders
+          getSelectedFolder={this.setSelectedFolder}
+          itemsCount={this.state.items.length}
+        />
         <div className="TodoSheet">
           <AddTodo newTodo={this.handleAddTodo} items={items} />
           <TodoItems

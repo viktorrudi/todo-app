@@ -4,7 +4,8 @@
   margin: 0;
   box-shadow: 5px 0 10px 0 rgba(213, 221, 243, 0.3);
   z-index: 2;
-  &--createFolder {
+  &--createFolder,
+  &--seeAllFolders {
     position: relative;
     text-align: center;
     background: rgb(60, 60, 60);

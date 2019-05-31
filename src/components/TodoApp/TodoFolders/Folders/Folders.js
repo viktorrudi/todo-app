@@ -13,7 +13,13 @@ class Folders extends Component {
   render() {
     const foldersData = this.state.folders
     let folders = foldersData.map(folder => (
-      <Folder key={folder.id} name={folder.name} color={folder.color} />
+      <Folder
+        key={folder.id}
+        id={folder.id}
+        name={folder.name}
+        color={folder.color}
+        getSelectedFolder={this.props.getSelectedFolder}
+      />
     ))
     return (
       <Fragment>
