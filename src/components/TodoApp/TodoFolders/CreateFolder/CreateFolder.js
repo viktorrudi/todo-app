@@ -31,10 +31,11 @@ class CreateFolder extends Component {
     })
   }
   render() {
+    const type = 'CreateFolder'
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className={type} onSubmit={this.handleSubmit}>
         <input
-          className="CreateFolder"
+          className={`${type}--addFolderField`}
           type="text"
           placeholder="Create folder"
           onChange={this.handleNewFolderInput}

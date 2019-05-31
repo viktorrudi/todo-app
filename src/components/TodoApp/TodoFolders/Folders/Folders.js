@@ -3,12 +3,16 @@ import Folder from './Folder'
 import './Folders.scss'
 
 class Folders extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
   render() {
+    console.log(this.props.items)
+
     let folders = this.props.folders.map(folder => (
-      <Folder key={folder.id} folder={folder} getSelectedFolder={this.props.getSelectedFolder} />
+      <Folder
+        key={folder.id}
+        folder={folder}
+        getSelectedFolder={this.props.getSelectedFolder}
+        allFolders={this.props.folders}
+      />
     ))
     return (
       <Fragment>

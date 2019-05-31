@@ -11,6 +11,7 @@ class Folder extends Component {
   render() {
     const type = 'Folder'
     const color = this.props.folder.color
+
     return (
       <div
         className={type}
@@ -21,7 +22,8 @@ class Folder extends Component {
       >
         <span className={`${type}--icon`} style={{ backgroundColor: color }} />
         <p className={`${type}--name`}>{this.props.folder.name}</p>
-        <span className={`${type}--badge`}>3</span>
+        {/* FIXME: Badges
+        <span className={`${type}--badge`}>3</span> */}
         <span className={`${type}--delete`}>x</span>
       </div>
     )

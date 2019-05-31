@@ -20,11 +20,11 @@ class TodoFolders extends Component {
 
   createFolder(newFolder) {
     // Expecting object in folder argument
-    console.log(newFolder)
+    // Adds new folder to state
     this.setState({
       folders: [...this.state.folders, newFolder],
     })
-    console.log(this.state.folders)
+    // TODO: Save folder in DB
   }
 
   render() {
@@ -32,12 +32,16 @@ class TodoFolders extends Component {
     const type = 'TodoSidebar'
     return (
       <aside className={type}>
-        <h3>Folders</h3>
-        <CreateFolder folders={this.state.folders} createFolder={this.createFolder} />
+        <h3>ToDo</h3>
         <div className={`${type}--seeAllFolders`} onClick={this.handleResetFolder}>
           See All {allItemsCount} items
         </div>
-        <Folders getSelectedFolder={this.props.getSelectedFolder} folders={this.state.folders} />
+        <CreateFolder folders={this.state.folders} createFolder={this.createFolder} />
+        <Folders
+          getSelectedFolder={this.props.getSelectedFolder}
+          folders={this.state.folders}
+          items={this.props.items}
+        />
       </aside>
     )
   }

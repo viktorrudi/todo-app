@@ -38,7 +38,7 @@ class TodoItem extends React.Component {
           </button>
 
           <div className={`${type}__item--time`}>{this.props.item.timeCreated}</div>
-          <div className={`${type}__item--date`}>{this.props.item.dateCreated}</div>
+          {/* <div className={`${type}__item--date`}>{this.props.item.dateCreated}</div> */}
         </span>
       </div>
     )

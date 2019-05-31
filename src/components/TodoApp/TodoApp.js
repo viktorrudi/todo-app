@@ -4,6 +4,7 @@ import TodoItems from './TodoItems/TodoItems'
 import TodoFolders from './TodoFolders/TodoFolders'
 import { findItemInState } from '../utilities/utilities'
 import * as DBtodoItems from '../../database/todo-items.json'
+import './TodoApp.scss'
 // Keeping DBtodoItems in TodoApp (global) because of badges in folders
 
 class Todo extends Component {
@@ -68,11 +69,10 @@ class Todo extends Component {
         <TodoFolders
           getSelectedFolder={this.setSelectedFolder}
           items={this.state.items}
-          // folders={this.state.folders}
           createFolder={this.createFolder}
         />
         <div className="TodoSheet">
-          <AddTodo newTodo={this.handleAddTodo} items={items} />
+          <AddTodo newTodo={this.handleAddTodo} items={items} openFolder={this.state.openFolder} />
           <TodoItems
             items={items}
             deleteTodo={this.handleDeleteTodo}

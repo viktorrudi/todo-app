@@ -1,3 +1,12 @@
 .CreateFolder {
-  width: 100%;
+  display: flex;
+  &--addFolderField {
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    padding: 10px 5px;
+    &:focus {
+      outline: none;
+    }
+  }
 }
