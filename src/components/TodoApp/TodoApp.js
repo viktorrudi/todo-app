@@ -4,6 +4,7 @@ import TodoItems from './TodoItems/TodoItems'
 import TodoFolders from './TodoFolders/TodoFolders'
 import { findItemInState } from '../utilities/utilities'
 import * as DBtodoItems from '../../database/todo-items.json'
+import * as DBtodoFolders from '../../database/todo-folders.json'
 import './TodoApp.scss'
 // Keeping DBtodoItems in TodoApp (global) because of badges in folders
 
@@ -12,6 +13,7 @@ class Todo extends Component {
     super(props)
     this.state = {
       items: DBtodoItems.default,
+      folders: DBtodoFolders.default,
       // TODO: Create login feature
       loggedIn: true,
       // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
@@ -64,6 +66,7 @@ class Todo extends Component {
 
   render() {
     const items = this.state.items
+    const folders = this.state.folders
     return (
       <Fragment>
         <TodoFolders
@@ -78,6 +81,7 @@ class Todo extends Component {
             deleteTodo={this.handleDeleteTodo}
             toggleCompletedTodo={this.handleToggleCompletedTodo}
             openFolder={this.state.openFolder}
+            folders={folders}
           />
         </div>
       </Fragment>

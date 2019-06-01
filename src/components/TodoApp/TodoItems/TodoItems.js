@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import TodoItem from './TodoItem'
 import _ from 'lodash'
 import { findItemsInFolder } from '../../utilities/utilities'
-import * as DBfolders from '../../../database/todo-folders.json'
 
 class TodoItems extends Component {
   constructor(props) {
@@ -10,7 +9,7 @@ class TodoItems extends Component {
     this.findItemFolder = this.findItemFolder.bind(this)
   }
   findItemFolder(itemFolderID) {
-    const allFolders = DBfolders.default
+    const allFolders = this.props.folders
     let result = allFolders.filter(folder => folder.id === itemFolderID)
     return result[0]
   }
