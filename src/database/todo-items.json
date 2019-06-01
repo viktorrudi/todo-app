@@ -2,7 +2,7 @@
   {
     "id": 1,
     "text": "1. This HTML file is a template. If you open it directly in the browser, you will see an empty page. You can add webfonts, meta tags, or analytics to this file.",
-    "folder": 1,
+    "folder": null,
     "completed": false,
     "important": true,
     "timeCreated": "15:15",
@@ -13,7 +13,7 @@
   {
     "id": 2,
     "text": "3. This HTSL file is a template. If you open it directly in the browser, you will see an empty page. You can add webfonts, meta tags, or analytics to this file.",
-    "folder": 2,
+    "folder": 1,
     "completed": true,
     "important": true,
     "timeCreated": "15:15",

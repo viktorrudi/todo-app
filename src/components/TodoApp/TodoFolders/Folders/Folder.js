@@ -22,8 +22,6 @@ class Folder extends Component {
       >
         <span className={`${type}--icon`} style={{ backgroundColor: color }} />
         <p className={`${type}--name`}>{this.props.folder.name}</p>
-        {/* FIXME: Badges
-        <span className={`${type}--badge`}>3</span> */}
         <span className={`${type}--delete`}>x</span>
       </div>
     )

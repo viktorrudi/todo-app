@@ -2,8 +2,18 @@ import React, { Component } from 'react'
 import TodoItem from './TodoItem'
 import _ from 'lodash'
 import { findItemsInFolder } from '../../utilities/utilities'
+import * as DBfolders from '../../../database/todo-folders.json'
 
 class TodoItems extends Component {
+  constructor(props) {
+    super(props)
+    this.findItemFolder = this.findItemFolder.bind(this)
+  }
+  findItemFolder(itemFolderID) {
+    const allFolders = DBfolders.default
+    let result = allFolders.filter(folder => folder.id === itemFolderID)
+    return result[0]
+  }
   render() {
     // Finds and returns todo items associated with the folder
     let openedFolder
@@ -23,6 +33,7 @@ class TodoItems extends Component {
       <TodoItem
         key={item.id}
         item={item}
+        folder={this.findItemFolder(item.folder)}
         deleteTodo={this.props.deleteTodo}
         toggleCompletedTodo={this.props.toggleCompletedTodo}
       />

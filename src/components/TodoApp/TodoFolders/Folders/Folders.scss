@@ -14,6 +14,7 @@ $folder-padding: 10px;
 
     &--icon {
       content: '';
+      pointer-events: none;
       display: inline-block;
       width: 10px;
       height: 10px;
@@ -22,6 +23,7 @@ $folder-padding: 10px;
     }
 
     &--name {
+      pointer-events: none;
       display: inline;
       white-space: nowrap;
       overflow: hidden;

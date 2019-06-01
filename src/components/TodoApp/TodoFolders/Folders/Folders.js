@@ -4,8 +4,6 @@ import './Folders.scss'
 
 class Folders extends Component {
   render() {
-    console.log(this.props.items)
-
     let folders = this.props.folders.map(folder => (
       <Folder
         key={folder.id}
