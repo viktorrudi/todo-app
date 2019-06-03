@@ -7,11 +7,21 @@ class TodoItems extends Component {
   constructor(props) {
     super(props)
     this.findItemFolder = this.findItemFolder.bind(this)
+    this.findOpenFolderName = this.findOpenFolderName.bind(this)
   }
   findItemFolder(itemFolderID) {
     const allFolders = this.props.folders
     let result = allFolders.filter(folder => folder.id === itemFolderID)
     return result[0]
+  }
+  findOpenFolderName(openFolder) {
+    const found = this.props.folders.map(folder => {
+      if (openFolder === folder.id) {
+        return folder.name
+      }
+      return false
+    })
+    return found
   }
   render() {
     // Finds and returns todo items associated with the folder
@@ -37,8 +47,13 @@ class TodoItems extends Component {
         toggleCompletedTodo={this.props.toggleCompletedTodo}
       />
     ))
-
-    return <main>{allItems}</main>
+    console.log(this.props.folders)
+    return (
+      <main>
+        <div>{this.findOpenFolderName(this.props.openFolder)}</div>
+        {allItems}
+      </main>
+    )
   }
 }
 

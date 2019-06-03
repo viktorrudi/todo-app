@@ -14,6 +14,7 @@ class Folders extends Component {
       if (item.folder === folder.id) {
         count++
       }
+      return false
     })
     return count
   }
