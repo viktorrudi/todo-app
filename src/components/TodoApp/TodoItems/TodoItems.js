@@ -30,10 +30,9 @@ class TodoItems extends Component {
       openedFolder = findItemsInFolder(this.props.items, this.props.openFolder)
     }
 
-    // FIXME: Sort by date created (new Date() stamp)
     const dateFilter = _.sortBy(openedFolder || this.props.items, item => {
       return new Date(item.creationStamp)
-    })
+    }).reverse()
 
     // Sorted by having uncompleted tasks first, and completed at the end
     let completedSorted = _.sortBy(dateFilter, ['completed'])
@@ -47,7 +46,6 @@ class TodoItems extends Component {
         toggleCompletedTodo={this.props.toggleCompletedTodo}
       />
     ))
-    console.log(this.props.folders)
     return (
       <main>
         <div>{this.findOpenFolderName(this.props.openFolder)}</div>

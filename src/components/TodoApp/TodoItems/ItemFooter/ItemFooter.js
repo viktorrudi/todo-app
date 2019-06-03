@@ -3,7 +3,6 @@ import './ItemFooter.scss'
 
 class ItemFooter extends Component {
   render() {
-    // console.log('props.folderName', this.props.folderName)
     const type = 'TodoItem'
     return (
       <div className={`${type}__footer`}>
