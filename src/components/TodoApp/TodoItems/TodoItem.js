@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ItemFooter from './ItemFooter/ItemFooter'
 import './TodoItem.scss'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -34,6 +35,7 @@ class TodoItem extends Component {
       color: 'rgba(0,0,0,0)',
       borderColor: 'rgba(0,0,0,0)',
     }
+
     const folder = this.props.folder || defaultFolderStyle
     const timeCreated = this.props.item.timeCreated
     const type = 'TodoItem'
@@ -51,6 +53,7 @@ class TodoItem extends Component {
           checked={this.props.item.completed}
           id={id}
         />
+
         {this.state.itemIsHovered ? (
           <span className={`${type}__action--delete`} onClick={this.handleDelete} id={id}>
             <FontAwesomeIcon icon={faTimes} color="#fff" />
@@ -63,12 +66,7 @@ class TodoItem extends Component {
           {this.props.item.text}
         </div>
 
-        <div className={`${type}__footer`}>
-          <div className={`${type}__footer--folder`} style={folderStyle}>
-            {folder.name}
-          </div>
-          <div className={`${type}__footer--time`}>{timeCreated}</div>
-        </div>
+        <ItemFooter folderStyle={folderStyle} folderName={folder.name} timeCreated={timeCreated} />
       </div>
     )
   }

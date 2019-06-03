@@ -3,6 +3,20 @@ import Folder from './Folder'
 import './Folders.scss'
 
 class Folders extends Component {
+  constructor(props) {
+    super(props)
+    this.findItemCount = this.findItemCount.bind(this)
+  }
+
+  findItemCount(folder) {
+    let count = 0
+    this.props.items.map(item => {
+      if (item.folder === folder.id) {
+        count++
+      }
+    })
+    return count
+  }
   render() {
     let folders = this.props.folders.map(folder => (
       <Folder
@@ -10,6 +24,7 @@ class Folders extends Component {
         folder={folder}
         getSelectedFolder={this.props.getSelectedFolder}
         allFolders={this.props.folders}
+        itemCount={this.findItemCount(folder)}
       />
     ))
     return (

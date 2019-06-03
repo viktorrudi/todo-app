@@ -15,7 +15,6 @@ class Todo extends Component {
       items: DBtodoItems.default,
       folders: DBtodoFolders.default,
       // TODO: Create login feature
-      loggedIn: true,
       // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
       openFolder: null,
     }
@@ -23,12 +22,20 @@ class Todo extends Component {
     this.handleDeleteTodo = this.handleDeleteTodo.bind(this)
     this.handleToggleCompletedTodo = this.handleToggleCompletedTodo.bind(this)
     this.setSelectedFolder = this.setSelectedFolder.bind(this)
+    this.handleAddFolder = this.handleAddFolder.bind(this)
   }
 
   handleAddTodo(newItem) {
     this.setState({
       items: [...this.state.items, newItem],
     })
+  }
+
+  handleAddFolder(newFolder) {
+    this.setState({
+      folders: [...this.state.folders, newFolder],
+    })
+    console.log(this.state.folders)
   }
 
   handleDeleteTodo(item) {
@@ -70,9 +77,10 @@ class Todo extends Component {
     return (
       <Fragment>
         <TodoFolders
+          folders={this.state.folders}
           getSelectedFolder={this.setSelectedFolder}
           items={this.state.items}
-          createFolder={this.createFolder}
+          createFolder={this.handleAddFolder}
         />
         <div className="TodoSheet">
           <AddTodo newTodo={this.handleAddTodo} items={items} openFolder={this.state.openFolder} />

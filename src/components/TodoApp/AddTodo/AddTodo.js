@@ -29,6 +29,7 @@ class AddTodo extends React.Component {
         id: this.props.items.length + 1,
         text: this.state.todoText,
         folder: this.props.openFolder,
+        completed: false,
         timeCreated: moment().format('HH:mm'),
         dateCreated: moment().format('DD-MM-YYYY'),
         creationStamp: nowStamp,

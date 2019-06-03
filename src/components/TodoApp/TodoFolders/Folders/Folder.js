@@ -22,6 +22,7 @@ class Folder extends Component {
       >
         <span className={`${type}--icon`} style={{ backgroundColor: color }} />
         <p className={`${type}--name`}>{this.props.folder.name}</p>
+        <span className={`${type}--badge`}>{this.props.itemCount}</span>
         <span className={`${type}--delete`}>x</span>
       </div>
     )
