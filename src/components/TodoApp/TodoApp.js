@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react'
 import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'
 import TodoFolders from './TodoFolders/TodoFolders'
+import ListHeader from './ListHeader/ListHeader'
 import { findItemInState } from '../utilities/utilities'
 import * as DBtodoItems from '../../database/todo-items.json'
 import * as DBtodoFolders from '../../database/todo-folders.json'
 import './TodoApp.scss'
 // Keeping DBtodoItems in TodoApp (global) because of badges in folders
 
-class Todo extends Component {
+class TodoApp extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,6 +24,8 @@ class Todo extends Component {
     this.handleToggleCompletedTodo = this.handleToggleCompletedTodo.bind(this)
     this.setSelectedFolder = this.setSelectedFolder.bind(this)
     this.handleAddFolder = this.handleAddFolder.bind(this)
+    this.handleChangeFolderName = this.handleChangeFolderName.bind(this)
+    this.handleDeleteFolder = this.handleDeleteFolder.bind(this)
   }
 
   handleAddTodo(newItem) {
@@ -63,9 +66,32 @@ class Todo extends Component {
     })
   }
 
+  handleChangeFolderName(folder) {
+    this.setState(prevState => {
+      let updatedFolders = prevState.folders.map(prevFolder => {
+        if (folder.id === prevFolder.id) {
+          prevFolder.name = folder.name
+        }
+        return false
+      })
+      return updatedFolders
+    })
+  }
+
+  handleDeleteFolder(folder) {
+    this.setState(prevState => {
+      // Finding and removing targeted folder from state
+      prevState.folders = prevState.folders.filter(prevFolder => prevFolder.id !== folder.id)
+      // Finding and removing all items in that folder
+      prevState.items = prevState.items.filter(prevItem => prevItem.folder !== folder.id)
+      // Returning to main overview of tasks
+      prevState.openFolder = null
+      return prevState
+    })
+    // TODO: Update folders in DB
+  }
+
   setSelectedFolder(id) {
-    // Lifing state up from Folder selection
-    // To set the ID of the clicked on folder
     this.setState({
       openFolder: id,
     })
@@ -74,21 +100,30 @@ class Todo extends Component {
   render() {
     const items = this.state.items
     const folders = this.state.folders
+    const openFolder = this.state.openFolder
     return (
       <Fragment>
         <TodoFolders
-          folders={this.state.folders}
+          folders={folders}
           getSelectedFolder={this.setSelectedFolder}
-          items={this.state.items}
+          items={items}
           createFolder={this.handleAddFolder}
         />
         <div className="TodoSheet">
-          <AddTodo newTodo={this.handleAddTodo} items={items} openFolder={this.state.openFolder} />
+          <AddTodo newTodo={this.handleAddTodo} items={items} openFolder={openFolder} />
+          {openFolder && (
+            <ListHeader
+              openFolder={openFolder}
+              folders={folders}
+              changeFolderName={this.handleChangeFolderName}
+              deleteFolder={this.handleDeleteFolder}
+            />
+          )}
           <TodoItems
             items={items}
             deleteTodo={this.handleDeleteTodo}
             toggleCompletedTodo={this.handleToggleCompletedTodo}
-            openFolder={this.state.openFolder}
+            openFolder={openFolder}
             folders={folders}
           />
         </div>
@@ -97,4 +132,4 @@ class Todo extends Component {
   }
 }
 
-export default Todo
+export default TodoApp
