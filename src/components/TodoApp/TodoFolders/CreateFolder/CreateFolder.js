@@ -8,15 +8,13 @@ class CreateFolder extends Component {
     this.state = {
       newFolderName: '',
     }
-    this.handleNewFolderInput = this.handleNewFolderInput.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleNewFolderInput(e) {
+  handleNewFolderInput = e => {
     this.setState({
       newFolderName: e.target.value,
     })
   }
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault()
     const newFolder = {
       id: this.props.folders.length + 1,

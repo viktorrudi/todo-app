@@ -19,29 +19,22 @@ class TodoApp extends Component {
       // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
       openFolder: null,
     }
-    this.handleAddTodo = this.handleAddTodo.bind(this)
-    this.handleDeleteTodo = this.handleDeleteTodo.bind(this)
-    this.handleToggleCompletedTodo = this.handleToggleCompletedTodo.bind(this)
-    this.setSelectedFolder = this.setSelectedFolder.bind(this)
-    this.handleAddFolder = this.handleAddFolder.bind(this)
-    this.handleChangeFolderName = this.handleChangeFolderName.bind(this)
-    this.handleDeleteFolder = this.handleDeleteFolder.bind(this)
   }
 
-  handleAddTodo(newItem) {
+  handleAddTodo = newItem => {
     this.setState({
       items: [...this.state.items, newItem],
     })
   }
 
-  handleAddFolder(newFolder) {
+  handleAddFolder = newFolder => {
     this.setState({
       folders: [...this.state.folders, newFolder],
     })
     console.log(this.state.folders)
   }
 
-  handleDeleteTodo(item) {
+  handleDeleteTodo = item => {
     // Finds the related ID inside state, of clicked item
     const targeted = findItemInState(item, this.state.items)
     // Returns a new array of todolist items without the ID of the clicked item
@@ -52,7 +45,7 @@ class TodoApp extends Component {
     })
   }
 
-  handleToggleCompletedTodo(id) {
+  handleToggleCompletedTodo = id => {
     // Finds the related ID inside state, of clicked item
     this.setState(prevState => {
       let updatedItems = prevState.items.map(prevItem => {
@@ -66,7 +59,7 @@ class TodoApp extends Component {
     })
   }
 
-  handleChangeFolderName(folder) {
+  handleChangeFolderName = folder => {
     this.setState(prevState => {
       let updatedFolders = prevState.folders.map(prevFolder => {
         if (folder.id === prevFolder.id) {
@@ -78,7 +71,7 @@ class TodoApp extends Component {
     })
   }
 
-  handleDeleteFolder(folder) {
+  handleDeleteFolder = folder => {
     this.setState(prevState => {
       // Finding and removing targeted folder from state
       prevState.folders = prevState.folders.filter(prevFolder => prevFolder.id !== folder.id)
@@ -91,7 +84,7 @@ class TodoApp extends Component {
     // TODO: Update folders in DB
   }
 
-  setSelectedFolder(id) {
+  setSelectedFolder = id => {
     this.setState({
       openFolder: id,
     })

@@ -10,14 +10,9 @@ class ListHeader extends Component {
         name: this.findOpenFolderName(this.props.openFolder),
       },
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
-    this.findOpenFolderName = this.findOpenFolderName.bind(this)
   }
 
-  findOpenFolderName(openFolder) {
+  findOpenFolderName = openFolder => {
     // FIXME: Find a cleaner solution
     const found = this.props.folders.map(folder => {
       if (openFolder === folder.id) {
@@ -32,7 +27,7 @@ class ListHeader extends Component {
     return item[0]
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate = (prevProps, prevState) => {
     // Updates state to contain currently selected folder (from props)
     if (prevProps.openFolder !== this.props.openFolder) {
       this.setState({
@@ -43,7 +38,7 @@ class ListHeader extends Component {
       })
     }
   }
-  handleChange(e) {
+  handleChange = e => {
     this.setState({
       openFolder: {
         id: this.state.openFolder.id,
@@ -51,12 +46,12 @@ class ListHeader extends Component {
       },
     })
   }
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault()
     this.props.changeFolderName(this.state.openFolder)
   }
 
-  handleDelete(e) {
+  handleDelete = e => {
     this.props.deleteFolder(this.state.openFolder)
   }
 
@@ -71,6 +66,7 @@ class ListHeader extends Component {
             type="text"
             value={this.state.openFolder.name}
             onChange={this.handleChange}
+            autocomplete="off"
           />
         </form>
         <span>

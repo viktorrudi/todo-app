@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 
 class Folder extends Component {
-  constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-  }
-  handleClick(e) {
+  handleClick = e => {
     this.props.getSelectedFolder(parseInt(e.target.id))
   }
   render() {

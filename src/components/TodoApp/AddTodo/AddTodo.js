@@ -8,18 +8,16 @@ class AddTodo extends React.Component {
     this.state = {
       todoText: '',
     }
-    this.handleNewTodoText = this.handleNewTodoText.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleNewTodoText(e) {
+  handleNewTodoText = e => {
     this.setState({
       todoText: e.target.value,
     })
     e.preventDefault()
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     if (this.state.todoText.length > 0) {
       //TODO: Create DB function to store new todo item
 

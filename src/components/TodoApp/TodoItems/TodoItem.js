@@ -10,20 +10,17 @@ class TodoItem extends Component {
     this.state = {
       itemIsHovered: false,
     }
-    this.handleDelete = this.handleDelete.bind(this)
-    this.handleComplete = this.handleComplete.bind(this)
-    this.handleHover = this.handleHover.bind(this)
   }
 
-  handleDelete() {
+  handleDelete = () => {
     this.props.deleteTodo(this.props.item.id)
   }
 
-  handleComplete() {
+  handleComplete = () => {
     this.props.toggleCompletedTodo(this.props.item.id)
   }
 
-  handleHover() {
+  handleHover = () => {
     this.setState(prevState => {
       return {
         itemIsHovered: !prevState.itemIsHovered,

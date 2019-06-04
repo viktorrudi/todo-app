@@ -4,17 +4,12 @@ import CreateFolder from './CreateFolder/CreateFolder'
 import './TodoFolders.scss'
 
 class TodoFolders extends Component {
-  constructor(props) {
-    super(props)
-    this.handleResetFolder = this.handleResetFolder.bind(this)
-    this.createFolder = this.createFolder.bind(this)
-  }
-  handleResetFolder() {
+  handleResetFolder = () => {
     // Resets folder view - shows all folders
     this.props.getSelectedFolder(null)
   }
 
-  createFolder(newFolder) {
+  createFolder = newFolder => {
     this.props.createFolder(newFolder)
   }
 

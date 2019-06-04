@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import TodoItem from './TodoItem'
-import ListHeader from './ListHeader/ListHeader'
 import NoItems from './NoItems/NoItems'
 import './TodoItem.scss'
 import _ from 'lodash'
 import { findItemsInFolder } from '../../utilities/utilities'
 
 class TodoItems extends Component {
-  constructor(props) {
-    super(props)
-    this.findItemFolder = this.findItemFolder.bind(this)
-  }
-  findItemFolder(itemFolderID) {
+  findItemFolder = itemFolderID => {
     const allFolders = this.props.folders
     let result = allFolders.filter(folder => folder.id === itemFolderID)
     return result[0]

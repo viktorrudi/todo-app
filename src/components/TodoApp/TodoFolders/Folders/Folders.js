@@ -3,12 +3,7 @@ import Folder from './Folder'
 import './Folders.scss'
 
 class Folders extends Component {
-  constructor(props) {
-    super(props)
-    this.findItemCount = this.findItemCount.bind(this)
-  }
-
-  findItemCount(folder) {
+  findItemCount = folder => {
     let count = 0
     this.props.items.map(item => {
       if (item.folder === folder.id) {
