@@ -5,7 +5,7 @@ class ItemFooter extends Component {
   render() {
     const type = 'TodoItem'
     return (
-      <div className={`${type}__footer`}>
+      <div className={`${type}__footer`} id={this.props.id}>
         <div className={`${type}__footer--folder`} style={this.props.folderStyle}>
           {this.props.folderName}
         </div>

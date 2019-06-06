@@ -9,6 +9,7 @@ class TodoItem extends Component {
     super(props)
     this.state = {
       itemIsHovered: false,
+      itemIsOpen: false,
     }
   }
 
@@ -28,6 +29,19 @@ class TodoItem extends Component {
     })
   }
 
+  handleClick = e => {
+    // Only work when not clicking on checkbox or delete button
+    if (e.target.type !== 'checkbox') {
+      if (e.target.className !== 'TodoItem__action--delete' && e.target.nodeName !== 'path') {
+        this.setState({
+          itemeIsHovered: true,
+          itemIsOpen: true,
+        })
+      }
+    }
+    this.props.toggleOpen(true)
+  }
+
   render() {
     const completed = this.props.item.completed
     const id = this.props.item.id
@@ -45,28 +59,42 @@ class TodoItem extends Component {
     }
 
     return (
-      <div className={type} onMouseEnter={this.handleHover} onMouseLeave={this.handleHover}>
-        <input
-          type="checkbox"
-          className={`${type}__action--done`}
-          onChange={this.handleComplete}
-          checked={this.props.item.completed}
-          id={id}
-        />
+      <React.Fragment>
+        <div
+          className={this.state.itemIsOpen ? `${type} ${type}__open` : type}
+          onMouseEnter={this.handleHover}
+          onMouseLeave={this.handleHover}
+          onClick={this.handleClick}
+        >
+          <input
+            type="checkbox"
+            className={`${type}__action--done`}
+            onChange={this.handleComplete}
+            checked={this.props.item.completed}
+            id={id}
+          />
 
-        {this.state.itemIsHovered ? (
-          <span className={`${type}__action--delete`} onClick={this.handleDelete} id={id}>
-            <FontAwesomeIcon icon={faTimes} color="#fff" />
-          </span>
-        ) : (
-          false
-        )}
+          {this.state.itemIsHovered ? (
+            <span className={`${type}__action--delete`} onClick={this.handleDelete} id={id}>
+              <FontAwesomeIcon icon={faTimes} color="#fff" />
+            </span>
+          ) : (
+            false
+          )}
 
-        <div className={`${type}__item`} style={completed ? { color: '#aaa' } : { color: '#000' }}>
-          {this.props.item.text}
+          <div
+            className={`${type}__item`}
+            style={completed ? { color: '#aaa' } : { color: '#000' }}
+          >
+            {this.props.item.text}
+          </div>
+          <ItemFooter
+            folderStyle={folderStyle}
+            folderName={folder.name}
+            timeCreated={timeCreated}
+          />
         </div>
-        <ItemFooter folderStyle={folderStyle} folderName={folder.name} timeCreated={timeCreated} />
-      </div>
+      </React.Fragment>
     )
   }
 }
