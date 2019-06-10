@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import AddTodo from './AddTodo/AddTodo'
-import TodoItems from './TodoItems/TodoItems'
+
 import TodoFolders from './TodoFolders/TodoFolders'
-import ListHeader from './ListHeader/ListHeader'
+import TodoSheet from './TodoSheet/TodoSheet'
 import { findItemInState } from '../utilities/utilities'
 import * as DBtodoItems from '../../database/todo-items.json'
 import * as DBtodoFolders from '../../database/todo-folders.json'
@@ -101,24 +100,16 @@ class TodoApp extends Component {
           items={items}
           createFolder={this.handleAddFolder}
         />
-        <div className="TodoSheet">
-          <AddTodo newTodo={this.handleAddTodo} items={items} openFolder={openFolder} />
-          {openFolder && (
-            <ListHeader
-              openFolder={openFolder}
-              folders={folders}
-              changeFolderName={this.handleChangeFolderName}
-              deleteFolder={this.handleDeleteFolder}
-            />
-          )}
-          <TodoItems
-            items={items}
-            deleteTodo={this.handleDeleteTodo}
-            toggleCompletedTodo={this.handleToggleCompletedTodo}
-            openFolder={openFolder}
-            folders={folders}
-          />
-        </div>
+        <TodoSheet
+          items={items}
+          folders={folders}
+          openFolder={openFolder}
+          changeFolderName={this.handleChangeFolderName}
+          deleteFolder={this.handleDeleteFolder}
+          newTodo={this.handleAddTodo}
+          deleteTodo={this.handleDeleteTodo}
+          toggleCompletedTodo={this.handleToggleCompletedTodo}
+        />
       </Fragment>
     )
   }

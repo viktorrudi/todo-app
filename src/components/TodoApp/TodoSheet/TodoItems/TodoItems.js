@@ -3,7 +3,7 @@ import TodoItem from './TodoItem'
 import NoItems from './NoItems/NoItems'
 import './TodoItem.scss'
 import _ from 'lodash'
-import { findItemsInFolder } from '../../utilities/utilities'
+import { findItemsInFolder } from '../../../utilities/utilities'
 
 class TodoItems extends Component {
   findItemFolder = itemFolderID => {
