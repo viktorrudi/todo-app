@@ -31,6 +31,7 @@ class TodoItems extends Component {
         folder={this.findItemFolder(item.folder)}
         deleteTodo={this.props.deleteTodo}
         toggleCompletedTodo={this.props.toggleCompletedTodo}
+        clickedItem={this.props.clickedItem}
       />
     ))
     return <main className="TodoWrapper">{allItems.length ? allItems : <NoItems />}</main>

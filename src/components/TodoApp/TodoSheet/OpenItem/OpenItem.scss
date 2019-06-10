@@ -1,0 +1,12 @@
+.OpenItem {
+  &__actions {
+    display: inline-block;
+    li {
+      display: inline;
+      &:hover {
+        cursor: pointer;
+        box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}

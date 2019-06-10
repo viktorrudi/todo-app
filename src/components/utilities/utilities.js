@@ -21,6 +21,14 @@ export function findItemsInFolder(propsItems, folderID) {
   return filteredItems
 }
 
+export function findParentTag(search, parentClass) {
+  while (search.parentNode) {
+    search = search.parentNode
+    if (search.className === parentClass) return Boolean(search)
+  }
+  return null
+}
+
 export function randomColor() {
   const colors = [
     'red',

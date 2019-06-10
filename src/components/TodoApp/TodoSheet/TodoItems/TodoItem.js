@@ -3,6 +3,7 @@ import ItemFooter from './ItemFooter/ItemFooter'
 import './TodoItem.scss'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { findParentTag } from '../../../utilities/utilities'
 
 class TodoItem extends Component {
   constructor(props) {
@@ -28,6 +29,19 @@ class TodoItem extends Component {
     })
   }
 
+  handleClick = (e, clickedItem) => {
+    const deleteButton = 'TodoItem__action--delete'
+    const checkbox = 'TodoItem__action--done'
+    const found =
+      findParentTag(e.target, deleteButton) ||
+      e.target.className === deleteButton ||
+      e.target.className === checkbox
+
+    if (!found) {
+      this.props.clickedItem(clickedItem)
+    }
+  }
+
   render() {
     const completed = this.props.item.completed
     const id = this.props.item.id
@@ -45,7 +59,12 @@ class TodoItem extends Component {
     }
 
     return (
-      <div className={type} onMouseEnter={this.handleHover} onMouseLeave={this.handleHover}>
+      <div
+        className={type}
+        onMouseEnter={this.handleHover}
+        onMouseLeave={this.handleHover}
+        onClick={e => this.handleClick(e, this.props.item)}
+      >
         <input
           type="checkbox"
           className={`${type}__action--done`}
