@@ -33,7 +33,6 @@ class TodoItems extends Component {
         toggleCompletedTodo={this.props.toggleCompletedTodo}
       />
     ))
-    console.log(allItems.length)
     return <main className="TodoWrapper">{allItems.length ? allItems : <NoItems />}</main>
   }
 }

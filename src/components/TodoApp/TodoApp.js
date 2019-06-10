@@ -31,7 +31,6 @@ class TodoApp extends Component {
     this.setState({
       folders: [...this.state.folders, newFolder],
     })
-    console.log(this.state.folders)
   }
 
   handleDeleteTodo = item => {
