@@ -66,7 +66,7 @@ class ListHeader extends Component {
             type="text"
             value={this.state.openFolder.name}
             onChange={this.handleChange}
-            autoComplete="off"
+            autocomplete="off"
           />
         </form>
         <span>
