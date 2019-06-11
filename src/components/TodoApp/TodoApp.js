@@ -1,105 +1,118 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from "react"
 
-import TodoFolders from "./TodoFolders/TodoFolders";
-import TodoSheet from "./TodoSheet/TodoSheet";
-import { findItemInState } from "../utilities/utilities";
-import * as DBtodoItems from "../../database/todo-items.json";
-import * as DBtodoFolders from "../../database/todo-folders.json";
-import "./TodoApp.scss";
+import TodoFolders from "./TodoFolders/TodoFolders"
+import TodoSheet from "./TodoSheet/TodoSheet"
+import { findItemInState } from "../utilities/utilities"
+import * as DBtodoItems from "../../database/todo-items.json"
+import * as DBtodoFolders from "../../database/todo-folders.json"
+import "./TodoApp.scss"
 // Keeping DBtodoItems in TodoApp (global) because of badges in folders
 
 class TodoApp extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       items: DBtodoItems.default,
       folders: DBtodoFolders.default,
       // TODO: Create login feature
       // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
       openFolder: null
-    };
+    }
   }
 
   handleAddTodo = newItem => {
     this.setState({
       items: [...this.state.items, newItem]
-    });
-  };
+    })
+  }
 
   handleAddFolder = newFolder => {
     this.setState({
       folders: [...this.state.folders, newFolder]
-    });
-  };
+    })
+  }
 
   handleDeleteTodo = itemID => {
     // Finds the related ID inside state, of clicked item
-    const targeted = findItemInState(itemID, this.state.items);
+    const targeted = findItemInState(itemID, this.state.items)
     // Returns a new array of todolist items without the ID of the clicked item
-    const newItems = this.state.items.filter(item => item.id !== targeted.id);
+    const newItems = this.state.items.filter(item => item.id !== targeted.id)
     // Sets new state containing the new items
     this.setState({
       items: [...newItems]
-    });
-  };
+    })
+  }
 
-  handleUpdateTodo = item => {
-    console.log(item);
-  };
+  handleUpdateTodo = (task, itemToUpdate) => {
+    if (task === "change_text") {
+      this.setState(prevState => {
+        // Updates state to contain updated todo (from OpenItem.js)
+        const newItems = prevState.items.map(oldItem => {
+          if (oldItem.id === itemToUpdate.id) {
+            oldItem = itemToUpdate
+          }
+          return oldItem
+        })
+        prevState.items = newItems
+        return prevState
+      })
+    }
+    // if(task === 'change_folder') {
+
+    // }
+  }
 
   handleToggleCompletedTodo = id => {
     // Finds the related ID inside state, of clicked item
     this.setState(prevState => {
       let updatedItems = prevState.items.map(prevItem => {
         if (id === prevItem.id) {
-          prevItem.completed = !prevItem.completed;
+          prevItem.completed = !prevItem.completed
         }
-        return prevItem;
-      });
+        return prevItem
+      })
       // Updates states items with toggled completed todos
-      return updatedItems;
-    });
-  };
+      return updatedItems
+    })
+  }
 
   handleChangeFolderName = folder => {
     this.setState(prevState => {
       let updatedFolders = prevState.folders.map(prevFolder => {
         if (folder.id === prevFolder.id) {
-          prevFolder.name = folder.name;
+          prevFolder.name = folder.name
         }
-        return false;
-      });
-      return updatedFolders;
-    });
-  };
+        return false
+      })
+      return updatedFolders
+    })
+  }
 
   handleDeleteFolder = folder => {
     this.setState(prevState => {
       // Finding and removing targeted folder from state
       prevState.folders = prevState.folders.filter(
         prevFolder => prevFolder.id !== folder.id
-      );
+      )
       // Finding and removing all items in that folder
       prevState.items = prevState.items.filter(
         prevItem => prevItem.folder !== folder.id
-      );
+      )
       // Returning to main overview of tasks
-      prevState.openFolder = null;
-      return prevState;
-    });
+      prevState.openFolder = null
+      return prevState
+    })
     // TODO: Update folders in DB
-  };
+  }
 
   setSelectedFolder = id => {
     this.setState({
       openFolder: id
-    });
-  };
+    })
+  }
 
   render() {
-    const items = this.state.items;
-    const folders = this.state.folders;
-    const openFolder = this.state.openFolder;
+    const { items, folders, openFolder } = this.state
     return (
       <Fragment>
         <TodoFolders
@@ -121,8 +134,8 @@ class TodoApp extends Component {
           handleDeleteTodo={this.handleDeleteTodo}
         />
       </Fragment>
-    );
+    )
   }
 }
 
-export default TodoApp;
+export default TodoApp
