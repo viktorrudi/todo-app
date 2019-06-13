@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import ItemFooter from './ItemFooter/ItemFooter'
 import './TodoItem.scss'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { findParentTag } from '../../../utilities/utilities'
 
 class TodoItem extends Component {
@@ -13,29 +11,13 @@ class TodoItem extends Component {
     }
   }
 
-  handleDelete = () => {
-    this.props.deleteTodo(this.props.item.id)
-  }
-
   handleComplete = () => {
     this.props.toggleCompletedTodo(this.props.item.id)
   }
 
-  handleHover = () => {
-    this.setState(prevState => {
-      return {
-        itemIsHovered: !prevState.itemIsHovered,
-      }
-    })
-  }
-
   handleClick = (e, clickedItem) => {
-    const deleteButton = 'TodoItem__action--delete'
     const checkbox = 'TodoItem__action--done'
-    const found =
-      findParentTag(e.target, deleteButton) ||
-      e.target.className === deleteButton ||
-      e.target.className === checkbox
+    const found = findParentTag(e.target, e.target.className === checkbox)
 
     if (!found) {
       this.props.clickedItem(clickedItem)
@@ -72,14 +54,6 @@ class TodoItem extends Component {
           checked={this.props.item.completed}
           id={id}
         />
-
-        {this.state.itemIsHovered ? (
-          <span className={`${type}__action--delete`} onClick={this.handleDelete} id={id}>
-            <FontAwesomeIcon icon={faTimes} color="#fff" />
-          </span>
-        ) : (
-          false
-        )}
 
         <div className={`${type}__item`} style={completed ? { color: '#aaa' } : { color: '#000' }}>
           {this.props.item.text}

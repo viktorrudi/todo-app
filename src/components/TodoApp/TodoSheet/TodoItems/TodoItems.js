@@ -29,7 +29,6 @@ class TodoItems extends Component {
         key={item.id}
         item={item}
         folder={this.findItemFolder(item.folder)}
-        deleteTodo={this.props.deleteTodo}
         toggleCompletedTodo={this.props.toggleCompletedTodo}
         clickedItem={this.props.clickedItem}
       />

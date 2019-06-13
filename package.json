@@ -1,5 +1,6 @@
 {
-  "name": "learning",
+  "name": "todoapp",
+  "homepage": "http://188.166.43.148/todo/build",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
