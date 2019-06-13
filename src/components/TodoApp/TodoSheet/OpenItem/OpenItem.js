@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import "./OpenItem.scss"
+import React, { Component } from 'react'
+import './OpenItem.scss'
 
 class OpenItem extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      item: this.props.openItem
+      item: this.props.openItem,
     }
   }
 
@@ -13,18 +13,18 @@ class OpenItem extends Component {
     this.setState({
       item: {
         ...this.state.item,
-        text: e.target.value
-      }
+        text: e.target.value,
+      },
     })
   }
 
   handleSubmit = e => {
-    this.props.handleChangeOpenItem("change_text", this.state.item)
+    this.props.handleChangeOpenItem('change_text', this.state.item)
     e.preventDefault()
   }
 
   handleDelete = () => {
-    this.props.handleChangeOpenItem("delete_item", this.state.item)
+    this.props.handleChangeOpenItem('delete_item', this.state.item)
   }
 
   componentWillReceiveProps(parentProps) {
@@ -35,7 +35,7 @@ class OpenItem extends Component {
   }
 
   render() {
-    const type = "OpenItem"
+    const type = 'OpenItem'
     return (
       <div className={type}>
         <div className={`${type}__close`} onClick={this.props.closeOpenedItem}>
@@ -50,11 +50,10 @@ class OpenItem extends Component {
           />
         </form>
         <ul className={`${type}__actions`}>
-          <li className="small-btn" onClick={this.handleDelete}>
+          <li className="small-btn btn-update">Change folder</li>
+          <li className="small-btn btn-delete" onClick={this.handleDelete}>
             Delete note
           </li>
-          <li className="small-btn">Mark as important</li>
-          <li className="small-btn">Change folder</li>
         </ul>
       </div>
     )
