@@ -1,24 +1,13 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, useContext } from 'react'
 
 import TodoFolders from './TodoFolders/TodoFolders'
 import TodoSheet from './TodoSheet/TodoSheet'
 import { findItemInState } from '../utilities/utilities'
-import * as DBtodoItems from '../../database/todo-items.json'
-import * as DBtodoFolders from '../../database/todo-folders.json'
+import { TodoContext } from '../../TodoContext'
 import './TodoApp.scss'
-// Keeping DBtodoItems in TodoApp (global) because of badges in folders
 
 class TodoApp extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      items: DBtodoItems.default,
-      folders: DBtodoFolders.default,
-      // TODO: Create login feature
-      // TODO: Fetch which folder ID is open and display ut in TodoItems. null = all items
-      openFolder: null,
-    }
-  }
+  static contextType = TodoContext
 
   handleAddTodo = newItem => {
     this.setState({
@@ -57,9 +46,6 @@ class TodoApp extends Component {
         return prevState
       })
     }
-    // if(task === 'change_folder') {
-
-    // }
   }
 
   handleToggleCompletedTodo = id => {
@@ -108,7 +94,11 @@ class TodoApp extends Component {
   }
 
   render() {
-    const { items, folders, openFolder } = this.state
+    // Todocontext
+
+    // const [itemsLib, setItems] = this.context
+    // console.log(itemsLib)
+    const { items, folders, openFolder } = this.context[0]
     return (
       <Fragment>
         <TodoFolders

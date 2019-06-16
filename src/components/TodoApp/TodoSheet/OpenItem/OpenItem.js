@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './OpenItem.scss'
+import ItemOptions from './ItemOptions/ItemOptions'
 
 class OpenItem extends Component {
   constructor(props) {
@@ -49,12 +50,9 @@ class OpenItem extends Component {
             onChange={this.handleChange}
           />
         </form>
-        <ul className={`${type}__actions`}>
-          <li className="small-btn btn-update">Change folder</li>
-          <li className="small-btn btn-delete" onClick={this.handleDelete}>
-            Delete note
-          </li>
-        </ul>
+        <div className={`${type}__actions`}>
+          <ItemOptions openItem={this.props.openItem} delete={this.handleDelete} />
+        </div>
       </div>
     )
   }
