@@ -4,7 +4,6 @@
     "text": "1.",
     "folder": null,
     "completed": false,
-    "important": true,
     "timeCreated": "12:26",
     "dateCreated": "02-02-2005",
     "creationStamp": "Thu Jan 02 2005 12:26:42 GMT+0200 (Central European Summer Time)"
@@ -15,7 +14,6 @@
     "text": "2.",
     "folder": 1,
     "completed": true,
-    "important": true,
     "timeCreated": "16:41",
     "dateCreated": "30-02-2012",
     "creationStamp": "Thu Feb 30 2012 16:41:42 GMT+0200 (Central European Summer Time)"
@@ -25,7 +23,6 @@
     "text": "3.",
     "folder": 2,
     "completed": false,
-    "important": false,
     "timeCreated": "18:12",
     "dateCreated": "15-01-2010",
     "creationStamp": "Thu Jan 15 2010 18:12:42 GMT+0200 (Central European Summer Time)"

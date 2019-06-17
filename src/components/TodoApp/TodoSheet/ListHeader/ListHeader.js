@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { propTypeForFolders } from '../../../../proptypes'
+import { TodoContext } from '../../../../TodoContext'
 import './ListHeader.scss'
 
 class ListHeader extends Component {
@@ -10,6 +13,13 @@ class ListHeader extends Component {
         name: this.findOpenFolderName(this.props.openFolder)
       }
     }
+  }
+
+  static contextType = TodoContext
+
+  static propTypes = {
+    openFolder: PropTypes.shape({ ...propTypeForFolders }),
+    folders: PropTypes.object
   }
 
   findOpenFolderName = openFolder => {

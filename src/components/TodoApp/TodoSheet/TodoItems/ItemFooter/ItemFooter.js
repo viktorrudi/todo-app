@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { propTypeForItems, propTypeForFolders } from '../../../../../proptypes'
 import './ItemFooter.scss'
 
 class ItemFooter extends Component {
+  static propTypes = {
+    folderStyle: PropTypes.object,
+    timeCreated: propTypeForItems.timeCreated,
+    folderName: propTypeForFolders.name
+  }
   render () {
     const type = 'TodoItem'
     return (

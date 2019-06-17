@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import TodoItem from './TodoItem'
 import NoItems from './NoItems/NoItems'
 import './TodoItem.scss'
@@ -30,8 +31,8 @@ export default function TodoItems (props) {
   let allItems = completedSorted.map(item => (
     <TodoItem
       key={item.id}
-      item={item}
-      folder={findItemFolder(item.folder)}
+      openitem={item}
+      openfolder={findItemFolder(item.folder)}
       toggleCompletedTodo={props.toggleCompletedTodo}
       clickedItem={props.clickedItem}
     />
@@ -42,4 +43,10 @@ export default function TodoItems (props) {
       {allItems.length ? allItems : <NoItems />}
     </main>
   )
+}
+
+TodoItems.propTypes = {
+  toggleCompletedTodo: PropTypes.func,
+  clickedItem: PropTypes.func,
+  openFolder: PropTypes.object
 }

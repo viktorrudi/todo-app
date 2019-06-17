@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { TodoContext } from '../../../TodoContext'
 import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'
 import ListHeader from './ListHeader/ListHeader'
@@ -12,6 +13,8 @@ class TodoSheet extends Component {
       item: null
     }
   }
+
+  static contextType = TodoContext
 
   handleClick = item => {
     this.setState({
@@ -52,6 +55,7 @@ class TodoSheet extends Component {
       deleteFolder,
       toggleCompletedTodo
     } = this.props
+
     return (
       <Fragment>
         <div className={`${type}`}>

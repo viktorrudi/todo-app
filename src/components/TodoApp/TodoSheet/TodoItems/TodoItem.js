@@ -1,4 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { propTypeForItems, propTypeForFolders } from '../../../../proptypes'
 import ItemFooter from './ItemFooter/ItemFooter'
 import './TodoItem.scss'
 import { findParentTag } from '../../../utilities/utilities'
@@ -11,8 +14,15 @@ class TodoItem extends Component {
     }
   }
 
+  static propTypes = {
+    toggleCompletedTodo: PropTypes.func,
+    clickedItem: PropTypes.func,
+    openitem: PropTypes.shape({ ...propTypeForItems }),
+    openfolder: PropTypes.shape({ ...propTypeForFolders })
+  }
+
   handleComplete = () => {
-    this.props.toggleCompletedTodo(this.props.item.id)
+    this.props.toggleCompletedTodo(this.props.openitem.id)
   }
 
   handleClick = (e, clickedItem) => {
@@ -25,19 +35,19 @@ class TodoItem extends Component {
   }
 
   render () {
-    const completed = this.props.item.completed
-    const id = this.props.item.id
+    const completed = this.props.openitem.completed
+    const id = this.props.openitem.id
     const defaultFolderStyle = {
       color: 'rgba(0,0,0,0)',
       borderColor: 'rgba(0,0,0,0)'
     }
 
-    const folder = this.props.folder || defaultFolderStyle
-    const timeCreated = this.props.item.timeCreated
+    const openfolder = this.props.openfolder || defaultFolderStyle
+    const timeCreated = this.props.openitem.timeCreated
     const type = 'TodoItem'
     const folderStyle = {
-      borderColor: folder.color,
-      color: folder.color
+      borderColor: openfolder.color,
+      color: openfolder.color
     }
 
     return (
@@ -45,13 +55,13 @@ class TodoItem extends Component {
         className={type}
         onMouseEnter={this.handleHover}
         onMouseLeave={this.handleHover}
-        onClick={e => this.handleClick(e, this.props.item)}
+        onClick={e => this.handleClick(e, this.props.openitem)}
       >
         <input
           type="checkbox"
           className={`${type}__action--done`}
           onChange={this.handleComplete}
-          checked={this.props.item.completed}
+          checked={this.props.openitem.completed}
           id={id}
         />
 
@@ -59,11 +69,11 @@ class TodoItem extends Component {
           className={`${type}__item`}
           style={completed ? { color: '#aaa' } : { color: '#000' }}
         >
-          {this.props.item.text}
+          {this.props.openitem.text}
         </div>
         <ItemFooter
           folderStyle={folderStyle}
-          folderName={folder.name}
+          folderName={openfolder.name}
           timeCreated={timeCreated}
         />
       </div>
