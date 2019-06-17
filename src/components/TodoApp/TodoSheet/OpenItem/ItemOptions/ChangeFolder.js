@@ -1,4 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react'
+import { propTypeForItems } from '../../../../../proptypes'
 import { TodoContext } from '../../../../../TodoContext'
 
 export default function ChangeFolder (props) {
@@ -47,4 +48,8 @@ export default function ChangeFolder (props) {
       {openFolderChange ? availableFolders : null}
     </Fragment>
   )
+}
+
+ChangeFolder.propTypes = {
+  openitem: propTypeForItems
 }

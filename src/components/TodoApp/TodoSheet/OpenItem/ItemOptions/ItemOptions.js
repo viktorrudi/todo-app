@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { propTypeForItems } from '../../../../../proptypes'
 import ChangeFolder from './ChangeFolder'
 
 export default function ItemOptions (props) {
@@ -14,4 +16,9 @@ export default function ItemOptions (props) {
       </div>
     </Fragment>
   )
+}
+
+ItemOptions.propTypes = {
+  openItem: propTypeForItems,
+  delete: PropTypes.func
 }
