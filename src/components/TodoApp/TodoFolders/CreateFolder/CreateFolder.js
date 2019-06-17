@@ -3,15 +3,15 @@ import { randomColor } from '../../../utilities/utilities'
 import './CreateFolder.scss'
 
 class CreateFolder extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      newFolderName: '',
+      newFolderName: ''
     }
   }
   handleNewFolderInput = e => {
     this.setState({
-      newFolderName: e.target.value,
+      newFolderName: e.target.value
     })
   }
   handleSubmit = e => {
@@ -19,16 +19,16 @@ class CreateFolder extends Component {
     const newFolder = {
       id: this.props.folders.length + 1,
       name: this.state.newFolderName,
-      color: randomColor(),
+      color: randomColor()
     }
     // TODO: Function to lift new object to change global state
     this.props.createFolder(newFolder)
     // TODO: Insert new folder into DB
     this.setState({
-      newFolderName: '',
+      newFolderName: ''
     })
   }
-  render() {
+  render () {
     const type = 'CreateFolder'
     return (
       <form className={type} onSubmit={this.handleSubmit}>

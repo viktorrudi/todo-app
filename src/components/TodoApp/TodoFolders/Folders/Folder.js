@@ -4,7 +4,7 @@ class Folder extends Component {
   handleClick = e => {
     this.props.getSelectedFolder(parseInt(e.target.id))
   }
-  render() {
+  render () {
     const type = 'Folder'
     const color = this.props.folder.color
 

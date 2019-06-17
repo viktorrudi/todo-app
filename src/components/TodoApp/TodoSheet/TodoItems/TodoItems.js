@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { findItemsInFolder } from '../../../utilities/utilities'
 import { TodoContext } from '../../../../TodoContext'
 
-export default function TodoItems(props) {
+export default function TodoItems (props) {
   // Todocontext
   const [todo, setTodo] = useContext(TodoContext)
 
@@ -37,5 +37,9 @@ export default function TodoItems(props) {
     />
   ))
 
-  return <main className="TodoWrapper">{allItems.length ? allItems : <NoItems />}</main>
+  return (
+    <main className="TodoWrapper">
+      {allItems.length ? allItems : <NoItems />}
+    </main>
+  )
 }

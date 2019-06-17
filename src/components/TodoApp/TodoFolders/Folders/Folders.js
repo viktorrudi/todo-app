@@ -13,7 +13,7 @@ class Folders extends Component {
     })
     return count
   }
-  render() {
+  render () {
     let folders = this.props.folders.map(folder => (
       <Folder
         key={folder.id}

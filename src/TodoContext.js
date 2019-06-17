@@ -8,7 +8,11 @@ export const TodoProvider = props => {
   const [todo, setTodo] = useState({
     items: DBtodoItems.default,
     folders: DBtodoFolders.default,
-    openFolder: null,
+    openFolder: null
   })
-  return <TodoContext.Provider value={[todo, setTodo]}>{props.children}</TodoContext.Provider>
+  return (
+    <TodoContext.Provider value={[todo, setTodo]}>
+      {props.children}
+    </TodoContext.Provider>
+  )
 }

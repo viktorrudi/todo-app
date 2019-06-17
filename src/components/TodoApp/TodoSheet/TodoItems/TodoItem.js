@@ -4,10 +4,10 @@ import './TodoItem.scss'
 import { findParentTag } from '../../../utilities/utilities'
 
 class TodoItem extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      itemIsHovered: false,
+      itemIsHovered: false
     }
   }
 
@@ -24,12 +24,12 @@ class TodoItem extends Component {
     }
   }
 
-  render() {
+  render () {
     const completed = this.props.item.completed
     const id = this.props.item.id
     const defaultFolderStyle = {
       color: 'rgba(0,0,0,0)',
-      borderColor: 'rgba(0,0,0,0)',
+      borderColor: 'rgba(0,0,0,0)'
     }
 
     const folder = this.props.folder || defaultFolderStyle
@@ -37,7 +37,7 @@ class TodoItem extends Component {
     const type = 'TodoItem'
     const folderStyle = {
       borderColor: folder.color,
-      color: folder.color,
+      color: folder.color
     }
 
     return (
@@ -55,10 +55,17 @@ class TodoItem extends Component {
           id={id}
         />
 
-        <div className={`${type}__item`} style={completed ? { color: '#aaa' } : { color: '#000' }}>
+        <div
+          className={`${type}__item`}
+          style={completed ? { color: '#aaa' } : { color: '#000' }}
+        >
           {this.props.item.text}
         </div>
-        <ItemFooter folderStyle={folderStyle} folderName={folder.name} timeCreated={timeCreated} />
+        <ItemFooter
+          folderStyle={folderStyle}
+          folderName={folder.name}
+          timeCreated={timeCreated}
+        />
       </div>
     )
   }

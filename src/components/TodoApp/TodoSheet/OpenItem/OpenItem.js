@@ -3,10 +3,10 @@ import './OpenItem.scss'
 import ItemOptions from './ItemOptions/ItemOptions'
 
 class OpenItem extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      item: this.props.openItem,
+      item: this.props.openItem
     }
   }
 
@@ -14,8 +14,8 @@ class OpenItem extends Component {
     this.setState({
       item: {
         ...this.state.item,
-        text: e.target.value,
-      },
+        text: e.target.value
+      }
     })
   }
 
@@ -28,14 +28,14 @@ class OpenItem extends Component {
     this.props.handleChangeOpenItem('delete_item', this.state.item)
   }
 
-  componentWillReceiveProps(parentProps) {
+  componentWillReceiveProps (parentProps) {
     // Updates state to match props sent from TodoSheet
     if (parentProps.openItem !== this.state.item) {
       this.setState({ item: parentProps.openItem })
     }
   }
 
-  render() {
+  render () {
     const type = 'OpenItem'
     return (
       <div className={type}>
@@ -51,7 +51,10 @@ class OpenItem extends Component {
           />
         </form>
         <div className={`${type}__actions`}>
-          <ItemOptions openItem={this.props.openItem} delete={this.handleDelete} />
+          <ItemOptions
+            openItem={this.props.openItem}
+            delete={this.handleDelete}
+          />
         </div>
       </div>
     )

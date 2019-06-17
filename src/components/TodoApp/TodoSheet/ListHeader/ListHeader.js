@@ -1,31 +1,31 @@
-import React, { Component } from "react";
-import "./ListHeader.scss";
+import React, { Component } from 'react'
+import './ListHeader.scss'
 
 class ListHeader extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       openFolder: {
         id: this.props.openFolder,
         name: this.findOpenFolderName(this.props.openFolder)
       }
-    };
+    }
   }
 
   findOpenFolderName = openFolder => {
     // FIXME: Find a cleaner solution
     const found = this.props.folders.map(folder => {
       if (openFolder === folder.id) {
-        return folder.name;
+        return folder.name
       }
-      return null;
-    });
+      return null
+    })
     // Only returns item string, and not an array of empty items + actual item
     const item = found.filter(folder => {
-      return folder !== null;
-    });
-    return item[0];
-  };
+      return folder !== null
+    })
+    return item[0]
+  }
 
   componentDidUpdate = (prevProps, prevState) => {
     // Updates state to contain currently selected folder (from props)
@@ -35,9 +35,9 @@ class ListHeader extends Component {
           id: this.props.openFolder,
           name: this.findOpenFolderName(this.props.openFolder)
         }
-      });
+      })
     }
-  };
+  }
 
   handleChange = e => {
     this.setState({
@@ -45,20 +45,20 @@ class ListHeader extends Component {
         id: this.state.openFolder.id,
         name: e.target.value
       }
-    });
-  };
+    })
+  }
 
   handleSubmit = e => {
-    e.preventDefault();
-    this.props.changeFolderName(this.state.openFolder);
-  };
+    e.preventDefault()
+    this.props.changeFolderName(this.state.openFolder)
+  }
 
   handleDelete = e => {
-    this.props.deleteFolder(this.state.openFolder);
-  };
+    this.props.deleteFolder(this.state.openFolder)
+  }
 
-  render() {
-    const type = "ListHeader";
+  render () {
+    const type = 'ListHeader'
     return (
       <div className={type}>
         <form onSubmit={this.handleSubmit}>
@@ -80,8 +80,8 @@ class ListHeader extends Component {
           </button>
         </span>
       </div>
-    );
+    )
   }
 }
 
-export default ListHeader;
+export default ListHeader

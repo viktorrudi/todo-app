@@ -1,15 +1,13 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import TodoApp from './components/TodoApp/TodoApp'
 import { TodoProvider } from './TodoContext'
 
 class App extends Component {
-  render() {
+  render () {
     return (
-      <Fragment>
-        <TodoProvider>
-          <TodoApp />
-        </TodoProvider>
-      </Fragment>
+      <TodoProvider>
+        <TodoApp />
+      </TodoProvider>
     )
   }
 }

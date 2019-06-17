@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useContext } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import TodoFolders from './TodoFolders/TodoFolders'
 import TodoSheet from './TodoSheet/TodoSheet'
@@ -11,13 +11,13 @@ class TodoApp extends Component {
 
   handleAddTodo = newItem => {
     this.setState({
-      items: [...this.state.items, newItem],
+      items: [...this.state.items, newItem]
     })
   }
 
   handleAddFolder = newFolder => {
     this.setState({
-      folders: [...this.state.folders, newFolder],
+      folders: [...this.state.folders, newFolder]
     })
   }
 
@@ -28,7 +28,7 @@ class TodoApp extends Component {
     const newItems = this.state.items.filter(item => item.id !== targeted.id)
     // Sets new state containing the new items
     this.setState({
-      items: [...newItems],
+      items: [...newItems]
     })
   }
 
@@ -77,9 +77,13 @@ class TodoApp extends Component {
   handleDeleteFolder = folder => {
     this.setState(prevState => {
       // Finding and removing targeted folder from state
-      prevState.folders = prevState.folders.filter(prevFolder => prevFolder.id !== folder.id)
+      prevState.folders = prevState.folders.filter(
+        prevFolder => prevFolder.id !== folder.id
+      )
       // Finding and removing all items in that folder
-      prevState.items = prevState.items.filter(prevItem => prevItem.folder !== folder.id)
+      prevState.items = prevState.items.filter(
+        prevItem => prevItem.folder !== folder.id
+      )
       // Returning to main overview of tasks
       prevState.openFolder = null
       return prevState
@@ -89,11 +93,11 @@ class TodoApp extends Component {
 
   setSelectedFolder = id => {
     this.setState({
-      openFolder: id,
+      openFolder: id
     })
   }
 
-  render() {
+  render () {
     // Todocontext
 
     // const [itemsLib, setItems] = this.context

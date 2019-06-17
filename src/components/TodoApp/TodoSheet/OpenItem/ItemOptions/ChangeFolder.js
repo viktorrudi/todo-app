@@ -1,7 +1,7 @@
 import React, { useState, useContext, Fragment } from 'react'
 import { TodoContext } from '../../../../../TodoContext'
 
-export default function ChangeFolder(props) {
+export default function ChangeFolder (props) {
   // Todocontext
   const [todo, setTodo] = useContext(TodoContext)
   // Toggle visibility of folder dropdown

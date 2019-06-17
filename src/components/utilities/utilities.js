@@ -1,4 +1,4 @@
-export function findItemInState(id, items) {
+export function findItemInState (id, items) {
   for (var i = 0; i < items.length; i++) {
     if (items[i].id === id) {
       return items[i]
@@ -6,22 +6,24 @@ export function findItemInState(id, items) {
   }
 }
 
-export function currentTime(dateObject) {
+export function currentTime (dateObject) {
   const date = dateObject
   return `${date.getHours()}:${date.getMinutes()}`
 }
 
-export function currentDate(dateObject) {
+export function currentDate (dateObject) {
   const date = dateObject
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 }
 
-export function findItemsInFolder(propsItems, folderID) {
-  const filteredItems = propsItems.filter(propItem => propItem.folder === folderID)
+export function findItemsInFolder (propsItems, folderID) {
+  const filteredItems = propsItems.filter(
+    propItem => propItem.folder === folderID
+  )
   return filteredItems
 }
 
-export function findParentTag(search, parentClass) {
+export function findParentTag (search, parentClass) {
   while (search.parentNode) {
     search = search.parentNode
     if (search.className === parentClass) return Boolean(search)
@@ -29,7 +31,7 @@ export function findParentTag(search, parentClass) {
   return null
 }
 
-export function randomColor() {
+export function randomColor () {
   const colors = [
     'red',
     'blue',
@@ -41,7 +43,7 @@ export function randomColor() {
     'black',
     'gray',
     'lightblue',
-    'magenta',
+    'magenta'
   ]
   const randomColor = Math.floor(Math.floor(Math.random() * colors.length) + 0)
   return colors[randomColor]

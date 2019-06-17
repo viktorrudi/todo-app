@@ -3,23 +3,23 @@ import moment from 'moment'
 import './AddTodo.scss'
 
 class AddTodo extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      todoText: '',
+      todoText: ''
     }
   }
 
   handleNewTodoText = e => {
     this.setState({
-      todoText: e.target.value,
+      todoText: e.target.value
     })
     e.preventDefault()
   }
 
   handleSubmit = e => {
     if (this.state.todoText.length > 0) {
-      //TODO: Create DB function to store new todo item
+      // TODO: Create DB function to store new todo item
 
       const nowStamp = new Date()
       // Use function in props to add to parents items state
@@ -30,18 +30,18 @@ class AddTodo extends React.Component {
         completed: false,
         timeCreated: moment().format('HH:mm'),
         dateCreated: moment().format('DD-MM-YYYY'),
-        creationStamp: nowStamp,
+        creationStamp: nowStamp
       })
 
       // Reset textfield
       this.setState({
-        todoText: '',
+        todoText: ''
       })
     }
 
     e.preventDefault()
   }
-  render() {
+  render () {
     const type = 'AddTodo'
     return (
       <form className={type} onSubmit={this.handleSubmit}>

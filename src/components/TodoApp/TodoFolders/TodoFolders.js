@@ -13,16 +13,22 @@ class TodoFolders extends Component {
     this.props.createFolder(newFolder)
   }
 
-  render() {
+  render () {
     const allItemsCount = this.props.items.length
     const type = 'TodoSidebar'
     return (
       <aside className={type}>
         <h3>ToDo</h3>
-        <div className={`${type}--seeAllFolders`} onClick={this.handleResetFolder}>
+        <div
+          className={`${type}--seeAllFolders`}
+          onClick={this.handleResetFolder}
+        >
           See All {allItemsCount} items
         </div>
-        <CreateFolder folders={this.props.folders} createFolder={this.createFolder} />
+        <CreateFolder
+          folders={this.props.folders}
+          createFolder={this.createFolder}
+        />
         <Folders
           getSelectedFolder={this.props.getSelectedFolder}
           folders={this.props.folders}

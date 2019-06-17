@@ -5,25 +5,25 @@ import ListHeader from './ListHeader/ListHeader'
 import OpenItem from './OpenItem/OpenItem'
 
 class TodoSheet extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       openItem: false,
-      item: null,
+      item: null
     }
   }
 
   handleClick = item => {
     this.setState({
       openItem: true,
-      item,
+      item
     })
   }
 
   handleClose = () => {
     this.setState({
       openItem: false,
-      item: {},
+      item: {}
     })
   }
 
@@ -32,19 +32,16 @@ class TodoSheet extends Component {
       this.props.handleUpdateTodo(task, item)
       this.setState({
         openItem: true,
-        item,
+        item
       })
     }
     if (task === 'delete_item') {
       this.props.handleDeleteTodo(item.id)
       this.handleClose()
     }
-    // if (task === "change_folder") {
-    //   this.props.handleUpdateTodo(task, item)
-    // }
   }
 
-  render() {
+  render () {
     const type = 'TodoSheet'
     const {
       items,
@@ -53,7 +50,7 @@ class TodoSheet extends Component {
       folders,
       changeFolderName,
       deleteFolder,
-      toggleCompletedTodo,
+      toggleCompletedTodo
     } = this.props
     return (
       <Fragment>
