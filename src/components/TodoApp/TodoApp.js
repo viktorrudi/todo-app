@@ -7,6 +7,7 @@ import { TodoContext } from '../../TodoContext'
 import './TodoApp.scss'
 
 class TodoApp extends Component {
+  // Not used for anything atm
   static contextType = TodoContext
 
   handleAddTodo = newItem => {
@@ -98,23 +99,13 @@ class TodoApp extends Component {
   }
 
   render () {
-    // Todocontext
-
-    // const [itemsLib, setItems] = this.context
-    // console.log(itemsLib)
-    const { items, folders, openFolder } = this.context[0]
     return (
       <Fragment>
         <TodoFolders
-          folders={folders}
           getSelectedFolder={this.setSelectedFolder}
-          items={items}
           createFolder={this.handleAddFolder}
         />
         <TodoSheet
-          items={items}
-          folders={folders}
-          openFolder={openFolder}
           changeFolderName={this.handleChangeFolderName}
           deleteFolder={this.handleDeleteFolder}
           newTodo={this.handleAddTodo}

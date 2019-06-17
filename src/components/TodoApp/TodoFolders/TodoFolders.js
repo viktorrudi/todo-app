@@ -1,38 +1,33 @@
 import React, { Component } from 'react'
+import { TodoContext } from '../../../TodoContext'
 import Folders from './Folders/Folders'
 import CreateFolder from './CreateFolder/CreateFolder'
 import './TodoFolders.scss'
 
 class TodoFolders extends Component {
-  handleResetFolder = () => {
-    // Resets folder view - shows all folders
-    this.props.getSelectedFolder(null)
-  }
+  static contextType = TodoContext
 
   createFolder = newFolder => {
     this.props.createFolder(newFolder)
   }
 
   render () {
-    const allItemsCount = this.props.items.length
     const type = 'TodoSidebar'
+    const { items, folders } = this.context[0]
     return (
       <aside className={type}>
         <h3>ToDo</h3>
         <div
           className={`${type}--seeAllFolders`}
-          onClick={this.handleResetFolder}
+          onClick={() => this.props.getSelectedFolder(null)}
         >
-          See All {allItemsCount} items
+          See All {items.length} items
         </div>
-        <CreateFolder
-          folders={this.props.folders}
-          createFolder={this.createFolder}
-        />
+        <CreateFolder folders={folders} createFolder={this.createFolder} />
         <Folders
           getSelectedFolder={this.props.getSelectedFolder}
-          folders={this.props.folders}
-          items={this.props.items}
+          folders={folders}
+          items={items}
         />
       </aside>
     )

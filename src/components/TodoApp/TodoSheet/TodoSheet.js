@@ -47,14 +47,13 @@ class TodoSheet extends Component {
   render () {
     const type = 'TodoSheet'
     const {
-      items,
       newTodo,
-      openFolder,
-      folders,
       changeFolderName,
       deleteFolder,
       toggleCompletedTodo
     } = this.props
+
+    const { items, folders, openFolder } = this.context[0]
 
     return (
       <Fragment>

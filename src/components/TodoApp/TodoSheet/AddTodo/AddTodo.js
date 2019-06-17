@@ -33,7 +33,7 @@ class AddTodo extends React.Component {
         creationStamp: nowStamp
       })
 
-      // Reset textfield
+      // Reset textfield after submit
       this.setState({
         todoText: ''
       })
