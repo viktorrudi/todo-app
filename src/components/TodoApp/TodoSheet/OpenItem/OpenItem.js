@@ -7,7 +7,8 @@ class OpenItem extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      itemText: null
+      itemID: null,
+      itemText: ''
     }
   }
   static contextType = TodoContext
@@ -23,21 +24,35 @@ class OpenItem extends Component {
     // e.preventDefault()
   }
 
-  handleDelete = () => {
-    // this.props.handleChangeOpenItem('delete_item', this.state.item)
-    this.context.removeTodoItem(this.state.item.id)
+  findOpenItemName = openItemID => {
+    const found = this.props.items.filter(folder => {
+      return openItemID === folder.id
+    })
+    // Returns name of item
+    return found[0].text
   }
 
-  // componentWillReceiveProps (parentProps) {
-  //   // Updates state to match props sent from TodoSheet
-  //   if (parentProps.openItem !== this.state.item) {
-  //     this.setState({ item: parentProps.openItem })
-  //   }
-  // }
+  componentDidUpdate = (prevProps, prevState) => {
+    // Updates state to contain currently selected item (from props)
+    if (prevProps.openItem !== this.props.openItem) {
+      this.setState({
+        itemID: this.props.openItem.id,
+        // Fetches name of item
+        itemText: this.findOpenItemName(this.props.openItem)
+      })
+    }
+  }
 
-  // findOpenedItemDetails = () => {
-  //   const allItems = this.context.items
-  // }
+  componentDidMount = () => {
+    this.setState({
+      itemID: this.props.openItem,
+      itemText: this.findOpenItemName(this.props.openItem)
+    })
+  }
+
+  handleDelete = () => {
+    this.context.removeTodoItem(this.state.itemID)
+  }
 
   render () {
     const type = 'OpenItem'
@@ -45,7 +60,7 @@ class OpenItem extends Component {
       <div className={type}>
         <div
           className={`${type}__close`}
-          onClick={this.context.setOpenItem(null)}
+          onClick={() => this.context.setOpenItem(null)}
         >
           Close
         </div>
@@ -53,7 +68,7 @@ class OpenItem extends Component {
           <input
             className={`${type}__note-input`}
             type="text"
-            value={this.context.openItem.text}
+            value={this.state.itemText}
             onChange={this.handleChange}
           />
         </form>

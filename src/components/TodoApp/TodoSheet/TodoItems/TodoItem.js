@@ -12,50 +12,57 @@ class TodoItem extends Component {
 
   static propTypes = {
     toggleCompletedTodo: PropTypes.func,
-    clickedItem: PropTypes.func,
-    openitem: PropTypes.shape({ ...propTypeForItems }),
+    item: PropTypes.shape({ ...propTypeForItems }),
     openfolder: PropTypes.shape({ ...propTypeForFolders })
   }
 
   handleComplete = () => {
-    this.props.toggleCompletedTodo(this.props.openitem.id)
+    this.context.toggleTodoComplete(this.props.item.id)
+    // this.props.toggleCompletedTodo(this.props.id)
   }
 
   handleClick = (e, clickedItem) => {
     const checkbox = 'TodoItem__action--done'
     const found = findParentTag(e.target, e.target.className === checkbox)
-
     if (!found) {
+      // FIXME: This is called twice?
       this.context.setOpenItem(clickedItem.id)
     }
   }
 
   render () {
-    const completed = this.props.openitem.completed
-    const id = this.props.openitem.id
+    // FIXME: Something happening with opening folder. Cause of double rendering?
+    const { item } = this.props
+    const completed = item.completed
+    const id = item.id
+
     const defaultFolderStyle = {
       color: 'rgba(0,0,0,0)',
       borderColor: 'rgba(0,0,0,0)'
     }
-
     const openfolder = this.props.openfolder || defaultFolderStyle
-    const timeCreated = this.props.openitem.timeCreated
-    const type = 'TodoItem'
+    const timeCreated = item.timeCreated
+
     const folderStyle = {
       borderColor: openfolder.color,
       color: openfolder.color
     }
 
+    const type = 'TodoItem'
+
     return (
       <div
         className={type}
-        onClick={e => this.handleClick(e, this.props.openitem)}
+        onClick={e => {
+          // this.props.openitem returns full item object
+          this.handleClick(e, this.props.item)
+        }}
       >
         <input
           type="checkbox"
           className={`${type}__action--done`}
           onChange={this.handleComplete}
-          checked={this.props.openitem.completed}
+          checked={this.props.item.completed}
           id={id}
         />
 
@@ -63,7 +70,7 @@ class TodoItem extends Component {
           className={`${type}__item`}
           style={completed ? { color: '#aaa' } : { color: '#000' }}
         >
-          {this.props.openitem.text}
+          {this.props.item.text}
         </div>
         <ItemFooter
           folderStyle={folderStyle}

@@ -14,6 +14,7 @@ class TodoProvider extends Component {
       folders: DBtodoFolders.default,
       openFolder: null,
       openItem: null,
+      toggleTodoComplete: this.toggleTodoComplete,
       addTodoItem: this.addTodoItem,
       removeTodoItem: this.removeTodoItem,
       removeFolder: this.removeFolder,
@@ -29,15 +30,27 @@ class TodoProvider extends Component {
   }
 
   setOpenItem = itemID => {
-    console.log(itemID)
-    // this.setState({
-    //   openItem: item
-    // })
+    this.setState({
+      openItem: itemID
+    })
   }
 
   setOpenFolder = folderID => {
     this.setState({
       openFolder: folderID
+    })
+  }
+
+  toggleTodoComplete = todoID => {
+    this.setState(prevState => {
+      const updatedItems = prevState.items.map(item => {
+        if (item.id === todoID) {
+          item.completed = !item.completed
+        }
+        return item
+      })
+      prevState.items = updatedItems
+      return prevState.items
     })
   }
 
@@ -93,7 +106,7 @@ class TodoProvider extends Component {
       )
       // Returning to main overview of tasks
       prevState.openFolder = null
-      return prevState
+      return prevState.folders
     })
   }
 
@@ -121,7 +134,7 @@ class TodoProvider extends Component {
       })
       // Update existing folders with array of new folders (with renamed folder)
       prevState.folders = updatedFolders
-      return prevState
+      return prevState.folders
     })
   }
 

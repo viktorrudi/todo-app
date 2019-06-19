@@ -77,7 +77,7 @@ class TodoSheet extends Component {
             />
           </div>
         </div>
-        {openItem && <OpenItem />}
+        {openItem && <OpenItem items={items} openItem={openItem} />}
       </Fragment>
     )
   }

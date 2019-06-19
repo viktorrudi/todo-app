@@ -22,19 +22,20 @@ export default function TodoItems (props) {
   if (props.openFolder) {
     openedFolder = findItemsInFolder(context.items, props.openFolder)
   }
+
+  // Sort by date
   const dateFilter = _.sortBy(openedFolder || context.items, item => {
     return new Date(item.creationStamp)
   }).reverse()
+
   // Sorted by having uncompleted tasks first, and completed at the end
   let completedSorted = _.sortBy(dateFilter, ['completed'])
 
   let allItems = completedSorted.map(item => (
     <TodoItem
       key={item.id}
-      openitem={item}
+      item={item}
       openfolder={findItemFolder(item.folder)}
-      toggleCompletedTodo={props.toggleCompletedTodo}
-      clickedItem={props.clickedItem}
     />
   ))
 
