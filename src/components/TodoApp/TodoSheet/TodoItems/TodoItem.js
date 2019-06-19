@@ -8,13 +8,6 @@ import './TodoItem.scss'
 import { findParentTag } from '../../../utilities/utilities'
 
 class TodoItem extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      itemIsHovered: false
-    }
-  }
-
   static contextType = TodoContext
 
   static propTypes = {
@@ -33,7 +26,7 @@ class TodoItem extends Component {
     const found = findParentTag(e.target, e.target.className === checkbox)
 
     if (!found) {
-      this.props.clickedItem(clickedItem)
+      this.context.setOpenItem(clickedItem.id)
     }
   }
 
@@ -56,8 +49,6 @@ class TodoItem extends Component {
     return (
       <div
         className={type}
-        onMouseEnter={this.handleHover}
-        onMouseLeave={this.handleHover}
         onClick={e => this.handleClick(e, this.props.openitem)}
       >
         <input

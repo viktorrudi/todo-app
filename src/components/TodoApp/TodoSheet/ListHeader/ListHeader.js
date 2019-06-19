@@ -10,7 +10,9 @@ class ListHeader extends Component {
     this.state = {
       openFolder: {
         id: this.props.openFolder,
-        name: this.findOpenFolderName(this.props.openFolder)
+        name: this.props.openFolder
+          ? this.findOpenFolderName(this.props.openFolder)
+          : null
       }
     }
   }
@@ -42,7 +44,7 @@ class ListHeader extends Component {
     if (prevProps.openFolder !== this.props.openFolder) {
       this.setState({
         openFolder: {
-          id: this.props.openFolder,
+          id: this.context.openFolder,
           name: this.findOpenFolderName(this.props.openFolder)
         }
       })
@@ -52,19 +54,18 @@ class ListHeader extends Component {
   handleChange = e => {
     this.setState({
       openFolder: {
-        id: this.state.openFolder.id,
         name: e.target.value
       }
     })
   }
 
   handleSubmit = e => {
+    console.log(this.state)
+    this.context.updateFolder(
+      this.state.openFolder.id,
+      this.state.openFolder.name
+    )
     e.preventDefault()
-    this.props.changeFolderName(this.state.openFolder)
-  }
-
-  handleDelete = e => {
-    this.props.deleteFolder(this.state.openFolder)
   }
 
   render () {
@@ -84,7 +85,7 @@ class ListHeader extends Component {
         <span>
           <button
             className={`${type}__folder--delete`}
-            onClick={this.handleDelete}
+            onClick={() => this.context.removeFolder(this.context.openFolder)}
           >
             Delete
           </button>

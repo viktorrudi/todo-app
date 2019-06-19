@@ -64,15 +64,16 @@ class TodoApp extends Component {
   }
 
   handleChangeFolderName = folder => {
-    this.setState(prevState => {
-      let updatedFolders = prevState.folders.map(prevFolder => {
-        if (folder.id === prevFolder.id) {
-          prevFolder.name = folder.name
-        }
-        return false
-      })
-      return updatedFolders
-    })
+    this.context.updateFolder(folder)
+    // this.setState(prevState => {
+    //   let updatedFolders = prevState.folders.map(prevFolder => {
+    //     if (folder.id === prevFolder.id) {
+    //       prevFolder.name = folder.name
+    //     }
+    //     return false
+    //   })
+    //   return updatedFolders
+    // })
   }
 
   handleDeleteFolder = folder => {
@@ -101,14 +102,10 @@ class TodoApp extends Component {
   render () {
     return (
       <Fragment>
-        <TodoFolders
-          getSelectedFolder={this.setSelectedFolder}
-          createFolder={this.handleAddFolder}
-        />
+        <TodoFolders createFolder={this.handleAddFolder} />
         <TodoSheet
           changeFolderName={this.handleChangeFolderName}
           deleteFolder={this.handleDeleteFolder}
-          newTodo={this.handleAddTodo}
           toggleCompletedTodo={this.handleToggleCompletedTodo}
           handleUpdateTodo={this.handleUpdateTodo}
           handleDeleteTodo={this.handleDeleteTodo}

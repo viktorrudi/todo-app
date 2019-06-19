@@ -46,20 +46,15 @@ class TodoSheet extends Component {
 
   render () {
     const type = 'TodoSheet'
-    const {
-      newTodo,
-      changeFolderName,
-      deleteFolder,
-      toggleCompletedTodo
-    } = this.props
+    const { changeFolderName, deleteFolder, toggleCompletedTodo } = this.props
 
-    const { items, folders, openFolder } = this.context
+    const { items, folders, openFolder, openItem } = this.context
 
     return (
       <Fragment>
         <div className={`${type}`}>
           <div className={`${type}__items`}>
-            <AddTodo items={items} newTodo={newTodo} openFolder={openFolder} />
+            <AddTodo items={items} openFolder={openFolder} />
             {openFolder && (
               <ListHeader
                 folders={folders}
@@ -77,13 +72,7 @@ class TodoSheet extends Component {
             />
           </div>
         </div>
-        {this.state.openItem && (
-          <OpenItem
-            openItem={this.state.item}
-            closeOpenedItem={this.handleClose}
-            handleChangeOpenItem={this.handleChangeOpenItem}
-          />
-        )}
+        {openItem && <OpenItem />}
       </Fragment>
     )
   }

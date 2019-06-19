@@ -13,15 +13,26 @@ class TodoProvider extends Component {
       items: DBtodoItems.default,
       folders: DBtodoFolders.default,
       openFolder: null,
+      openItem: null,
       addTodoItem: this.addTodoItem,
       removeTodoItem: this.removeTodoItem,
+      removeFolder: this.removeFolder,
       setOpenFolder: this.setOpenFolder,
-      createFolder: this.createFolder
+      createFolder: this.createFolder,
+      updateFolder: this.updateFolder,
+      setOpenItem: this.setOpenItem
     }
   }
 
   static propTypes = {
     children: PropTypes.object
+  }
+
+  setOpenItem = itemID => {
+    console.log(itemID)
+    // this.setState({
+    //   openItem: item
+    // })
   }
 
   setOpenFolder = folderID => {
@@ -56,8 +67,6 @@ class TodoProvider extends Component {
     this.setState({
       items: [...this.state.items, newItem]
     })
-
-    // TODO: Update DB with new item
   }
 
   removeTodoItem = itemID => {
@@ -67,7 +76,43 @@ class TodoProvider extends Component {
     const newItems = this.state.items.filter(item => item.id !== targeted.id)
     // Sets new state containing the new items
     this.setState({
-      items: [...newItems]
+      items: [...newItems],
+      openItem: null
+    })
+  }
+
+  removeFolder = folderID => {
+    this.setState(prevState => {
+      // Finding and removing targeted folder from state
+      prevState.folders = prevState.folders.filter(
+        prevFolder => prevFolder.id !== folderID
+      )
+      // Finding and removing all items in that folder
+      prevState.items = prevState.items.filter(
+        prevItem => prevItem.folder !== folderID
+      )
+      // Returning to main overview of tasks
+      prevState.openFolder = null
+      return prevState
+    })
+  }
+
+  updateFolder = (folderID, newName) => {
+    this.setState(prevState => {
+      const targetedFolder = {
+        folderID,
+        newName
+      }
+      console.log('updatefolder id:', folderID)
+
+      const updatedFolders = prevState.folders.map(prevFolder => {
+        if (targetedFolder.folderID === prevFolder.id) {
+          targetedFolder.newName = prevFolder.name
+        }
+        return false
+      })
+
+      return updatedFolders
     })
   }
 

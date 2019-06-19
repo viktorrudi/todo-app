@@ -1,9 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import PropTypes from 'prop-types'
+import { TodoContext } from '../../../../../TodoContext'
 import { propTypeForItems } from '../../../../../proptypes'
 import ChangeFolder from './ChangeFolder'
 
 export default function ItemOptions (props) {
+  const context = useContext(TodoContext)
+
   return (
     <Fragment>
       <ChangeFolder openitem={props.openItem} />
