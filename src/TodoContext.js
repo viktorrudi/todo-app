@@ -97,22 +97,31 @@ class TodoProvider extends Component {
     })
   }
 
-  updateFolder = (folderID, newName) => {
+  updateFolder = (selectedID, newName) => {
     this.setState(prevState => {
       const targetedFolder = {
-        folderID,
-        newName
+        id: selectedID,
+        name: newName
       }
-      console.log('updatefolder id:', folderID)
 
-      const updatedFolders = prevState.folders.map(prevFolder => {
-        if (targetedFolder.folderID === prevFolder.id) {
-          targetedFolder.newName = prevFolder.name
-        }
-        return false
+      // Return complete folder object matching selectedID
+      let foundFolder = prevState.folders.filter(prevFolder => {
+        return prevFolder.id === targetedFolder.id
       })
 
-      return updatedFolders
+      // Renaming the found folder with the asked name
+      foundFolder[0].name = targetedFolder.name
+
+      // Inserting object with updated name into new array
+      const updatedFolders = prevState.folders.map(prevFolder => {
+        if (foundFolder[0] === prevFolder) {
+          foundFolder = prevFolder
+        }
+        return prevFolder
+      })
+      // Update existing folders with array of new folders (with renamed folder)
+      prevState.folders = updatedFolders
+      return prevState
     })
   }
 

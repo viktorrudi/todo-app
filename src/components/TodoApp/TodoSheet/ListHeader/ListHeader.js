@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { propTypeForFolders } from '../../../../proptypes'
 import { TodoContext } from '../../../../TodoContext'
 import './ListHeader.scss'
 
@@ -20,23 +19,15 @@ class ListHeader extends Component {
   static contextType = TodoContext
 
   static propTypes = {
-    openFolder: PropTypes.shape({ ...propTypeForFolders }),
-    folders: PropTypes.object
+    openFolder: PropTypes.number,
+    folders: PropTypes.array
   }
 
-  findOpenFolderName = openFolder => {
-    // FIXME: Find a cleaner solution
-    const found = this.props.folders.map(folder => {
-      if (openFolder === folder.id) {
-        return folder.name
-      }
-      return null
+  findOpenFolderName = openFolderID => {
+    const found = this.props.folders.filter(folder => {
+      return openFolderID === folder.id
     })
-    // Only returns item string, and not an array of empty items + actual item
-    const item = found.filter(folder => {
-      return folder !== null
-    })
-    return item[0]
+    return found[0].name
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -44,7 +35,7 @@ class ListHeader extends Component {
     if (prevProps.openFolder !== this.props.openFolder) {
       this.setState({
         openFolder: {
-          id: this.context.openFolder,
+          id: this.props.openFolder,
           name: this.findOpenFolderName(this.props.openFolder)
         }
       })
@@ -60,11 +51,7 @@ class ListHeader extends Component {
   }
 
   handleSubmit = e => {
-    console.log(this.state)
-    this.context.updateFolder(
-      this.state.openFolder.id,
-      this.state.openFolder.name
-    )
+    this.context.updateFolder(this.props.openFolder, this.state.openFolder.name)
     e.preventDefault()
   }
 

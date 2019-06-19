@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { TodoContext } from '../../../TodoContext'
+import PropTypes from 'prop-types'
 import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'
 import ListHeader from './ListHeader/ListHeader'
@@ -15,6 +16,10 @@ class TodoSheet extends Component {
   }
 
   static contextType = TodoContext
+
+  static propTupes = {
+    openItem: PropTypes.object
+  }
 
   handleClick = item => {
     this.setState({

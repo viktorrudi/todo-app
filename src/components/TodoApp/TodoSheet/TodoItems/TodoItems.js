@@ -48,5 +48,5 @@ export default function TodoItems (props) {
 TodoItems.propTypes = {
   toggleCompletedTodo: PropTypes.func,
   clickedItem: PropTypes.func,
-  openFolder: PropTypes.object
+  openFolder: PropTypes.number
 }
