@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './OpenItem.scss'
 import ItemOptions from './ItemOptions/ItemOptions'
+import { TodoContext } from '../../../../TodoContext'
 
 class OpenItem extends Component {
   constructor (props) {
@@ -9,6 +10,8 @@ class OpenItem extends Component {
       item: this.props.openItem
     }
   }
+
+  static contextType = TodoContext
 
   handleChange = e => {
     this.setState({
@@ -25,7 +28,8 @@ class OpenItem extends Component {
   }
 
   handleDelete = () => {
-    this.props.handleChangeOpenItem('delete_item', this.state.item)
+    // this.props.handleChangeOpenItem('delete_item', this.state.item)
+    this.context.removeTodoItem(this.state.item.id)
   }
 
   componentWillReceiveProps (parentProps) {

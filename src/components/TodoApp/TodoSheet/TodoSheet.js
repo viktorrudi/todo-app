@@ -53,7 +53,7 @@ class TodoSheet extends Component {
       toggleCompletedTodo
     } = this.props
 
-    const { items, folders, openFolder } = this.context[0]
+    const { items, folders, openFolder } = this.context
 
     return (
       <Fragment>

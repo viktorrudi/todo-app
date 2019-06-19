@@ -9,10 +9,10 @@ import { TodoContext } from '../../../../TodoContext'
 
 export default function TodoItems (props) {
   // Todocontext
-  const [todo, setTodo] = useContext(TodoContext)
+  const context = useContext(TodoContext)
 
   const findItemFolder = itemFolderID => {
-    const allFolders = todo.folders
+    const allFolders = context.folders
     let result = allFolders.filter(folder => folder.id === itemFolderID)
     return result[0]
   }
@@ -20,9 +20,9 @@ export default function TodoItems (props) {
   // Finds and returns todo items associated with the folder
   let openedFolder
   if (props.openFolder) {
-    openedFolder = findItemsInFolder(todo.items, props.openFolder)
+    openedFolder = findItemsInFolder(context.items, props.openFolder)
   }
-  const dateFilter = _.sortBy(openedFolder || todo.items, item => {
+  const dateFilter = _.sortBy(openedFolder || context.items, item => {
     return new Date(item.creationStamp)
   }).reverse()
   // Sorted by having uncompleted tasks first, and completed at the end

@@ -5,15 +5,15 @@ import './AddTodo.scss'
 
 export default function AddTodo () {
   const [todoText, setTodoText] = useState('')
-  const [todo, setTodo] = useContext(TodoContext)
-  // const [state, dispatch] = useReducer(todoReducer, [{ text: todoText }])
+  const context = useContext(TodoContext)
 
   const handleNewTodoText = e => {
     setTodoText(e.target.value)
   }
   const handleSubmit = e => {
     e.preventDefault()
-    setTodo(todoText)
+    // setTodo(todoText)
+    context.addTodoItem(todoText)
   }
 
   const type = 'AddTodo'

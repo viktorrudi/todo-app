@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react'
+import { TodoContext } from '../../../../TodoContext'
 import PropTypes from 'prop-types'
 import { propTypeForItems, propTypeForFolders } from '../../../../proptypes'
 import ItemFooter from './ItemFooter/ItemFooter'
@@ -13,6 +14,8 @@ class TodoItem extends Component {
       itemIsHovered: false
     }
   }
+
+  static contextType = TodoContext
 
   static propTypes = {
     toggleCompletedTodo: PropTypes.func,

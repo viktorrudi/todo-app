@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { randomColor } from '../../../utilities/utilities'
+import { TodoContext } from '../../../../TodoContext'
 import './CreateFolder.scss'
 
 class CreateFolder extends Component {
@@ -9,25 +9,25 @@ class CreateFolder extends Component {
       newFolderName: ''
     }
   }
+
+  static contextType = TodoContext
+
   handleNewFolderInput = e => {
     this.setState({
       newFolderName: e.target.value
     })
   }
+
   handleSubmit = e => {
     e.preventDefault()
-    const newFolder = {
-      id: this.props.folders.length + 1,
-      name: this.state.newFolderName,
-      color: randomColor()
-    }
-    // TODO: Function to lift new object to change global state
-    this.props.createFolder(newFolder)
-    // TODO: Insert new folder into DB
+
+    this.context.createFolder(this.state.newFolderName)
+
     this.setState({
       newFolderName: ''
     })
   }
+
   render () {
     const type = 'CreateFolder'
     return (

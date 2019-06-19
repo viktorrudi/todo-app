@@ -4,7 +4,7 @@ import { TodoContext } from '../../../../../TodoContext'
 
 export default function ChangeFolder (props) {
   // Todocontext
-  const [todo, setTodo] = useContext(TodoContext)
+  const context = useContext(TodoContext)
   // Toggle visibility of folder dropdown
   const [openFolderChange, setOpenFolder] = useState(false)
 
@@ -13,20 +13,20 @@ export default function ChangeFolder (props) {
   }
 
   const changeItemFolder = id => {
-    setTodo(prevTodo => {
-      const updatedItems = prevTodo.items.map(item => {
-        if (item.id === props.openitem.id) {
-          item.folder = id
-        }
-        return item
-      })
-      return { ...prevTodo, items: updatedItems }
-    })
+    // setTodo(prevTodo => {
+    //   const updatedItems = prevTodo.items.map(item => {
+    //     if (item.id === props.openitem.id) {
+    //       item.folder = id
+    //     }
+    //     return item
+    //   })
+    //   return { ...prevTodo, items: updatedItems }
+    // })
   }
 
   let availableFolders = (
     <div className="ChangeFolder__folders">
-      {todo.folders.map(folder => (
+      {context.folders.map(folder => (
         <div
           className="ChangeFolder__folders--folder"
           key={folder.id}

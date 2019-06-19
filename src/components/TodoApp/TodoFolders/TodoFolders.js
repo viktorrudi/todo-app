@@ -8,22 +8,22 @@ class TodoFolders extends Component {
   static contextType = TodoContext
 
   createFolder = newFolder => {
-    this.props.createFolder(newFolder)
+    this.context.createFolder(newFolder)
   }
 
   render () {
     const type = 'TodoSidebar'
-    const { items, folders } = this.context[0]
+    const { items, folders } = this.context
     return (
       <aside className={type}>
         <h3>ToDo</h3>
         <div
           className={`${type}--seeAllFolders`}
-          onClick={() => this.props.getSelectedFolder(null)}
+          onClick={() => this.context.setOpenFolder(null)}
         >
           See All {items.length} items
         </div>
-        <CreateFolder folders={folders} createFolder={this.createFolder} />
+        <CreateFolder folders={folders} />
         <Folders
           getSelectedFolder={this.props.getSelectedFolder}
           folders={folders}
