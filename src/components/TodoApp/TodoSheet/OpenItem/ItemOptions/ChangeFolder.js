@@ -1,10 +1,11 @@
 import React, { useState, useContext, Fragment } from 'react'
 import { propTypeForItems } from '../../../../../proptypes'
 import { TodoContext } from '../../../../../TodoContext'
+import './ItemOptions.scss'
 
 export default function ChangeFolder (props) {
-  // Todocontext
   const context = useContext(TodoContext)
+
   // Toggle visibility of folder dropdown
   const [openFolderChange, setOpenFolder] = useState(false)
 
@@ -12,16 +13,8 @@ export default function ChangeFolder (props) {
     setOpenFolder(!openFolderChange)
   }
 
-  const changeItemFolder = id => {
-    // setTodo(prevTodo => {
-    //   const updatedItems = prevTodo.items.map(item => {
-    //     if (item.id === props.openitem.id) {
-    //       item.folder = id
-    //     }
-    //     return item
-    //   })
-    //   return { ...prevTodo, items: updatedItems }
-    // })
+  const changeItemFolder = folder => {
+    context.updateItem('CHANGE_ITEM_FOLDER', folder)
   }
 
   let availableFolders = (
@@ -30,7 +23,7 @@ export default function ChangeFolder (props) {
         <div
           className="ChangeFolder__folders--folder"
           key={folder.id}
-          onClick={() => changeItemFolder(folder.id)}
+          onClick={() => changeItemFolder(folder)}
         >
           {folder.name}
         </div>
@@ -41,7 +34,7 @@ export default function ChangeFolder (props) {
   return (
     <Fragment>
       <div className="ChangeFolder small-btn btn-update" onClick={handleClick}>
-        Change folder: <small>{props.openitem.folder}</small>
+        Change folder
       </div>
 
       {/* Only show folder items on "Change folder" click */}

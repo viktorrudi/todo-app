@@ -21,7 +21,8 @@ class TodoProvider extends Component {
       setOpenFolder: this.setOpenFolder,
       createFolder: this.createFolder,
       updateFolder: this.updateFolder,
-      setOpenItem: this.setOpenItem
+      setOpenItem: this.setOpenItem,
+      updateItem: this.updateItem
     }
   }
 
@@ -66,15 +67,13 @@ class TodoProvider extends Component {
   }
 
   addTodoItem = newItemText => {
+    const now = new Date()
     const newItem = {
       id: this.state.items.length + 1,
       text: newItemText,
       folder: this.state.openFolder,
-      completed: false
-      // TODO:
-      // timeCreated: moment().format('HH:mm'),
-      // dateCreated: moment().format('DD-MM-YYYY'),
-      // creationStamp: nowStamp
+      completed: false,
+      creationStamp: now.toLocaleString('en-GB')
     }
 
     this.setState({
@@ -106,11 +105,13 @@ class TodoProvider extends Component {
       )
       // Returning to main overview of tasks
       prevState.openFolder = null
+      prevState.openItem = null
       return prevState.folders
     })
   }
 
   updateFolder = (selectedID, newName) => {
+    // TODO: Make into a receiver of tasks (reducer?)
     this.setState(prevState => {
       const targetedFolder = {
         id: selectedID,
@@ -138,6 +139,35 @@ class TodoProvider extends Component {
     })
   }
 
+  updateItem = (task, requestedItem, newItemText) => {
+    if (task === 'CHANGE_ITEM_FOLDER') {
+      this.setState(prevState => {
+        const updatedItems = prevState.items.map(item => {
+          // Matches item with the open item ID
+          if (item.id === this.state.openItem) {
+            item.folder = requestedItem.id
+          }
+          return item
+        })
+        prevState.items = updatedItems
+        return prevState
+      })
+    }
+
+    if (task === 'UPDATE_ITEM_TEXT') {
+      this.setState(prevState => {
+        const updatedItems = prevState.items.map(item => {
+          if (item.id === requestedItem) {
+            item.text = newItemText
+          }
+          return item
+        })
+        prevState.items = updatedItems
+        return prevState
+      })
+    }
+  }
+
   render () {
     return (
       <TodoContext.Provider value={this.state}>
@@ -148,22 +178,3 @@ class TodoProvider extends Component {
 }
 
 export default TodoProvider
-
-// export const TodoProvider = props => {
-//   const addTodoItem = item => {
-//     console.log('addtodo', item)
-//   }
-
-//   const [todo, setTodo] = useState({
-//     items: DBtodoItems.default,
-//     folders: DBtodoFolders.default,
-//     openFolder: null,
-//     addTodoItem: addTodoItem
-//   })
-
-//   return (
-//     <TodoContext.Provider value={[todo, setTodo]}>
-//       {props.children}
-//     </TodoContext.Provider>
-//   )
-// }

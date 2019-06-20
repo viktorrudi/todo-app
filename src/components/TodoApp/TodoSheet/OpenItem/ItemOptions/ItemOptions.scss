@@ -1,0 +1,11 @@
+.ChangeFolder {
+  &__folders {
+    &--folder {
+      padding: 5px 10px;
+      cursor: pointer;
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
+}

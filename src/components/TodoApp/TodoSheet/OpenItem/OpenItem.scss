@@ -29,6 +29,13 @@
     padding: 20px;
     margin: auto;
   }
+  &__info {
+    &--time {
+      font-size: 0.8rem;
+      text-align: right;
+      padding: 5px 0;
+    }
+  }
   &__close {
     cursor: pointer;
     text-align: left;

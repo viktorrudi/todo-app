@@ -70,12 +70,12 @@ class ListHeader extends Component {
           />
         </form>
         <span>
-          <button
+          <div
             className={`${type}__folder--delete`}
             onClick={() => this.context.removeFolder(this.context.openFolder)}
           >
             Delete
-          </button>
+          </div>
         </span>
       </div>
     )

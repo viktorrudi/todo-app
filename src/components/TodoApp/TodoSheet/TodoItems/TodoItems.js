@@ -18,13 +18,13 @@ export default function TodoItems (props) {
   }
 
   // Finds and returns todo items associated with the folder
-  let openedFolder
+  let itemsInOpenedFolder
   if (props.openFolder) {
-    openedFolder = findItemsInFolder(context.items, props.openFolder)
+    itemsInOpenedFolder = findItemsInFolder(context.items, props.openFolder)
   }
 
   // Sort by date
-  const dateFilter = _.sortBy(openedFolder || context.items, item => {
+  const dateFilter = _.sortBy(itemsInOpenedFolder || context.items, item => {
     return new Date(item.creationStamp)
   }).reverse()
 

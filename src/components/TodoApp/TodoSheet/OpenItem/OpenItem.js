@@ -20,25 +20,28 @@ class OpenItem extends Component {
   }
 
   handleSubmit = e => {
-    // this.props.handleChangeOpenItem('change_text', this.state.item)
-    // e.preventDefault()
+    this.context.updateItem(
+      'UPDATE_ITEM_TEXT',
+      this.state.itemID,
+      this.state.itemText
+    )
+    e.preventDefault()
   }
 
-  findOpenItemName = openItemID => {
+  findOpenItem = openItemID => {
     const found = this.props.items.filter(folder => {
       return openItemID === folder.id
     })
     // Returns name of item
-    return found[0].text
+    return found[0]
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     // Updates state to contain currently selected item (from props)
     if (prevProps.openItem !== this.props.openItem) {
       this.setState({
-        itemID: this.props.openItem.id,
-        // Fetches name of item
-        itemText: this.findOpenItemName(this.props.openItem)
+        itemID: this.props.openItem,
+        itemText: this.findOpenItem(this.props.openItem).text
       })
     }
   }
@@ -46,12 +49,12 @@ class OpenItem extends Component {
   componentDidMount = () => {
     this.setState({
       itemID: this.props.openItem,
-      itemText: this.findOpenItemName(this.props.openItem)
+      itemText: this.findOpenItem(this.props.openItem).text
     })
   }
 
   handleDelete = () => {
-    this.context.removeTodoItem(this.state.itemID)
+    return this.context.removeTodoItem(this.state.itemID)
   }
 
   render () {
@@ -72,6 +75,12 @@ class OpenItem extends Component {
             onChange={this.handleChange}
           />
         </form>
+        <div className={`${type}__info`}>
+          <div className={`${type}__info--time`}>
+            {this.findOpenItem(this.props.openItem).creationStamp}
+          </div>
+        </div>
+
         <div className={`${type}__actions`}>
           <ItemOptions
             openItem={this.context.openItem}

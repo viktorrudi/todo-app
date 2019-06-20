@@ -41,7 +41,6 @@ class TodoItem extends Component {
       borderColor: 'rgba(0,0,0,0)'
     }
     const openfolder = this.props.openfolder || defaultFolderStyle
-    const timeCreated = item.timeCreated
 
     const folderStyle = {
       borderColor: openfolder.color,
@@ -72,11 +71,7 @@ class TodoItem extends Component {
         >
           {this.props.item.text}
         </div>
-        <ItemFooter
-          folderStyle={folderStyle}
-          folderName={openfolder.name}
-          timeCreated={timeCreated}
-        />
+        <ItemFooter folderStyle={folderStyle} folderName={openfolder.name} />
       </div>
     )
   }
