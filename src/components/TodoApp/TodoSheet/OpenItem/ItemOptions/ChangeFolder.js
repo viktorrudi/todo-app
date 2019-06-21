@@ -17,28 +17,26 @@ export default function ChangeFolder (props) {
     context.updateItem('CHANGE_ITEM_FOLDER', folder)
   }
 
-  let availableFolders = (
-    <div className="ChangeFolder__folders">
-      {context.folders.map(folder => (
-        <div
-          className="ChangeFolder__folders--folder"
-          key={folder.id}
-          onClick={() => changeItemFolder(folder)}
-        >
-          {folder.name}
-        </div>
-      ))}
-    </div>
-  )
+  const type = 'ChangeFolder__folders'
 
   return (
     <Fragment>
       <div className="ChangeFolder small-btn btn-update" onClick={handleClick}>
         Change folder
       </div>
-
-      {/* Only show folder items on "Change folder" click */}
-      {openFolderChange ? availableFolders : null}
+      {openFolderChange ? (
+        <div className={type}>
+          {context.folders.map(folder => (
+            <div
+              className={`${type}--folder`}
+              key={folder.id}
+              onClick={() => changeItemFolder(folder)}
+            >
+              {folder.name}
+            </div>
+          ))}
+        </div>
+      ) : null}
     </Fragment>
   )
 }

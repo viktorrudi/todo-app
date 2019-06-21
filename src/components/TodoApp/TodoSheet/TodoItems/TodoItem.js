@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import { propTypeForItems, propTypeForFolders } from '../../../../proptypes'
 import ItemFooter from './ItemFooter/ItemFooter'
 import './TodoItem.scss'
-import { findParentTag } from '../../../utilities/utilities'
 
 class TodoItem extends Component {
   static contextType = TodoContext
@@ -18,13 +17,10 @@ class TodoItem extends Component {
 
   handleComplete = () => {
     this.context.toggleTodoComplete(this.props.item.id)
-    // this.props.toggleCompletedTodo(this.props.id)
   }
 
   handleClick = (e, clickedItem) => {
-    const checkbox = 'TodoItem__action--done'
-    const found = findParentTag(e.target, e.target.className === checkbox)
-    if (!found) {
+    if (e.target.type !== 'checkbox') {
       // FIXME: This is called twice?
       this.context.setOpenItem(clickedItem.id)
     }
@@ -71,7 +67,9 @@ class TodoItem extends Component {
         >
           {this.props.item.text}
         </div>
-        <ItemFooter folderStyle={folderStyle} folderName={openfolder.name} />
+        {this.context.openFolder ? null : (
+          <ItemFooter folderStyle={folderStyle} folderName={openfolder.name} />
+        )}
       </div>
     )
   }

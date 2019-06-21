@@ -4,17 +4,20 @@
   position: relative;
   flex-wrap: wrap;
   border-radius: 5px;
-  box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
   margin-bottom: 10px;
   cursor: pointer;
-  transition: box-shadow 0.1s ease-in-out;
+  transform: translateY(0px);
+  transition: all 0.1s ease-in-out;
   &:hover {
-    box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0px 5px 30px 0 rgba(0, 0, 0, 0.1);
   }
   &__action--done {
+    // TODO
   }
   &__action--delete {
-    content: '';
+    content: "";
     position: absolute;
     padding: 1px;
     right: -5px;
