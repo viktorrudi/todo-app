@@ -1,6 +1,6 @@
 import React, { Component, createContext } from 'react'
 import PropTypes from 'prop-types'
-import { findItemInState, randomColor } from './components/utilities/utilities'
+import { findItemInState, randomColor } from './utilities/utilities'
 import * as DBtodoItems from './database/todo-items.json'
 import * as DBtodoFolders from './database/todo-folders.json'
 
