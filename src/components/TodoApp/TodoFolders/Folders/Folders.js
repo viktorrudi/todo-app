@@ -25,6 +25,7 @@ class Folders extends Component {
             <Folder
               key={folder.id}
               folder={folder}
+              open={folder.id === this.context.openFolder}
               itemCount={this.findItemCount(folder)}
             />
           ))}

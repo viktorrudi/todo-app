@@ -14,7 +14,7 @@ $folder-padding: 10px;
     }
 
     &--icon {
-      content: '';
+      content: "";
       pointer-events: none;
       display: inline-block;
       width: 8px;
@@ -53,6 +53,10 @@ $folder-padding: 10px;
       display: none;
       float: left;
       z-index: 4;
+    }
+    &--open {
+      background: #e3e3e3;
+      font-weight: bold;
     }
   }
 }

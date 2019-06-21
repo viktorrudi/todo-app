@@ -15,11 +15,11 @@ class Folder extends Component {
   }
   render () {
     const type = 'Folder'
-    const { folder, itemCount } = this.props
+    const { folder, open, itemCount } = this.props
 
     return (
       <div
-        className={type}
+        className={open ? `${type} ${type}--open` : type}
         onMouseOver={this.handleHover}
         onMouseLeave={this.handleHover}
         onClick={this.handleClick}
