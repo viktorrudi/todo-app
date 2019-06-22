@@ -77,7 +77,7 @@ class OpenItem extends Component {
         </form>
         <div className={`${type}__info`}>
           <div className={`${type}__info--time`}>
-            {this.findOpenItem(this.props.openItem).creationStamp}
+            Created {this.findOpenItem(this.props.openItem).creationStamp}
           </div>
         </div>
 

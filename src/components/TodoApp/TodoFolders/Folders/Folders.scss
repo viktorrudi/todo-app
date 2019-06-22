@@ -3,18 +3,18 @@ $folder-padding: 10px;
 .Folders {
   width: 250px;
   .Folder {
-    background: #f7f7f7;
+    // background: #f7f7f7;
     padding: $folder-padding;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
     &:hover {
       cursor: pointer;
-      background: #e3e3e3;
+      // background: #e3e3e3;
       transform: scale(1.08) translateX(6px);
     }
 
     &--icon {
-      content: "";
+      content: '';
       pointer-events: none;
       display: inline-block;
       width: 8px;
@@ -55,7 +55,6 @@ $folder-padding: 10px;
       z-index: 4;
     }
     &--open {
-      background: #e3e3e3;
       font-weight: bold;
     }
   }

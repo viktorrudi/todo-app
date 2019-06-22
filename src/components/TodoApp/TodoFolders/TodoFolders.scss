@@ -2,29 +2,29 @@
 
 .TodoSidebar {
   float: left;
-  background: $lt-blue;
   height: 100vh;
   margin: 0;
+  padding: 0 20px;
   box-shadow: 5px 0 10px 0 rgba(213, 221, 243, 0.3);
   z-index: 2;
   &--seeAllFolders {
     position: relative;
-    text-align: center;
-    background: rgb(60, 60, 60);
-    border: 2px solid rgb(60, 60, 60);
-    color: #fff;
-    padding: 10px 0;
+    margin-top: 50px;
+    // padding: 10px 0;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
     &:hover {
       cursor: pointer;
-      background: #fff;
-      color: rgb(60, 60, 60);
-      border: 2px solid rgb(60, 60, 60);
       font-weight: 700;
     }
   }
+  h2 {
+    small {
+      font-size: 50%;
+      float: right;
+    }
+  }
   h3 {
-    padding: 0 70px;
+    margin-top: 50px;
   }
 }

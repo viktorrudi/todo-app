@@ -21,19 +21,23 @@ class TodoFolders extends Component {
     const { items, folders } = this.context
     return (
       <aside className={type}>
-        <h3>ToDo</h3>
+        <h2>
+          ToD👌 <small>v.1.0.0</small>
+        </h2>
         <div
           className={`${type}--seeAllFolders`}
           onClick={() => this.context.setOpenFolder(null)}
         >
           See All {items.length} items
         </div>
-        <CreateFolder folders={folders} />
+
+        <h3>Folders</h3>
         <Folders
           getSelectedFolder={this.props.getSelectedFolder}
           folders={folders}
           items={items}
         />
+        <CreateFolder folders={folders} />
       </aside>
     )
   }

@@ -1,11 +1,14 @@
+@import '../../../custom-variables.scss';
+
 .TodoItem {
+  background: #fff;
   clear: both;
   display: flex;
   position: relative;
   flex-wrap: wrap;
   border-radius: 5px;
   box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
-  margin-bottom: 10px;
+  margin: $item-spacing 0;
   cursor: pointer;
   transform: translateY(0px);
   transition: all 0.1s ease-in-out;
@@ -17,7 +20,7 @@
     // TODO
   }
   &__action--delete {
-    content: "";
+    content: '';
     position: absolute;
     padding: 1px;
     right: -5px;

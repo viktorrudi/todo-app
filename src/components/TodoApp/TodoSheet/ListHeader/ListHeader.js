@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { TodoContext } from '../../../../TodoContext'
 import './ListHeader.scss'
+import { MdDelete } from 'react-icons/md'
 
 class ListHeader extends Component {
   constructor (props) {
@@ -74,7 +75,7 @@ class ListHeader extends Component {
             className={`${type}__folder--delete`}
             onClick={() => this.context.removeFolder(this.context.openFolder)}
           >
-            Delete
+            <MdDelete /> Delete folder
           </div>
         </span>
       </div>

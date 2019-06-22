@@ -5,6 +5,7 @@ import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'
 import ListHeader from './ListHeader/ListHeader'
 import OpenItem from './OpenItem/OpenItem'
+import './TodoSheet.scss'
 
 class TodoSheet extends Component {
   constructor (props) {

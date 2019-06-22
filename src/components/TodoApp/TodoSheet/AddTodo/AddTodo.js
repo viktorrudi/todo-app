@@ -26,11 +26,10 @@ export default function AddTodo () {
       <input
         className={`${type}__addTodoField`}
         type="text"
-        placeholder="add item"
+        placeholder="add item..."
         value={todoText}
         onChange={handleNewTodoText}
       />
-      {/* <input className={`${type}__action--add`} type="submit" value="+" /> */}
     </form>
   )
 }
