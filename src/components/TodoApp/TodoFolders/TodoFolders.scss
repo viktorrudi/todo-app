@@ -1,5 +1,8 @@
+@import '../../custom-variables.scss';
+
 .TodoSidebar {
   float: left;
+  background: $lt-blue;
   height: 100vh;
   margin: 0;
   box-shadow: 5px 0 10px 0 rgba(213, 221, 243, 0.3);
