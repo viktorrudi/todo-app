@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { TodoContext } from '../../../../TodoContext'
 import './ListHeader.scss'
-import { MdDelete } from 'react-icons/md'
+import FolderOptions from './FolderOptions/FolderOptions'
 
 class ListHeader extends Component {
   constructor (props) {
@@ -18,7 +18,6 @@ class ListHeader extends Component {
   }
 
   static contextType = TodoContext
-
   static propTypes = {
     openFolder: PropTypes.number,
     folders: PropTypes.array
@@ -57,25 +56,21 @@ class ListHeader extends Component {
   }
 
   render () {
+    const { openFolder } = this.state
     const type = 'ListHeader'
     return (
       <div className={type}>
         <form onSubmit={this.handleSubmit}>
-          <div
-            className={`${type}__folder--delete`}
-            onClick={() => this.context.removeFolder(this.context.openFolder)}
-          >
-            <MdDelete />
-          </div>
           <input
-            id={this.state.openFolder.id}
+            id={openFolder.id}
             className={`${type}__folder--input`}
             type="text"
-            value={this.state.openFolder.name}
+            value={openFolder.name}
             onChange={this.handleChange}
             autoComplete="off"
           />
         </form>
+        <FolderOptions openFolder={openFolder.id} />
       </div>
     )
   }

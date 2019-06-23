@@ -1,10 +1,9 @@
 import React, { useState, useContext, Fragment } from 'react'
-import { propTypeForItems } from '../../../../../proptypes'
 import { TodoContext } from '../../../../../TodoContext'
 import './ItemOptions.scss'
 import { MdFolder } from 'react-icons/md'
 
-export default function ChangeFolder (props) {
+export default function ChangeFolder () {
   const context = useContext(TodoContext)
 
   // Toggle visibility of folder dropdown
@@ -18,8 +17,6 @@ export default function ChangeFolder (props) {
     context.updateItem('CHANGE_ITEM_FOLDER', folder)
     setOpenFolder(false)
   }
-
-  console.log(props.itemFolder)
 
   const type = 'ChangeFolder'
   return (
@@ -43,8 +40,4 @@ export default function ChangeFolder (props) {
       ) : null}
     </Fragment>
   )
-}
-
-ChangeFolder.propTypes = {
-  openitem: propTypeForItems
 }

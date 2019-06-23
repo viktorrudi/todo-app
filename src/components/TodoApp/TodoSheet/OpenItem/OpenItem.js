@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './OpenItem.scss'
+import PropTypes from 'prop-types'
 import ItemOptions from './ItemOptions/ItemOptions'
 import { TodoContext } from '../../../../TodoContext'
-import { MdClose, MdFolder } from 'react-icons/md'
+import { MdClose } from 'react-icons/md'
 
 class OpenItem extends Component {
   constructor (props) {
@@ -12,6 +13,12 @@ class OpenItem extends Component {
       itemText: ''
     }
   }
+
+  static propTypes = {
+    items: PropTypes.array,
+    openItem: PropTypes.number
+  }
+
   static contextType = TodoContext
 
   handleChange = e => {

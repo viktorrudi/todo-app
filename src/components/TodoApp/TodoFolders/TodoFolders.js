@@ -18,7 +18,11 @@ class TodoFolders extends Component {
     return (
       <aside className={type}>
         <h2>
-          ToD👌 <small>v.1.0.0</small>
+          ToD
+          <span role="img" aria-label="Todo">
+            👌
+          </span>
+          <small>v.1.0.0</small>
         </h2>
         <div
           className={`${type}--seeAllFolders`}
