@@ -7,12 +7,14 @@ class Folder extends Component {
 
   static propTypes = {
     folder: PropTypes.object,
-    itemCount: PropTypes.number
+    itemCount: PropTypes.number,
+    open: PropTypes.bool
   }
 
   handleClick = e => {
     this.context.setOpenFolder(parseInt(e.target.id))
   }
+
   render () {
     const type = 'Folder'
     const { folder, open, itemCount } = this.props

@@ -1,5 +1,10 @@
+@import '../../../../custom-variables.scss';
+
 .ChangeFolder {
   &__folders {
+    position: relative;
+    max-height: 133px;
+    overflow-y: scroll;
     &--folder {
       padding: 5px 10px;
       cursor: pointer;

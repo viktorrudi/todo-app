@@ -1,8 +1,8 @@
 @import '../../custom-variables.scss';
 
-.TodoSidebar {
+.TodoFolders {
   float: left;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   padding: 0 20px;
   box-shadow: 5px 0 10px 0 rgba(213, 221, 243, 0.3);
@@ -10,12 +10,12 @@
   &--seeAllFolders {
     position: relative;
     margin-top: 50px;
-    // padding: 10px 0;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
+    width: 100%;
     &:hover {
       cursor: pointer;
-      font-weight: 700;
+      transform: scale(1.08) translateX(6px);
     }
   }
   h2 {
@@ -26,5 +26,9 @@
   }
   h3 {
     margin-top: 50px;
+    svg {
+      position: relative;
+      top: 3px;
+    }
   }
 }

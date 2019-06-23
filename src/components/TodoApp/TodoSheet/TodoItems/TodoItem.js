@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { TodoContext } from '../../../../TodoContext'
 import PropTypes from 'prop-types'
 import { propTypeForItems, propTypeForFolders } from '../../../../proptypes'
-import ItemFooter from './ItemFooter/ItemFooter'
 import './TodoItem.scss'
 
 class TodoItem extends Component {
@@ -32,34 +31,25 @@ class TodoItem extends Component {
     const completed = item.completed
     const id = item.id
 
-    const defaultFolderStyle = {
-      color: 'rgba(0,0,0,0)',
-      borderColor: 'rgba(0,0,0,0)'
-    }
-    const openfolder = this.props.openfolder || defaultFolderStyle
-
-    const folderStyle = {
-      borderColor: openfolder.color,
-      color: openfolder.color
-    }
-
     const type = 'TodoItem'
-
     return (
       <div
         className={type}
         onClick={e => {
-          // this.props.openitem returns full item object
           this.handleClick(e, this.props.item)
         }}
       >
-        <input
-          type="checkbox"
-          className={`${type}__action--done`}
-          onChange={this.handleComplete}
-          checked={this.props.item.completed}
-          id={id}
-        />
+        {/* Custom checkbox */}
+        <label>
+          <input
+            type="checkbox"
+            className={`${type}__action--done`}
+            onChange={this.handleComplete}
+            checked={this.props.item.completed}
+            id={id}
+          />
+          <span className="check-toggle" />
+        </label>
 
         <div
           className={`${type}__item`}
@@ -67,9 +57,6 @@ class TodoItem extends Component {
         >
           {this.props.item.text}
         </div>
-        {this.context.openFolder ? null : (
-          <ItemFooter folderStyle={folderStyle} folderName={openfolder.name} />
-        )}
       </div>
     )
   }

@@ -33,17 +33,13 @@ export function findParentTag (search, parentClass) {
 
 export function randomColor () {
   const colors = [
-    'red',
-    'blue',
-    'orange',
-    'purple',
-    'pink',
-    'yellow',
-    'brown',
-    'black',
-    'gray',
-    'lightblue',
-    'magenta'
+    '#D84343',
+    '#0F9D58',
+    '#F4B400',
+    '#4285F4',
+    '#4D4D4D',
+    '#43459D',
+    '#4DBFD9'
   ]
   const randomColor = Math.floor(Math.floor(Math.random() * colors.length) + 0)
   return colors[randomColor]

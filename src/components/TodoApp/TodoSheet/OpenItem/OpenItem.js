@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './OpenItem.scss'
 import ItemOptions from './ItemOptions/ItemOptions'
 import { TodoContext } from '../../../../TodoContext'
+import { MdClose, MdFolder } from 'react-icons/md'
 
 class OpenItem extends Component {
   constructor (props) {
@@ -58,6 +59,13 @@ class OpenItem extends Component {
   }
 
   render () {
+    const openItem = this.context.items.filter(
+      item => this.context.openItem === item.id
+    )
+    const [folderForOpenItem] = this.context.folders.filter(
+      folder => openItem[0].folder === folder.id
+    )
+
     const type = 'OpenItem'
     return (
       <div className={type}>
@@ -65,6 +73,7 @@ class OpenItem extends Component {
           className={`${type}__close`}
           onClick={() => this.context.setOpenItem(null)}
         >
+          <MdClose />
           Close
         </div>
         <form onSubmit={this.handleSubmit}>
@@ -78,6 +87,9 @@ class OpenItem extends Component {
         <div className={`${type}__info`}>
           <div className={`${type}__info--time`}>
             Created {this.findOpenItem(this.props.openItem).creationStamp}
+          </div>
+          <div className={`${type}__info--folder`}>
+            {folderForOpenItem ? folderForOpenItem.name : null}
           </div>
         </div>
 

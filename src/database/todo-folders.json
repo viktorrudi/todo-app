@@ -2,21 +2,21 @@
   {
     "id": 1,
     "name": "PPC Items",
-    "color": "blue"
+    "color": "#4DBFD9"
   },
   {
     "id": 2,
     "name": "Training schedule",
-    "color": "red"
+    "color": "#D84343"
   },
   {
     "id": 3,
     "name": "Marketing",
-    "color": "lightgreen"
+    "color": "#F4B400"
   },
   {
     "id": 4,
     "name": "Customer care",
-    "color": "brown"
+    "color": "#4285F4"
   }
 ]

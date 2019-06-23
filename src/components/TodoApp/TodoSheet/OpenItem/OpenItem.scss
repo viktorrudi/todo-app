@@ -1,10 +1,11 @@
 @import '../../../custom-variables.scss';
 
 .OpenItem {
-  padding: 0 15px;
   min-width: 270px;
   background: $main-background;
+  margin-right: $item-spacing;
   @media (max-width: 800px) {
+    padding: 0 15px;
     min-width: 85vw;
     left: 50%;
     bottom: 0;
@@ -19,6 +20,11 @@
     margin-top: 20px;
     width: 100%;
     padding-left: 0;
+    svg {
+      position: relative;
+      top: 3px;
+      margin-right: 10px;
+    }
   }
   &__note-input {
     font-size: 1rem;
@@ -32,10 +38,17 @@
     margin: auto;
   }
   &__info {
+    position: relative;
     &--time {
       font-size: 0.8rem;
       text-align: right;
       padding: 5px 0;
+    }
+    &--folder {
+      font-weight: 700;
+      font-size: 0.8rem;
+      position: absolute;
+      right: 0;
     }
   }
   &__close {
@@ -44,6 +57,10 @@
     width: 100%;
     @media (max-width: 800px) {
       text-align: right !important;
+    }
+    svg {
+      position: relative;
+      top: 3px;
     }
   }
 }

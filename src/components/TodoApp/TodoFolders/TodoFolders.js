@@ -3,21 +3,17 @@ import PropTypes from 'prop-types'
 import { TodoContext } from '../../../TodoContext'
 import Folders from './Folders/Folders'
 import CreateFolder from './CreateFolder/CreateFolder'
+import { MdFolder } from 'react-icons/md'
 import './TodoFolders.scss'
 
 class TodoFolders extends Component {
   static contextType = TodoContext
-
   static propTypes = {
     getSelectedFolder: PropTypes.func
   }
 
-  createFolder = newFolder => {
-    this.context.createFolder(newFolder)
-  }
-
   render () {
-    const type = 'TodoSidebar'
+    const type = 'TodoFolders'
     const { items, folders } = this.context
     return (
       <aside className={type}>
@@ -28,15 +24,13 @@ class TodoFolders extends Component {
           className={`${type}--seeAllFolders`}
           onClick={() => this.context.setOpenFolder(null)}
         >
-          See All {items.length} items
+          See All <strong>{items.length}</strong> items
         </div>
 
-        <h3>Folders</h3>
-        <Folders
-          getSelectedFolder={this.props.getSelectedFolder}
-          folders={folders}
-          items={items}
-        />
+        <h3>
+          <MdFolder /> Folders
+        </h3>
+        <Folders folders={folders} items={items} />
         <CreateFolder folders={folders} />
       </aside>
     )

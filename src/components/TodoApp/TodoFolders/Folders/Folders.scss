@@ -1,15 +1,13 @@
-$folder-padding: 10px;
+@import '../../../custom-variables.scss';
 
 .Folders {
-  width: 250px;
+  width: 220px;
   .Folder {
-    // background: #f7f7f7;
-    padding: $folder-padding;
+    padding: 10px 5px;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
     &:hover {
       cursor: pointer;
-      // background: #e3e3e3;
       transform: scale(1.08) translateX(6px);
     }
 
@@ -38,13 +36,11 @@ $folder-padding: 10px;
       float: right;
       position: absolute;
       top: 50%;
-      right: $folder-padding;
+      right: 10px;
       transform: translateY(-50%);
       font-size: 0.8rem;
       padding: 5px 0px;
-      color: #808080;
-      // border-radius: 5px;
-      // background: rgb(238, 238, 238);
+      color: $gray;
     }
     &--count {
       float: right;

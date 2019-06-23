@@ -1,3 +1,5 @@
+@import '../custom-variables.scss';
+
 .TodoSheet {
   width: 100%;
   margin: 0 15px;
@@ -14,15 +16,15 @@
 }
 
 .btn-update {
-  color: rgb(11, 27, 79);
+  color: $green;
   &:hover {
-    color: rgb(79, 34, 213);
+    color: darken($green, 15%);
   }
 }
 
 .btn-delete {
-  color: rgb(87, 19, 12);
+  color: $red;
   &:hover {
-    color: rgb(222, 11, 11);
+    color: darken($red, 15%);
   }
 }

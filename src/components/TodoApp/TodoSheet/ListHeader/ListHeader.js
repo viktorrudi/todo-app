@@ -61,6 +61,12 @@ class ListHeader extends Component {
     return (
       <div className={type}>
         <form onSubmit={this.handleSubmit}>
+          <div
+            className={`${type}__folder--delete`}
+            onClick={() => this.context.removeFolder(this.context.openFolder)}
+          >
+            <MdDelete />
+          </div>
           <input
             id={this.state.openFolder.id}
             className={`${type}__folder--input`}
@@ -70,14 +76,6 @@ class ListHeader extends Component {
             autoComplete="off"
           />
         </form>
-        <span>
-          <div
-            className={`${type}__folder--delete`}
-            onClick={() => this.context.removeFolder(this.context.openFolder)}
-          >
-            <MdDelete /> Delete folder
-          </div>
-        </span>
       </div>
     )
   }

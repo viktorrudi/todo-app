@@ -2,6 +2,7 @@ import React, { useState, useContext, Fragment } from 'react'
 import { propTypeForItems } from '../../../../../proptypes'
 import { TodoContext } from '../../../../../TodoContext'
 import './ItemOptions.scss'
+import { MdFolder } from 'react-icons/md'
 
 export default function ChangeFolder (props) {
   const context = useContext(TodoContext)
@@ -15,20 +16,23 @@ export default function ChangeFolder (props) {
 
   const changeItemFolder = folder => {
     context.updateItem('CHANGE_ITEM_FOLDER', folder)
+    setOpenFolder(false)
   }
 
-  const type = 'ChangeFolder__folders'
+  console.log(props.itemFolder)
 
+  const type = 'ChangeFolder'
   return (
     <Fragment>
-      <div className="ChangeFolder small-btn btn-update" onClick={handleClick}>
-        Change folder
+      <div className={`${type} small-btn btn-update`} onClick={handleClick}>
+        <MdFolder /> Change folder
       </div>
+
       {openFolderChange ? (
-        <div className={type}>
+        <div className={`${type}__folders`}>
           {context.folders.map(folder => (
             <div
-              className={`${type}--folder`}
+              className={`${type}__folders--folder`}
               key={folder.id}
               onClick={() => changeItemFolder(folder)}
             >

@@ -1,3 +1,5 @@
+@import '../../../custom-variables.scss';
+
 .AddTodo {
   display: flex;
   position: relative;
@@ -7,7 +9,7 @@
     font-size: 1.8rem;
     float: left;
     position: relative;
-    border: none;
+    border: 1px solid $light-gray;
     border-radius: 5px;
     box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
     &:focus {
