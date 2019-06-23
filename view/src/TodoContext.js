@@ -1,4 +1,5 @@
 import React, { Component, createContext } from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import { findItemInState, randomColor } from './utilities/utilities'
 import * as DBtodoItems from './database/todo-items.json'
@@ -10,7 +11,7 @@ class TodoProvider extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      items: DBtodoItems.default,
+      items: [],
       folders: DBtodoFolders.default,
       openFolder: null,
       openItem: null,
@@ -22,9 +23,39 @@ class TodoProvider extends Component {
       createFolder: this.createFolder,
       updateFolder: this.updateFolder,
       setOpenItem: this.setOpenItem,
-      updateItem: this.updateItem
+      updateItem: this.updateItem,
+      errors: []
     }
   }
+
+  /// ///////////////////////////////////
+  componentDidMount () {
+    // Set items
+    axios
+      .get('http://localhost:27018/api/items')
+      .then(response => {
+        this.setState({ items: response.data })
+        console.log(response.data)
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
+
+    // Set folders
+    axios
+      .get('http://localhost:27018/api/folders')
+      .then(response => {
+        this.setState({ folders: response.data })
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
+  }
+  /// ///////////////////////////////////
 
   static propTypes = {
     children: PropTypes.object
@@ -48,6 +79,9 @@ class TodoProvider extends Component {
         if (item.id === todoID) {
           item.completed = !item.completed
         }
+        axios.patch('http://localhost:27018/api/toggle-complete/' + todoID, {
+          completed: item.completed
+        })
         return item
       })
       prevState.items = updatedItems
