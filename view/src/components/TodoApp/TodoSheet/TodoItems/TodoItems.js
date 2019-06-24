@@ -13,7 +13,7 @@ export default function TodoItems (props) {
 
   const findItemFolder = itemFolderID => {
     const allFolders = context.folders
-    let result = allFolders.filter(folder => folder.id === itemFolderID)
+    let result = allFolders.filter(folder => folder._id === itemFolderID)
     return result[0]
   }
 
@@ -33,7 +33,7 @@ export default function TodoItems (props) {
 
   let allItems = completedSorted.map(item => (
     <TodoItem
-      key={item.id}
+      key={item._id}
       item={item}
       openfolder={findItemFolder(item.folder)}
     />

@@ -45,7 +45,7 @@ class TodoSheet extends Component {
       })
     }
     if (task === 'delete_item') {
-      this.props.handleDeleteTodo(item.id)
+      this.props.handleDeleteTodo(item._id)
       this.handleClose()
     }
   }

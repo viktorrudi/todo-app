@@ -9,7 +9,7 @@ class Folders extends Component {
   findItemCount = folder => {
     let count = 0
     this.context.items.map(item => {
-      if (item.folder === folder.id) {
+      if (item.folder === folder._id) {
         count++
       }
       return false
@@ -23,9 +23,9 @@ class Folders extends Component {
         <div className="Folders">
           {this.context.folders.map(folder => (
             <Folder
-              key={folder.id}
+              key={folder._id}
               folder={folder}
-              open={folder.id === this.context.openFolder}
+              open={folder._id === this.context.openFolder}
               itemCount={this.findItemCount(folder)}
             />
           ))}

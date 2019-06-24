@@ -21,29 +21,29 @@ connection.once('open', () => {
 })
 
 app.listen(PORT, function() {
-  console.log('Server is running on Port: ' + PORT)
+  console.log('Server is running on port: ' + PORT)
 })
 
-const todoRoutes = express.Router()
-app.use('/api', todoRoutes)
+const router = express.Router()
+app.use('/api', router)
 
 ///////////////////////
 
-todoRoutes.route('/items').get((req, res) => {
+router.route('/items').get((req, res) => {
   TodoItem.find((err, todos) => {
     if (err) throw new Error(err)
     res.json(todos)
   })
 })
 
-todoRoutes.route('/folders').get((req, res) => {
+router.route('/folders').get((req, res) => {
   TodoFolder.find((err, folders) => {
     if (err) throw new Error(err)
     res.json(folders)
   })
 })
 
-todoRoutes.route('/items:id').get((req, res) => {
+router.route('/items:id').get((req, res) => {
   const id = req.params.id
   TodoItem.findById(id, (err, todo) => {
     if (err) throw new Error(err)
@@ -51,7 +51,7 @@ todoRoutes.route('/items:id').get((req, res) => {
   })
 })
 
-todoRoutes.route('/folders:id').get((req, res) => {
+router.route('/folders:id').get((req, res) => {
   const id = req.params.id
   TodoFolder.findById(id, (err, folders) => {
     if (err) throw new Error(err)
@@ -59,7 +59,7 @@ todoRoutes.route('/folders:id').get((req, res) => {
   })
 })
 
-todoRoutes.route('/add-item').post((req, res) => {
+router.route('/items').post((req, res) => {
   const todo = new TodoItem(req.body)
   console.log(todo)
   todo
@@ -72,7 +72,25 @@ todoRoutes.route('/add-item').post((req, res) => {
     })
 })
 
-todoRoutes.route('/add-folder').post((req, res) => {
+// Delete item
+router.route('/items').delete((req, res) => {
+  TodoItem.deleteOne({ _id: req.query.id })
+    .then(item => {
+      res.status(200).json({ message: 'Todo deleted!', item })
+    })
+    .catch(err => res.json(err))
+})
+
+// Delete item
+router.route('/folders').delete((req, res) => {
+  TodoFolder.deleteOne({ _id: req.query.id })
+    .then(item => {
+      res.status(200).json({ message: 'Folder deleted!', item })
+    })
+    .catch(err => res.json(err))
+})
+
+router.route('/folders').post((req, res) => {
   const folder = new TodoFolder(req.body)
   console.log(folder)
   folder
@@ -85,8 +103,8 @@ todoRoutes.route('/add-folder').post((req, res) => {
     })
 })
 
-todoRoutes.route('/toggle-complete/:id').patch((req, res) => {
-  TodoItem.findById(req.params.id, (err, todo) => {
+router.route('/toggle-complete-item').patch((req, res) => {
+  TodoItem.findById(req.query.id, (err, todo) => {
     if (err) res.status(404).json(err)
 
     todo.completed = req.body.completed
@@ -102,8 +120,8 @@ todoRoutes.route('/toggle-complete/:id').patch((req, res) => {
   })
 })
 
-todoRoutes.route('/update-todo-text/:id').patch((req, res) => {
-  TodoItem.findById(req.params.id, (err, todo) => {
+router.route('/update-todo-text').patch((req, res) => {
+  TodoItem.findById(req.query.id, (err, todo) => {
     if (err) res.status(404).json(err)
 
     todo.text = req.body.text
@@ -119,8 +137,8 @@ todoRoutes.route('/update-todo-text/:id').patch((req, res) => {
   })
 })
 
-todoRoutes.route('/update-folder-name/:id').patch((req, res) => {
-  TodoFolder.findById(req.params.id, (err, folder) => {
+router.route('/update-folder-name').patch((req, res) => {
+  TodoFolder.findById(req.query.id, (err, folder) => {
     if (err) res.status(404).json(err)
 
     folder.name = req.body.name
@@ -136,8 +154,8 @@ todoRoutes.route('/update-folder-name/:id').patch((req, res) => {
   })
 })
 
-todoRoutes.route('/update-todo-folder/:id').patch((req, res) => {
-  TodoItem.findById(req.params.id, (err, todo) => {
+router.route('/update-todo-folder').patch((req, res) => {
+  TodoItem.findById(req.query.id, (err, todo) => {
     if (err) res.status(404).json(err)
 
     todo.folder = req.body.folder
@@ -153,8 +171,8 @@ todoRoutes.route('/update-todo-folder/:id').patch((req, res) => {
   })
 })
 
-todoRoutes.route('/update-folder-color/:id').patch((req, res) => {
-  TodoFolder.findById(req.params.id, (err, folder) => {
+router.route('/update-folder-color').patch((req, res) => {
+  TodoFolder.findById(req.query.id, (err, folder) => {
     if (err) res.status(404).json(err)
 
     folder.color = req.body.color

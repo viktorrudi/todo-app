@@ -38,7 +38,7 @@ class OpenItem extends Component {
 
   findOpenItem = openItemID => {
     const found = this.props.items.filter(folder => {
-      return openItemID === folder.id
+      return openItemID === folder._id
     })
     // Returns name of item
     return found[0]
@@ -67,10 +67,10 @@ class OpenItem extends Component {
 
   render () {
     const openItem = this.context.items.filter(
-      item => this.context.openItem === item.id
+      item => this.context.openItem === item._id
     )
     const [folderForOpenItem] = this.context.folders.filter(
-      folder => openItem[0].folder === folder.id
+      folder => openItem[0].folder === folder._id
     )
 
     const type = 'OpenItem'

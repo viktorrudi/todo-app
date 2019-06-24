@@ -1,6 +1,6 @@
 export function findItemInState (id, items) {
   for (var i = 0; i < items.length; i++) {
-    if (items[i].id === id) {
+    if (items[i]._id === id) {
       return items[i]
     }
   }

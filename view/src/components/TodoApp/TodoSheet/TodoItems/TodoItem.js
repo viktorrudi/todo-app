@@ -15,13 +15,13 @@ class TodoItem extends Component {
   }
 
   handleComplete = () => {
-    this.context.toggleTodoComplete(this.props.item.id)
+    this.context.toggleTodoComplete(this.props.item._id)
   }
 
   handleClick = (e, clickedItem) => {
     if (e.target.type !== 'checkbox') {
       // FIXME: This is called twice?
-      this.context.setOpenItem(clickedItem.id)
+      this.context.setOpenItem(clickedItem._id)
     }
   }
 
@@ -29,7 +29,7 @@ class TodoItem extends Component {
     // FIXME: Something happening with opening folder. Cause of double rendering?
     const { item } = this.props
     const completed = item.completed
-    const id = item.id
+    const id = item._id
 
     const type = 'TodoItem'
     return (

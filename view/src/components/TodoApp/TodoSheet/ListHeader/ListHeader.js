@@ -9,7 +9,7 @@ class ListHeader extends Component {
     super(props)
     this.state = {
       openFolder: {
-        id: this.props.openFolder,
+        _id: this.props.openFolder,
         name: this.props.openFolder
           ? this.findOpenFolderName(this.props.openFolder)
           : null
@@ -24,10 +24,11 @@ class ListHeader extends Component {
   }
 
   findOpenFolderName = openFolderID => {
-    const found = this.props.folders.filter(folder => {
-      return openFolderID === folder.id
+    const [found] = this.props.folders.filter(folder => {
+      return openFolderID === folder._id
     })
-    return found[0].name
+    if (!found) throw new Error('Open folder error. Folder not found')
+    return found.name
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -35,7 +36,7 @@ class ListHeader extends Component {
     if (prevProps.openFolder !== this.props.openFolder) {
       this.setState({
         openFolder: {
-          id: this.props.openFolder,
+          _id: this.props.openFolder,
           name: this.findOpenFolderName(this.props.openFolder)
         }
       })
@@ -62,7 +63,7 @@ class ListHeader extends Component {
       <div className={type}>
         <form onSubmit={this.handleSubmit}>
           <input
-            id={openFolder.id}
+            id={openFolder._id}
             className={`${type}__folder--input`}
             type="text"
             value={openFolder.name}
@@ -70,7 +71,7 @@ class ListHeader extends Component {
             autoComplete="off"
           />
         </form>
-        <FolderOptions openFolder={openFolder.id} />
+        <FolderOptions openFolder={openFolder._id} />
       </div>
     )
   }

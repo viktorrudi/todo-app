@@ -30,7 +30,7 @@ export default function ChangeFolder () {
           {context.folders.map(folder => (
             <div
               className={`${type}__folders--folder`}
-              key={folder.id}
+              key={folder._id}
               onClick={() => changeItemFolder(folder)}
             >
               {folder.name}

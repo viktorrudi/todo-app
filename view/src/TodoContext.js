@@ -2,8 +2,8 @@ import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { findItemInState, randomColor } from './utilities/utilities'
-import * as DBtodoItems from './database/todo-items.json'
-import * as DBtodoFolders from './database/todo-folders.json'
+// import * as DBtodoItems from './database/todo-items.json'
+// import * as DBtodoFolders from './database/todo-folders.json'
 
 export const TodoContext = createContext()
 
@@ -12,7 +12,7 @@ class TodoProvider extends Component {
     super(props)
     this.state = {
       items: [],
-      folders: DBtodoFolders.default,
+      folders: [],
       openFolder: null,
       openItem: null,
       toggleTodoComplete: this.toggleTodoComplete,
@@ -35,7 +35,6 @@ class TodoProvider extends Component {
       .get('http://localhost:27018/api/items')
       .then(response => {
         this.setState({ items: response.data })
-        console.log(response.data)
       })
       .catch(error => {
         this.setState({
@@ -74,57 +73,87 @@ class TodoProvider extends Component {
   }
 
   toggleTodoComplete = todoID => {
+    let [target] = this.state.items.filter(item => item._id === todoID)
+    let newCompletedStatus = !target.completed
+
+    // State update
     this.setState(prevState => {
-      const updatedItems = prevState.items.map(item => {
-        if (item.id === todoID) {
-          item.completed = !item.completed
-        }
-        axios.patch('http://localhost:27018/api/toggle-complete/' + todoID, {
-          completed: item.completed
-        })
+      return prevState.items.map(item => {
+        if (todoID === item._id) item.completed = newCompletedStatus
         return item
       })
-      prevState.items = updatedItems
-      return prevState.items
     })
+
+    // DB update
+    axios
+      .patch(`http://localhost:27018/api/toggle-complete-item/?id=${todoID}`, {
+        completed: newCompletedStatus
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
   }
 
   createFolder = newFolderName => {
-    const newFolder = {
-      id: this.state.folders.length + 1,
-      name: newFolderName,
-      color: randomColor()
-    }
-    this.setState({
-      folders: [...this.state.folders, newFolder]
-    })
+    // DB update
+    axios
+      .post('http://localhost:27018/api/folders/', {
+        name: newFolderName,
+        color: randomColor()
+      })
+      .then(response => {
+        const newFolder = response.data.folder
+
+        // State update
+        this.setState({ folders: [...this.state.folders, newFolder] })
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
   }
 
   addTodoItem = newItemText => {
     const now = new Date()
-    const newItem = {
-      id: this.state.items.length + 1,
-      text: newItemText,
-      folder: this.state.openFolder,
-      completed: false,
-      creationStamp: now.toLocaleString('en-GB')
-    }
 
-    this.setState({
-      items: [...this.state.items, newItem]
-    })
+    // DB update
+    axios
+      .post('http://localhost:27018/api/items/', {
+        text: newItemText,
+        folder: this.state.openFolder,
+        completed: false,
+        creationStamp: now.toLocaleString('en-GB')
+      })
+      .then(response => {
+        const newItem = response.data.todo
+
+        // State update
+        this.setState({ items: [...this.state.items, newItem] })
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
   }
 
   removeTodoItem = itemID => {
     // Finds the related ID inside state, of clicked item
     const targeted = findItemInState(itemID, this.state.items)
+
     // Returns a new array of todolist items without the ID of the clicked item
-    const newItems = this.state.items.filter(item => item.id !== targeted.id)
+    const newItems = this.state.items.filter(item => item._id !== targeted._id)
     // Sets new state containing the new items
     this.setState({
       items: [...newItems],
       openItem: null
     })
+
+    // DB update
+    axios.delete(`http://localhost:27018/api/items/?id=${itemID}`)
   }
 
   removeFolder = folderID => {
@@ -142,6 +171,9 @@ class TodoProvider extends Component {
       prevState.openItem = null
       return prevState.folders
     })
+
+    // DB update
+    axios.delete(`http://localhost:27018/api/folders/?id=${folderID}`)
   }
 
   updateFolder = (selectedID, newName) => {

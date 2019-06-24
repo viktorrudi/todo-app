@@ -12,7 +12,7 @@ class Folder extends Component {
   }
 
   handleClick = e => {
-    this.context.setOpenFolder(parseInt(e.target.id))
+    this.context.setOpenFolder(e.target.id)
   }
 
   render () {
@@ -25,7 +25,7 @@ class Folder extends Component {
         onMouseOver={this.handleHover}
         onMouseLeave={this.handleHover}
         onClick={this.handleClick}
-        id={folder.id}
+        id={folder._id}
       >
         <span
           className={`${type}--icon`}
