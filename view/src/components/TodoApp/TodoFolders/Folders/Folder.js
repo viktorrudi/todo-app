@@ -12,6 +12,7 @@ class Folder extends Component {
   }
 
   handleClick = e => {
+    this.context.setMarkedForDelete(false)
     this.context.setOpenFolder(e.target.id)
   }
 

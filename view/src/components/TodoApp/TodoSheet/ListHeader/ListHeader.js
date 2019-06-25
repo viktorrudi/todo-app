@@ -19,15 +19,14 @@ class ListHeader extends Component {
 
   static contextType = TodoContext
   static propTypes = {
-    openFolder: PropTypes.number,
+    openFolder: PropTypes.string,
     folders: PropTypes.array
   }
 
   findOpenFolderName = openFolderID => {
-    const [found] = this.props.folders.filter(folder => {
-      return openFolderID === folder._id
-    })
-    if (!found) throw new Error('Open folder error. Folder not found')
+    const [found] = this.props.folders.filter(
+      folder => openFolderID === folder._id
+    )
     return found.name
   }
 
@@ -43,12 +42,21 @@ class ListHeader extends Component {
     }
   }
 
+  handleMarkForDelete = () => {
+    this.setState({
+      markedForDelete: !this.state.markedForDelete
+    })
+  }
+
   handleChange = e => {
     this.setState({
       openFolder: {
         name: e.target.value
       }
     })
+    if (this.context.markedForDelete) {
+      this.context.setMarkedForDelete(false)
+    }
   }
 
   handleSubmit = e => {
@@ -57,8 +65,9 @@ class ListHeader extends Component {
   }
 
   render () {
-    const { openFolder } = this.state
+    const { openFolder, markedForDelete } = this.state
     const type = 'ListHeader'
+
     return (
       <div className={type}>
         <form onSubmit={this.handleSubmit}>
@@ -71,7 +80,11 @@ class ListHeader extends Component {
             autoComplete="off"
           />
         </form>
-        <FolderOptions openFolder={openFolder._id} />
+        <FolderOptions
+          openFolder={openFolder._id}
+          handleMarkForDelete={this.handleMarkForDelete}
+          markForDelete={markedForDelete}
+        />
       </div>
     )
   }

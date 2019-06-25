@@ -10,11 +10,20 @@ export const TodoContext = createContext()
 class TodoProvider extends Component {
   constructor (props) {
     super(props)
+    this.server = {
+      items: 'http://localhost:27018/api/items/',
+      folders: 'http://localhost:27018/api/folders/'
+    }
     this.state = {
+      // Values
       items: [],
       folders: [],
       openFolder: null,
       openItem: null,
+      markedForDelete: false,
+      errors: [],
+      // Actions
+      setMarkedForDelete: this.setMarkedForDelete,
       toggleTodoComplete: this.toggleTodoComplete,
       addTodoItem: this.addTodoItem,
       removeTodoItem: this.removeTodoItem,
@@ -23,16 +32,16 @@ class TodoProvider extends Component {
       createFolder: this.createFolder,
       updateFolder: this.updateFolder,
       setOpenItem: this.setOpenItem,
-      updateItem: this.updateItem,
-      errors: []
+      updateItem: this.updateItem
     }
   }
 
-  /// ///////////////////////////////////
+  /// Actions ///
+
   componentDidMount () {
     // Set items
     axios
-      .get('http://localhost:27018/api/items')
+      .get(this.server.items)
       .then(response => {
         this.setState({ items: response.data })
       })
@@ -44,7 +53,7 @@ class TodoProvider extends Component {
 
     // Set folders
     axios
-      .get('http://localhost:27018/api/folders')
+      .get(this.server.folders)
       .then(response => {
         this.setState({ folders: response.data })
       })
@@ -54,7 +63,6 @@ class TodoProvider extends Component {
         })
       })
   }
-  /// ///////////////////////////////////
 
   static propTypes = {
     children: PropTypes.object
@@ -72,48 +80,10 @@ class TodoProvider extends Component {
     })
   }
 
-  toggleTodoComplete = todoID => {
-    let [target] = this.state.items.filter(item => item._id === todoID)
-    let newCompletedStatus = !target.completed
-
-    // State update
-    this.setState(prevState => {
-      return prevState.items.map(item => {
-        if (todoID === item._id) item.completed = newCompletedStatus
-        return item
-      })
+  setMarkedForDelete = status => {
+    this.setState({
+      markedForDelete: status
     })
-
-    // DB update
-    axios
-      .patch(`http://localhost:27018/api/toggle-complete-item/?id=${todoID}`, {
-        completed: newCompletedStatus
-      })
-      .catch(error => {
-        this.setState({
-          errors: [{ message: error }]
-        })
-      })
-  }
-
-  createFolder = newFolderName => {
-    // DB update
-    axios
-      .post('http://localhost:27018/api/folders/', {
-        name: newFolderName,
-        color: randomColor()
-      })
-      .then(response => {
-        const newFolder = response.data.folder
-
-        // State update
-        this.setState({ folders: [...this.state.folders, newFolder] })
-      })
-      .catch(error => {
-        this.setState({
-          errors: [{ message: error }]
-        })
-      })
   }
 
   addTodoItem = newItemText => {
@@ -121,7 +91,7 @@ class TodoProvider extends Component {
 
     // DB update
     axios
-      .post('http://localhost:27018/api/items/', {
+      .post(this.server.items, {
         text: newItemText,
         folder: this.state.openFolder,
         completed: false,
@@ -140,12 +110,57 @@ class TodoProvider extends Component {
       })
   }
 
+  toggleTodoComplete = todoID => {
+    let [target] = this.state.items.filter(item => item._id === todoID)
+    let newCompletedStatus = !target.completed
+
+    // State update
+    this.setState(prevState => {
+      return prevState.items.map(item => {
+        if (todoID === item._id) item.completed = newCompletedStatus
+        return item
+      })
+    })
+
+    // DB update
+    axios
+      .patch(`${this.server.items}update-status/?id=${todoID}`, {
+        completed: newCompletedStatus
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
+  }
+
+  createFolder = newFolderName => {
+    // DB update
+    axios
+      .post(this.server.folders, {
+        name: newFolderName,
+        color: randomColor()
+      })
+      .then(response => {
+        const newFolder = response.data.folder
+
+        // State update
+        this.setState({ folders: [...this.state.folders, newFolder] })
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
+  }
+
   removeTodoItem = itemID => {
     // Finds the related ID inside state, of clicked item
     const targeted = findItemInState(itemID, this.state.items)
 
     // Returns a new array of todolist items without the ID of the clicked item
     const newItems = this.state.items.filter(item => item._id !== targeted._id)
+
     // Sets new state containing the new items
     this.setState({
       items: [...newItems],
@@ -153,27 +168,29 @@ class TodoProvider extends Component {
     })
 
     // DB update
-    axios.delete(`http://localhost:27018/api/items/?id=${itemID}`)
+    axios.delete(`${this.server.items}?id=${itemID}`)
   }
 
   removeFolder = folderID => {
     this.setState(prevState => {
       // Finding and removing targeted folder from state
       prevState.folders = prevState.folders.filter(
-        prevFolder => prevFolder.id !== folderID
+        prevFolder => prevFolder._id !== folderID
       )
+
       // Finding and removing all items in that folder
       prevState.items = prevState.items.filter(
         prevItem => prevItem.folder !== folderID
       )
+
       // Returning to main overview of tasks
       prevState.openFolder = null
       prevState.openItem = null
       return prevState.folders
     })
 
-    // DB update
-    axios.delete(`http://localhost:27018/api/folders/?id=${folderID}`)
+    // DB update - delete item from DB
+    axios.delete(`${this.server.folders}?id=${folderID}`)
   }
 
   updateFolder = (selectedID, newName) => {
@@ -185,23 +202,29 @@ class TodoProvider extends Component {
       }
 
       // Return complete folder object matching selectedID
-      let foundFolder = prevState.folders.filter(prevFolder => {
+      let [foundFolder] = prevState.folders.filter(prevFolder => {
         return prevFolder.id === targetedFolder.id
       })
 
       // Renaming the found folder with the asked name
-      foundFolder[0].name = targetedFolder.name
+      foundFolder.name = targetedFolder.name
 
       // Inserting object with updated name into new array
       const updatedFolders = prevState.folders.map(prevFolder => {
-        if (foundFolder[0] === prevFolder) {
+        if (foundFolder === prevFolder) {
           foundFolder = prevFolder
         }
         return prevFolder
       })
+
       // Update existing folders with array of new folders (with renamed folder)
       prevState.folders = updatedFolders
       return prevState.folders
+    })
+
+    // DB update
+    axios.patch(`${this.server.folders}update-name/?id=${selectedID}`, {
+      name: newName
     })
   }
 
@@ -209,21 +232,28 @@ class TodoProvider extends Component {
     if (task === 'CHANGE_ITEM_FOLDER') {
       this.setState(prevState => {
         const updatedItems = prevState.items.map(item => {
-          // Matches item with the open item ID
-          if (item.id === this.state.openItem) {
-            item.folder = requestedItem.id
+          // Matches item with the ID of the open item
+          if (item._id === this.state.openItem) {
+            item.folder = requestedItem._id
+            console.log('yes')
           }
           return item
         })
         prevState.items = updatedItems
         return prevState
       })
+
+      // DB update
+      axios.patch(
+        `${this.server.items}update-folder/?id=${this.state.openItem}`,
+        { folder: requestedItem._id }
+      )
     }
 
     if (task === 'UPDATE_ITEM_TEXT') {
       this.setState(prevState => {
         const updatedItems = prevState.items.map(item => {
-          if (item.id === requestedItem) {
+          if (item._id === requestedItem) {
             item.text = newItemText
           }
           return item
@@ -232,6 +262,11 @@ class TodoProvider extends Component {
         return prevState
       })
     }
+
+    // DB update
+    axios.patch(`${this.server.items}update-text/?id=${this.state.openItem}`, {
+      text: newItemText
+    })
   }
 
   render () {
