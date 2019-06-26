@@ -3,6 +3,7 @@
 
 body {
   color: $text-main;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: 'Karla', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -12,7 +13,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+// Spinner
+.css-12imlsk-wrapper-wrapper {
+  position: fixed !important;
+  width: 100vw !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  .css-1x6aoof-style,
+  .css-l4j5ob-style {
+    background-color: $blue !important;
+  }
+}
+
 #root {
   display: flex;
+  min-height: 100vh;
   background: $main-background;
 }

@@ -9,8 +9,8 @@ class TodoProvider extends Component {
   constructor (props) {
     super(props)
     this.server = {
-      items: 'http://localhost:27018/api/items/',
-      folders: 'http://localhost:27018/api/folders/'
+      items: 'http://localhost:4000/api/items/',
+      folders: 'http://localhost:4000/api/folders/'
     }
     this.state = {
       // Values

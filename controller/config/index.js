@@ -7,6 +7,6 @@ module.exports = {
     port: process.env.PORT || 4000,
   },
   db: {
-    uri: process.env.DB_CONNECTION || 'mongodb://127.0.0.1/:27018',
+    uri: process.env.DB_CONNECTION || 'mongodb://127.0.0.1:27018/todos',
   },
 }
