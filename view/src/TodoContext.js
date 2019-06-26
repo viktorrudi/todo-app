@@ -2,8 +2,6 @@ import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { findItemInState, randomColor } from './utilities/utilities'
-// import * as DBtodoItems from './database/todo-items.json'
-// import * as DBtodoFolders from './database/todo-folders.json'
 
 export const TodoContext = createContext()
 
@@ -22,6 +20,7 @@ class TodoProvider extends Component {
       openItem: null,
       markedForDelete: false,
       errors: [],
+      loaded: 0,
       // Actions
       setMarkedForDelete: this.setMarkedForDelete,
       toggleTodoComplete: this.toggleTodoComplete,
@@ -44,6 +43,7 @@ class TodoProvider extends Component {
       .get(this.server.items)
       .then(response => {
         this.setState({ items: response.data })
+        this.setState({ loaded: this.state.loaded + 1 })
       })
       .catch(error => {
         this.setState({
@@ -56,6 +56,7 @@ class TodoProvider extends Component {
       .get(this.server.folders)
       .then(response => {
         this.setState({ folders: response.data })
+        this.setState({ loaded: this.state.loaded + 1 })
       })
       .catch(error => {
         this.setState({
@@ -168,7 +169,11 @@ class TodoProvider extends Component {
     })
 
     // DB update
-    axios.delete(`${this.server.items}?id=${itemID}`)
+    axios.delete(`${this.server.items}?id=${itemID}`).catch(error => {
+      this.setState({
+        errors: [{ message: error }]
+      })
+    })
   }
 
   removeFolder = folderID => {
@@ -190,20 +195,24 @@ class TodoProvider extends Component {
     })
 
     // DB update - delete item from DB
-    axios.delete(`${this.server.folders}?id=${folderID}`)
+    axios.delete(`${this.server.folders}?id=${folderID}`).catch(error => {
+      this.setState({
+        errors: [{ message: error }]
+      })
+    })
   }
 
   updateFolder = (selectedID, newName) => {
     // TODO: Make into a receiver of tasks (reducer?)
     this.setState(prevState => {
       const targetedFolder = {
-        id: selectedID,
+        _id: selectedID,
         name: newName
       }
 
       // Return complete folder object matching selectedID
       let [foundFolder] = prevState.folders.filter(prevFolder => {
-        return prevFolder.id === targetedFolder.id
+        return prevFolder._id === targetedFolder._id
       })
 
       // Renaming the found folder with the asked name
@@ -223,9 +232,15 @@ class TodoProvider extends Component {
     })
 
     // DB update
-    axios.patch(`${this.server.folders}update-name/?id=${selectedID}`, {
-      name: newName
-    })
+    axios
+      .patch(`${this.server.folders}update-name/?id=${selectedID}`, {
+        name: newName
+      })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
   }
 
   updateItem = (task, requestedItem, newItemText) => {
@@ -244,13 +259,19 @@ class TodoProvider extends Component {
       })
 
       // DB update
-      axios.patch(
-        `${this.server.items}update-folder/?id=${this.state.openItem}`,
-        { folder: requestedItem._id }
-      )
+      axios
+        .patch(`${this.server.items}update-folder/?id=${this.state.openItem}`, {
+          folder: requestedItem._id
+        })
+        .catch(error => {
+          this.setState({
+            errors: [{ message: error }]
+          })
+        })
     }
 
     if (task === 'UPDATE_ITEM_TEXT') {
+      // State update
       this.setState(prevState => {
         const updatedItems = prevState.items.map(item => {
           if (item._id === requestedItem) {
@@ -261,12 +282,18 @@ class TodoProvider extends Component {
         prevState.items = updatedItems
         return prevState
       })
-    }
 
-    // DB update
-    axios.patch(`${this.server.items}update-text/?id=${this.state.openItem}`, {
-      text: newItemText
-    })
+      // DB update
+      axios
+        .patch(`${this.server.items}update-text/?id=${this.state.openItem}`, {
+          text: newItemText
+        })
+        .catch(error => {
+          this.setState({
+            errors: [{ message: error }]
+          })
+        })
+    }
   }
 
   render () {

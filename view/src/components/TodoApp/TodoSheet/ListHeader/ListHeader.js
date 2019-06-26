@@ -30,7 +30,7 @@ class ListHeader extends Component {
     return found.name
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = prevProps => {
     // Updates state to contain currently selected folder (from props)
     if (prevProps.openFolder !== this.props.openFolder) {
       this.setState({

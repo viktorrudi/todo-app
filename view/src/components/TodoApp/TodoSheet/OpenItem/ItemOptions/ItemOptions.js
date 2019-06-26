@@ -20,6 +20,6 @@ export default function ItemOptions (props) {
 }
 
 ItemOptions.propTypes = {
-  openItem: PropTypes.number,
+  openItem: PropTypes.string,
   delete: PropTypes.func
 }

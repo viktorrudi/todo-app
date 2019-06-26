@@ -9,14 +9,14 @@ class OpenItem extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      itemID: null,
+      itemID: '',
       itemText: ''
     }
   }
 
   static propTypes = {
     items: PropTypes.array,
-    openItem: PropTypes.number
+    openItem: PropTypes.string
   }
 
   static contextType = TodoContext

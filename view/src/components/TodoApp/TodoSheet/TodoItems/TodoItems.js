@@ -8,13 +8,15 @@ import { findItemsInFolder } from '../../../../utilities/utilities'
 import { TodoContext } from '../../../../TodoContext'
 
 export default function TodoItems (props) {
-  // Todocontext
   const context = useContext(TodoContext)
 
   const findItemFolder = itemFolderID => {
-    const allFolders = context.folders
-    let result = allFolders.filter(folder => folder._id === itemFolderID)
-    return result[0]
+    if (context.loaded === 2) {
+      const [folder] = context.folders.filter(
+        folder => folder._id === itemFolderID
+      )
+      return folder
+    }
   }
 
   // Finds and returns todo items associated with the folder
@@ -32,11 +34,7 @@ export default function TodoItems (props) {
   let completedSorted = _.sortBy(dateFilter, ['completed'])
 
   let allItems = completedSorted.map(item => (
-    <TodoItem
-      key={item._id}
-      item={item}
-      openfolder={findItemFolder(item.folder)}
-    />
+    <TodoItem key={item._id} item={item} findFolder={findItemFolder} />
   ))
 
   return (

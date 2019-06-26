@@ -66,5 +66,14 @@
   }
   &__item {
     width: 100%;
+    &--folder {
+      color: #9a9a9a;
+      position: absolute;
+      top: -6px;
+      right: 9px;
+      font-size: 0.7rem;
+      background: #efefef;
+      padding: 2px 5px;
+    }
   }
 }

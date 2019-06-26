@@ -40,7 +40,6 @@ router.route('/').post((req, res) => {
 // **** DELETE **** //
 
 // Delete folder
-// TODO: Also delete all items in folder
 router.route('/').delete((req, res) => {
   const folderID = req.query.id
 

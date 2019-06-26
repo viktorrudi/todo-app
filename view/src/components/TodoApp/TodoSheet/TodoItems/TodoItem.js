@@ -14,29 +14,28 @@ class TodoItem extends Component {
     openfolder: PropTypes.shape({ ...propTypeForFolders })
   }
 
-  handleComplete = () => {
-    this.context.toggleTodoComplete(this.props.item._id)
-  }
-
   handleClick = (e, clickedItem) => {
-    if (e.target.type !== 'checkbox') {
-      // FIXME: This is called twice?
+    if (e.target.tagName === 'SPAN') {
+      this.context.toggleTodoComplete(this.props.item._id)
+    }
+    if (e.target.tagName === 'DIV') {
       this.context.setOpenItem(clickedItem._id)
     }
   }
 
   render () {
-    // FIXME: Something happening with opening folder. Cause of double rendering?
-    const { item } = this.props
+    const { item, findFolder } = this.props
     const completed = item.completed
-    const id = item._id
+
+    let itemFolder
+    itemFolder = findFolder(item.folder)
 
     const type = 'TodoItem'
     return (
       <div
         className={type}
         onClick={e => {
-          this.handleClick(e, this.props.item)
+          this.handleClick(e, item)
         }}
       >
         {/* Custom checkbox */}
@@ -44,18 +43,23 @@ class TodoItem extends Component {
           <input
             type="checkbox"
             className={`${type}__action--done`}
-            onChange={this.handleComplete}
-            checked={this.props.item.completed}
-            id={id}
+            // onChange={e => this.handleClick(e, null)}
+            checked={item.completed}
+            id={item._id}
           />
-          <span className="check-toggle" />
+          <span className="check-toggle" onClick={() => this.handleClick} />
         </label>
 
         <div
           className={`${type}__item`}
           style={completed ? { color: '#aaa' } : { color: '#000' }}
         >
-          {this.props.item.text}
+          {item.text}
+          {this.context.openFolder ? null : (
+            <aside className={`${type}__item--folder`}>
+              {itemFolder ? itemFolder.name : null}
+            </aside>
+          )}
         </div>
       </div>
     )

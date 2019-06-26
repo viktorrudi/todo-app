@@ -19,7 +19,7 @@ class TodoSheet extends Component {
   static contextType = TodoContext
 
   static propTupes = {
-    openItem: PropTypes.object
+    openItem: PropTypes.string
   }
 
   handleClick = item => {
