@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from 'react'
+import React, { useState, useContext } from 'react'
 import { TodoContext } from '../../../../../TodoContext'
 import './ItemOptions.scss'
 import { MdFolder } from 'react-icons/md'
@@ -20,7 +20,7 @@ export default function ChangeFolder () {
 
   const type = 'ChangeFolder'
   return (
-    <Fragment>
+    <>
       <div className={`${type} small-btn btn-update`} onClick={handleClick}>
         <MdFolder /> Change folder
       </div>
@@ -38,6 +38,6 @@ export default function ChangeFolder () {
           ))}
         </div>
       ) : null}
-    </Fragment>
+    </>
   )
 }

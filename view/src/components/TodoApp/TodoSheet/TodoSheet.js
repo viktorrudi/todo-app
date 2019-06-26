@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { TodoContext } from '../../../TodoContext'
 import PropTypes from 'prop-types'
 import AddTodo from './AddTodo/AddTodo'
@@ -57,7 +57,7 @@ class TodoSheet extends Component {
     const { items, folders, openFolder, openItem } = this.context
 
     return (
-      <Fragment>
+      <>
         <div className={`${type}`}>
           <div className={`${type}__items`}>
             <AddTodo items={items} openFolder={openFolder} />
@@ -79,7 +79,7 @@ class TodoSheet extends Component {
           </div>
         </div>
         {openItem && <OpenItem items={items} openItem={openItem} />}
-      </Fragment>
+      </>
     )
   }
 }

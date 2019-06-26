@@ -1,7 +1,9 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
 import { TodoContext } from '../../TodoContext'
 import TodoFolders from './TodoFolders/TodoFolders'
 import TodoSheet from './TodoSheet/TodoSheet'
+import AppAlerts from './AppAlerts/AppAlerts'
+import Loader from '../Loader/Loader'
 import './TodoApp.scss'
 
 export default function TodoApp () {
@@ -10,17 +12,22 @@ export default function TodoApp () {
   if (context.loaded === 2) {
     var loaded = true
   }
+
   return (
-    <Fragment>
-      {loaded ? (
-        <Fragment>
+    <>
+      {// If loaded, display folders and items
+        loaded ? (
+        <>
+          {context.errors ? <AppAlerts permanent={false} /> : null}
           <TodoFolders />
           <TodoSheet />
-        </Fragment>
-      ) : (
-        // TODO: create spinner and give it a bit of delay
-        <h1>Loadaing...</h1>
-      )}
-    </Fragment>
+        </>
+        ) : (
+        <>
+          <Loader loaded={loaded} />
+          {context.errors ? <AppAlerts permanent={true} /> : null}
+        </>
+        )}
+    </>
   )
 }

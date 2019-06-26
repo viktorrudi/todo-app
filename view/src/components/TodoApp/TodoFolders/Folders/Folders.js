@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { TodoContext } from '../../../../TodoContext'
 import Folder from './Folder'
 import './Folders.scss'
@@ -19,7 +19,7 @@ class Folders extends Component {
 
   render () {
     return (
-      <Fragment>
+      <>
         <div className="Folders">
           {this.context.folders.map(folder => (
             <Folder
@@ -30,7 +30,7 @@ class Folders extends Component {
             />
           ))}
         </div>
-      </Fragment>
+      </>
     )
   }
 }

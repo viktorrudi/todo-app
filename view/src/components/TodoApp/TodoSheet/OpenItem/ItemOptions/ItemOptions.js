@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ChangeFolder from './ChangeFolder'
 import { MdDelete } from 'react-icons/md'
 
 export default function ItemOptions (props) {
   return (
-    <Fragment>
+    <>
       <ChangeFolder />
       <div
         openitem={props.openItem}
@@ -15,7 +15,7 @@ export default function ItemOptions (props) {
         <MdDelete />
         Delete note
       </div>
-    </Fragment>
+    </>
   )
 }
 

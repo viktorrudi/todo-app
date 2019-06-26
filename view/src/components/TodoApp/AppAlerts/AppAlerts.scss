@@ -1,0 +1,35 @@
+@import '../../custom-variables.scss';
+
+.AppAlerts {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background: $red;
+  z-index: 10;
+  padding: 10px 0;
+  color: $white;
+  font-size: 2rem;
+  font-weight: 700;
+  opacity: 1;
+  transform: translateY(50px);
+  transition: all 0.3s ease-in-out;
+  &.closed {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  &.open {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  small {
+    font-size: 50%;
+    display: block;
+  }
+  span {
+    position: relative;
+    top: 3px;
+    margin: 0 5px;
+  }
+}
