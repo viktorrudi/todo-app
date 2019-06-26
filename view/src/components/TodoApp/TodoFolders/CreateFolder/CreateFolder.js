@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TodoContext } from '../../../../TodoContext'
+import { TodoContext } from '../../TodoContext'
 import './CreateFolder.scss'
 
 class CreateFolder extends Component {

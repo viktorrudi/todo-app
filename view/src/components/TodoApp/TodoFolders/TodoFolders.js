@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { TodoContext } from '../../../TodoContext'
+import { TodoContext } from '../TodoContext'
 import Folders from './Folders/Folders'
 import CreateFolder from './CreateFolder/CreateFolder'
 import { MdFolder } from 'react-icons/md'

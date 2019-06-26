@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import TodoApp from './components/TodoApp/TodoApp'
 import Login from './components/Login'
-import TodoProvider from './TodoContext'
+import TodoProvider from './components/TodoApp/TodoContext'
 
 class App extends Component {
   render () {

@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import { findItemInState, randomColor } from './utilities/utilities'
+import { findItemInState, randomColor } from '../../utilities/utilities'
 
 export const TodoContext = createContext()
 

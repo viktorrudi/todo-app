@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 // import { todoReducer } from '../../../../reducers'
-import { TodoContext } from '../../../../TodoContext'
+import { TodoContext } from '../../TodoContext'
 import './AddTodo.scss'
 
 export default function AddTodo () {

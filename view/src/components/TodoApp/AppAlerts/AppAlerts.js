@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { TodoContext } from '../../../TodoContext'
+import { TodoContext } from '../TodoContext'
 import './AppAlerts.scss'
 
 export default function AppAlerts (props) {
@@ -36,10 +36,12 @@ export default function AppAlerts (props) {
       {errorMsgs.map(errorMessage => {
         const { response } = errorMessage.message
         const { message } = errorMessage.message
+        const status = response.status || 'status unknown'
+        const data = response.data || 'could not fetch data'
         return (
           <p>
             <small>
-              {response.status}: {response.data}
+              {status}: {data}
             </small>
             <span role="img" aria-label="Error">
               😱

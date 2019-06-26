@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react'
-import { TodoContext } from '../../../../TodoContext'
+import { TodoContext } from '../../TodoContext'
 import PropTypes from 'prop-types'
 import { propTypeForItems, propTypeForFolders } from '../../../../proptypes'
 import './TodoItem.scss'

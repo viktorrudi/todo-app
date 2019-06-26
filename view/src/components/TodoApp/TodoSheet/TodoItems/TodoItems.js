@@ -5,7 +5,7 @@ import NoItems from './NoItems/NoItems'
 import './TodoItem.scss'
 import _ from 'lodash'
 import { findItemsInFolder } from '../../../../utilities/utilities'
-import { TodoContext } from '../../../../TodoContext'
+import { TodoContext } from '../../TodoContext'
 
 export default function TodoItems (props) {
   const context = useContext(TodoContext)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TodoContext } from '../../../../../TodoContext'
+import { TodoContext } from '../../../TodoContext'
 import { MdDelete } from 'react-icons/md'
 
 export default class FolderOptions extends Component {

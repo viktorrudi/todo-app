@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TodoContext } from '../../../TodoContext'
+import { TodoContext } from '../TodoContext'
 import PropTypes from 'prop-types'
 import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'

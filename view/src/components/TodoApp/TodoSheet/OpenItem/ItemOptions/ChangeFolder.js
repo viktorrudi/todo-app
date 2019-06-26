@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { TodoContext } from '../../../../../TodoContext'
+import { TodoContext } from '../../../TodoContext'
 import './ItemOptions.scss'
 import { MdFolder } from 'react-icons/md'
 

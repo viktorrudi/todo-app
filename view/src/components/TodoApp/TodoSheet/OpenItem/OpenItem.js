@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './OpenItem.scss'
 import PropTypes from 'prop-types'
 import ItemOptions from './ItemOptions/ItemOptions'
-import { TodoContext } from '../../../../TodoContext'
+import { TodoContext } from '../../TodoContext'
 import { MdClose } from 'react-icons/md'
 
 class OpenItem extends Component {
