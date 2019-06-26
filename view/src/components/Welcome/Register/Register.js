@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import './Login.scss'
+import PropTypes from 'prop-types'
+import '../Welcome.scss'
 
-export default function Login () {
-  const [loggedIn, setLoggedIn] = useState(false)
+export default function Register (props) {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
@@ -10,17 +10,20 @@ export default function Login () {
     e.preventDefault()
   }
 
-  const type = 'Login'
+  const type = 'Form'
   return (
-    <div className={type}>
-      <div className={`${type}__wrapper`}>
-        <span role="img">👌</span>
+    <div id="register" className={`${type}__container`}>
+      <div className={`${type}__container--wrapper`}>
+        <span role="img" aria-label="Register">
+          👋
+        </span>
+        <h2>Register</h2>
         <form handleSubmit={handleSubmit}>
           <div className="input-wrapper">
             <label htmlFor="email" />
             <input
               type="text"
-              id="email"
+              id="register_email"
               placeholder="email"
               value={userName}
               onChange={e => setUserName(e.target.value)}
@@ -30,17 +33,24 @@ export default function Login () {
             <label htmlFor="password" />
             <input
               type="password"
-              id="password"
+              id="register_password"
               placeholder="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
             <div className="input-wrapper">
-              <input type="submit" value="Login" />
+              <input type="submit" value="Register" />
             </div>
           </div>
         </form>
+        <div className="swap-form" onClick={() => props.setView('login')}>
+          I have a user
+        </div>
       </div>
     </div>
   )
+}
+
+Register.propTypes = {
+  setView: PropTypes.func
 }

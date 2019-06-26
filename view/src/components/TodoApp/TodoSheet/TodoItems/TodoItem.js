@@ -43,7 +43,7 @@ class TodoItem extends Component {
           <input
             type="checkbox"
             className={`${type}__action--done`}
-            // onChange={e => this.handleClick(e, null)}
+            onChange={() => this.handleClick}
             checked={item.completed}
             id={item._id}
           />

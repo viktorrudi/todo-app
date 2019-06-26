@@ -26,7 +26,6 @@ router.route('/').get((req, res) => {
 // Save new folder
 router.route('/').post((req, res) => {
   const folder = new TodoFolder(req.body)
-  console.log(folder)
   folder
     .save()
     .then(folder => {

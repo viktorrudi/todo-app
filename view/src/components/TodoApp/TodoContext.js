@@ -250,7 +250,6 @@ class TodoProvider extends Component {
           // Matches item with the ID of the open item
           if (item._id === this.state.openItem) {
             item.folder = requestedItem._id
-            console.log('yes')
           }
           return item
         })

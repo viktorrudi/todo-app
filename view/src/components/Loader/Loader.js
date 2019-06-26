@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { BarLoader } from 'react-spinners'
 
 export default function Loader (props) {
