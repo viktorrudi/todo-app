@@ -1,14 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import '../Welcome.scss'
+import { AppContext } from '../../../AppContext'
 
 export default function Login (props) {
-  const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleSubmit = e => {
-    e.preventDefault()
+  const initialText = {
+    login: 'Login ',
+    loggingIn: 'Logging in...'
   }
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [loginText, setLoginText] = useState(initialText.login)
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(true)
+
+  const context = useContext(AppContext)
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    setLoginText(initialText.loggingIn)
+    setButtonIsDisabled(true)
+    await context.handleLogin(email, password)
+  }
+
+  useEffect(() => {
+    if (context.httpStatus === 401) {
+      setLoginText(context.loginError)
+      setButtonIsDisabled(true)
+    }
+    if (!context.loginError) {
+      setLoginText(initialText.login)
+    }
+    if (context.httpStatus === 200) {
+      setLoginText(initialText.loggingIn)
+    }
+    if (email.length > 4 && password.length >= 4) {
+      setButtonIsDisabled(false)
+    } else {
+      setButtonIsDisabled(true)
+    }
+  })
 
   const type = 'Form'
   return (
@@ -25,8 +55,8 @@ export default function Login (props) {
               type="text"
               id="login_email"
               placeholder="email"
-              value={userName}
-              onChange={e => setUserName(e.target.value)}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
           <div className="input-wrapper">
@@ -40,8 +70,13 @@ export default function Login (props) {
             />
           </div>
           <div className="input-wrapper">
-            <button className="login-btn" type="submit">
-              Login
+            <button
+              disabled={buttonIsDisabled}
+              className={`login-btn ${context.loginError ? 'error' : null}`}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              {loginText}
             </button>
           </div>
         </form>

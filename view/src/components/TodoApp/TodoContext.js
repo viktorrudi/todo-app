@@ -1,6 +1,7 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import AppContext from '../../AppContext'
 import { findItemInState, randomColor } from '../../utilities/utilities'
 
 export const TodoContext = createContext()
@@ -35,12 +36,16 @@ class TodoProvider extends Component {
     }
   }
 
-  /// Actions ///
+  static contextType = AppContext
 
   componentDidMount () {
     // Set items
     axios
-      .get(this.server.items)
+      .get(this.server.items, {
+        headers: {
+          'x-access-token': this.context.token
+        }
+      })
       .then(response => {
         this.setState({ items: response.data })
         this.setState({ loaded: this.state.loaded + 1 })
@@ -53,7 +58,11 @@ class TodoProvider extends Component {
 
     // Set folders
     axios
-      .get(this.server.folders)
+      .get(this.server.folders, {
+        headers: {
+          'x-access-token': this.context.token
+        }
+      })
       .then(response => {
         this.setState({ folders: response.data })
         this.setState({ loaded: this.state.loaded + 1 })
@@ -68,6 +77,8 @@ class TodoProvider extends Component {
   static propTypes = {
     children: PropTypes.object
   }
+
+  /// Actions ///
 
   setOpenItem = itemID => {
     this.setState({

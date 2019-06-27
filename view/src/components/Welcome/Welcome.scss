@@ -70,6 +70,13 @@
         }
         &.login-btn {
           background: $blue;
+          &:disabled {
+            cursor: not-allowed;
+            background: gray;
+          }
+          &.error {
+            background: $red;
+          }
         }
       }
     }
