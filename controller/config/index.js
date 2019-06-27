@@ -9,4 +9,8 @@ module.exports = {
   db: {
     uri: process.env.DB_CONNECTION || 'mongodb://127.0.0.1:27018/todos',
   },
+  auth: {
+    secret: 'secretKey',
+    expireTime: '1h',
+  },
 }

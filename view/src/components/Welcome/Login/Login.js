@@ -38,13 +38,15 @@ export default function Login (props) {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <div className="input-wrapper">
-              <input type="submit" value="Login" />
-            </div>
+          </div>
+          <div className="input-wrapper">
+            <button className="login-btn" type="submit">
+              Login
+            </button>
           </div>
         </form>
         <div className="swap-form" onClick={() => props.setView('register')}>
-          I need to sign up
+          I need to register
         </div>
       </div>
     </div>

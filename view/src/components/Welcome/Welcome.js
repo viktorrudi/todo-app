@@ -4,7 +4,7 @@ import Register from './Register/Register'
 
 export default function Welcome () {
   const [loggedIn, setLoggedIn] = useState(false)
-  const [view, setView] = useState('login')
+  const [view, setView] = useState('register')
   return (
     <span className={`Welcome__view ${view}`}>
       <Login setView={setView} />
