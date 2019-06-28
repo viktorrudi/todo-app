@@ -19,7 +19,12 @@ export default function Login (props) {
     e.preventDefault()
     setLoginText(initialText.loggingIn)
     setButtonIsDisabled(true)
-    await context.handleLogin(email, password)
+    try {
+      await context.handleLogin(email, password)
+      props.history.push('/todo')
+    } catch {
+      throw Error('Login error')
+    }
   }
 
   useEffect(() => {

@@ -25,6 +25,10 @@ class AppProvider extends Component {
   /// Actions ///
 
   handleLogin = (email, password) => {
+    console.log('starting login with:', {
+      email,
+      password
+    })
     const loginTimeout = setTimeout(() => {
       this.setState({ loginError: 'Request timeout', httpStatus: 408 })
     }, 2000)
@@ -35,7 +39,7 @@ class AppProvider extends Component {
         password
       })
       .then(response => {
-        console.log(response)
+        console.log('login successful', response)
         clearTimeout(loginTimeout)
         this.setState({
           loginError: '',
