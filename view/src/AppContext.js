@@ -29,9 +29,9 @@ class AppProvider extends Component {
       email,
       password
     })
-    const loginTimeout = setTimeout(() => {
-      this.setState({ loginError: 'Request timeout', httpStatus: 408 })
-    }, 2000)
+    // const loginTimeout = setTimeout(() => {
+    //   this.setState({ loginError: 'Request timeout', httpStatus: 408 })
+    // }, 2000)
 
     axios
       .post('http://localhost:4000/api/login/', {
@@ -40,21 +40,23 @@ class AppProvider extends Component {
       })
       .then(response => {
         console.log('login successful', response)
-        clearTimeout(loginTimeout)
+        // clearTimeout(loginTimeout)
         this.setState({
           loginError: '',
-          loggedIn: response.httpStatus === 200,
+          loggedIn: response.status === 200,
           httpStatus: response.status,
           userID: response.data.data.user._id,
           token: response.data.data.token
         })
       })
       .catch(err => {
-        clearTimeout(loginTimeout)
+        console.log('handleLogin catch', err)
+        // clearTimeout(loginTimeout)
         this.setState({
           httpStatus: err.response.status,
           loginError: 'Incorrect email/password'
         })
+        throw Error(err)
       })
   }
 

@@ -21,14 +21,10 @@ export default function App () {
   return (
     <Router>
       <Switch>
-        <Route
-          exact
-          path="/"
-          component={Welcome}
-          setIsAuth={context.setLoggedIn}
-        />
+        <Route exact path="/" component={Welcome} />
         <TodoProvider>
-          <PrivateRoute exact path="/todo" component={TodoApp} />
+          <Route exact path="/todo" component={TodoApp} />
+          {/* <PrivateRoute exact path="/todo" component={TodoApp} /> */}
         </TodoProvider>
       </Switch>
     </Router>

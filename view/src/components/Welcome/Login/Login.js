@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import '../Welcome.scss'
 import { AppContext } from '../../../AppContext'
 
-export default function Login (props) {
+function Login (props) {
   const initialText = {
     login: 'Login ',
     loggingIn: 'Logging in...'
@@ -15,16 +16,25 @@ export default function Login (props) {
 
   const context = useContext(AppContext)
 
-  const handleSubmit = async e => {
+  // Remove me
+  // console.log(props)
+
+  const handleSubmit = e => {
     e.preventDefault()
     setLoginText(initialText.loggingIn)
     setButtonIsDisabled(true)
-    try {
-      await context.handleLogin(email, password)
-      props.history.push('/todo')
-    } catch {
-      throw Error('Login error')
-    }
+
+    context.handleLogin(email, password)
+    console.log('login success 1')
+    props.history.push('/todo')
+
+    // try {
+    //   await context.handleLogin(email, password)
+    //   console.log('login success 1')
+    //   props.history.push('/todo')
+    // } catch {
+    //   throw Error('Login error')
+    // }
   }
 
   useEffect(() => {
@@ -96,3 +106,5 @@ export default function Login (props) {
 Login.propTypes = {
   setView: PropTypes.func
 }
+
+export default withRouter(Login)
