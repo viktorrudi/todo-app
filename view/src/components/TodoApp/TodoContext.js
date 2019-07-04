@@ -1,7 +1,6 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import AppContext from '../../AppContext'
 import { findItemInState, randomColor } from '../../utilities/utilities'
 
 export const TodoContext = createContext()
@@ -72,52 +71,6 @@ class TodoProvider extends Component {
       setOpenItem: this.setOpenItem,
       updateItem: this.updateItem
     }
-  }
-
-  // FIXME: Context not being picked up, so it gives a token malformed error on component mount
-  static contextType = AppContext
-
-  componentDidMount () {
-    console.log('todocontext mounting with token:', this.context.token)
-    // Set items
-    // axios
-    //   .get(this.server.items, {
-    //     headers: {
-    //       'x-access-token': this.context.token
-    //     }
-    //   })
-    //   .then(response => {
-    //     console.log('got response (items)', response.data)
-    //     this.setState({ items: response.data })
-    //     this.setState({ loaded: this.state.loaded + 1 })
-    //   })
-    //   .catch(error => {
-    //     this.setState({
-    //       errors: [{ message: error }]
-    //     })
-    //   })
-
-    // Set folders
-    // axios
-    //   .get(this.server.folders, {
-    //     headers: {
-    //       'x-access-token': this.context.token
-    //     }
-    //   })
-    //   .then(response => {
-    //     console.log('got response (folders)', response.data)
-    //     this.setState({ folders: response.data })
-    //     this.setState({ loaded: this.state.loaded + 1 })
-    //   })
-    //   .catch(error => {
-    //     this.setState({
-    //       errors: [{ message: error }]
-    //     })
-    //   })
-  }
-
-  static propTypes = {
-    children: PropTypes.object
   }
 
   /// Actions ///
@@ -346,6 +299,10 @@ class TodoProvider extends Component {
           })
         })
     }
+  }
+
+  static propTypes = {
+    children: PropTypes.object
   }
 
   render () {
