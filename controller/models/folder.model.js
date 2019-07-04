@@ -6,4 +6,4 @@ let folderSchema = new Schema({
   color: { type: String, required: true },
 })
 
-module.exports = mongoose.model('TodoFolders', folderSchema)
+module.exports = mongoose.model('folders', folderSchema)

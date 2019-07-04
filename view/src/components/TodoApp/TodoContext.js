@@ -23,6 +23,44 @@ class TodoProvider extends Component {
       errors: [],
       loaded: 0,
       // Actions
+      setInit: {
+        folders: (token) => {
+          axios
+            .get(this.server.folders, {
+              headers: {
+                'x-access-token': token
+              }
+            })
+            .then(response => {
+              console.log('got response (folders)', response.data)
+              this.setState({ folders: response.data })
+              this.setState({ loaded: this.state.loaded + 1 })
+            })
+            .catch(error => {
+              this.setState({
+                errors: [{ message: error }]
+              })
+            })
+        },
+        items: (token) => {
+          axios
+            .get(this.server.items, {
+              headers: {
+                'x-access-token': token
+              }
+            })
+            .then(response => {
+              console.log('got response (items)', response.data)
+              this.setState({ items: response.data })
+              this.setState({ loaded: this.state.loaded + 1 })
+            })
+            .catch(error => {
+              this.setState({
+                errors: [{ message: error }]
+              })
+            })
+        }
+      },
       setMarkedForDelete: this.setMarkedForDelete,
       toggleTodoComplete: this.toggleTodoComplete,
       addTodoItem: this.addTodoItem,
@@ -42,40 +80,40 @@ class TodoProvider extends Component {
   componentDidMount () {
     console.log('todocontext mounting with token:', this.context.token)
     // Set items
-    axios
-      .get(this.server.items, {
-        headers: {
-          'x-access-token': this.context.token
-        }
-      })
-      .then(response => {
-        console.log('got response (items)', response.data)
-        this.setState({ items: response.data })
-        this.setState({ loaded: this.state.loaded + 1 })
-      })
-      .catch(error => {
-        this.setState({
-          errors: [{ message: error }]
-        })
-      })
+    // axios
+    //   .get(this.server.items, {
+    //     headers: {
+    //       'x-access-token': this.context.token
+    //     }
+    //   })
+    //   .then(response => {
+    //     console.log('got response (items)', response.data)
+    //     this.setState({ items: response.data })
+    //     this.setState({ loaded: this.state.loaded + 1 })
+    //   })
+    //   .catch(error => {
+    //     this.setState({
+    //       errors: [{ message: error }]
+    //     })
+    //   })
 
     // Set folders
-    axios
-      .get(this.server.folders, {
-        headers: {
-          'x-access-token': this.context.token
-        }
-      })
-      .then(response => {
-        console.log('got response (folders)', response.data)
-        this.setState({ folders: response.data })
-        this.setState({ loaded: this.state.loaded + 1 })
-      })
-      .catch(error => {
-        this.setState({
-          errors: [{ message: error }]
-        })
-      })
+    // axios
+    //   .get(this.server.folders, {
+    //     headers: {
+    //       'x-access-token': this.context.token
+    //     }
+    //   })
+    //   .then(response => {
+    //     console.log('got response (folders)', response.data)
+    //     this.setState({ folders: response.data })
+    //     this.setState({ loaded: this.state.loaded + 1 })
+    //   })
+    //   .catch(error => {
+    //     this.setState({
+    //       errors: [{ message: error }]
+    //     })
+    //   })
   }
 
   static propTypes = {

@@ -7,6 +7,7 @@ let TodoItem = require('../models/item.model')
 router.route('/').get((req, res) => {
   TodoItem.find((err, todos) => {
     if (err) throw new Error(err)
+    console.log('all todo items found: ', todos);
     res.json(todos)
   })
 })

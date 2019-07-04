@@ -8,4 +8,4 @@ let itemSchema = new Schema({
   creationStamp: { type: String, required: false },
 })
 
-module.exports = mongoose.model('TodoItem', itemSchema)
+module.exports = mongoose.model('items', itemSchema)
