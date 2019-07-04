@@ -10,8 +10,12 @@ const utilities = require('./utilities')
 app.set('secretKey', config.auth.secret)
 
 // Mongoose connection
-mongoose.connect(config.db.uri, { useNewUrlParser: true })
-const connection = mongoose.connection
+mongoose
+  .connect(config.db.uri, { useNewUrlParser: true })
+  .then(() => {
+    console.log('connected to db')
+  })
+  .catch(err => console.log(err))
 
 // Middleware
 app.use(cors())
@@ -29,10 +33,11 @@ app.use('/api/register', userController.register)
 app.use('/api/login', userController.authenticate)
 
 // Connection test
-connection.once('open', () => console.log('connected to db'))
+// const connection = mongoose.connection
+// connection.once('open', () => console.log('connected to db'))
 
 // Connection init
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log('Server is running on port: ' + PORT)
 })
 

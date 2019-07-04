@@ -21,10 +21,11 @@ module.exports = {
 
   // User login
   authenticate: (req, res) => {
+    console.log('attempting login with: ' + req.body.email + '. pw: ' + req.body.password);
     const { email, password } = req.body
     if (email && password) {
       User.findOne({ email }, async (err, user) => {
-        //Error handler
+        console.log('found user:', user);
         if (err) res.status(500).json(err)
         // If password is correct, create token and send it back
         if (user && bcrypt.compareSync(password, user.password)) {

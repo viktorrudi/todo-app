@@ -1,5 +1,6 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 export const AppContext = createContext()
@@ -48,6 +49,9 @@ class AppProvider extends Component {
           userID: response.data.data.user._id,
           token: response.data.data.token
         })
+
+        console.log('state set', this.state)
+        this.props.history.push('/todo')
       })
       .catch(err => {
         console.log('handleLogin catch', err)
@@ -73,4 +77,4 @@ class AppProvider extends Component {
   }
 }
 
-export default AppProvider
+export default withRouter(AppProvider)

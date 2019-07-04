@@ -4,7 +4,7 @@ import { Switch } from 'react-router'
 import TodoApp from './components/TodoApp/TodoApp'
 import Welcome from './components/Welcome/Welcome'
 import TodoProvider from './components/TodoApp/TodoContext'
-import { AppContext } from './AppContext'
+import AppProvider, { AppContext } from './AppContext'
 
 export default function App () {
   const context = useContext(AppContext)
@@ -21,11 +21,13 @@ export default function App () {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Welcome} />
-        <TodoProvider>
-          <Route exact path="/todo" component={TodoApp} />
-          {/* <PrivateRoute exact path="/todo" component={TodoApp} /> */}
-        </TodoProvider>
+        <AppProvider>
+          <Route exact path="/" component={Welcome} />
+          <TodoProvider>
+            <Route exact path="/todo" component={TodoApp} />
+            {/* <PrivateRoute exact path="/todo" component={TodoApp} /> */}
+          </TodoProvider>
+        </AppProvider>
       </Switch>
     </Router>
   )

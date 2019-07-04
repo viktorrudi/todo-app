@@ -31,9 +31,10 @@ export default function AppAlerts (props) {
 
   const type = 'AppAlerts'
   const visibility = showError ? 'open' : 'closed'
+  console.error('AppAlerts.js error:', errorMsgs)
   return (
     <div className={`${type} ${visibility}`}>
-      {errorMsgs.map(errorMessage => {
+      {/* {errorMsgs.map(errorMessage => {
         const { response } = errorMessage.message
         const { message } = errorMessage.message
         const status = response.status || 'status unknown'
@@ -52,7 +53,7 @@ export default function AppAlerts (props) {
             </span>
           </p>
         )
-      })}
+      })} */}
     </div>
   )
 }
