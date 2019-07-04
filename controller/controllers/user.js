@@ -39,6 +39,7 @@ module.exports = {
             message: 'User found',
             data: { user: user, token },
           })
+          // Todo: check if cookies are stored, check cookie expiration, store token in cookie
           return
         }
         // Wrong email or password
