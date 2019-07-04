@@ -8,8 +8,7 @@ module.exports = {
     port: process.env.PORT || 4000,
   },
   db: {
-    // uri: process.env.DB_CONNECTION,
-    uri: 'mongodb+srv://admin:NkiYUSIVrzL1dCWl@todoapp-mxq6h.mongodb.net/todo-app?retryWrites=true&w=majority',
+    uri: process.env.DB_CONNECTION,
   },
   auth: {
     secret: 'secretKey',
