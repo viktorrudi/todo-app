@@ -4,8 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const config = require('./config')
-const PORT = config.server.port
 const utilities = require('./utilities')
+const cookieParser = require('cookie-parser')
 
 app.set('secretKey', config.auth.secret)
 
@@ -18,6 +18,7 @@ mongoose
   .catch(err => console.log(err))
 
 // Middleware
+app.use(cookieParser())
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -32,13 +33,14 @@ app.use('/api/folders', utilities.validateUser, foldersRouter)
 app.use('/api/register', userController.register)
 app.use('/api/login', userController.authenticate)
 
-// Connection test
-// const connection = mongoose.connection
-// connection.once('open', () => console.log('connected to db'))
-
 // Connection init
-app.listen(PORT, function () {
-  console.log('Server is running on port: ' + PORT)
+app.listen(config.server.port, function() {
+  console.log('Server is running on port: ' + config.server.port)
+})
+
+// Error catcher
+app.use((err, req, res, next) => {
+  res.json(err)
 })
 
 // App stop
