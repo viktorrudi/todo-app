@@ -11,12 +11,10 @@ export default function TodoItems (props) {
   const context = useContext(TodoContext)
 
   const findItemFolder = itemFolderID => {
-    if (context.loaded === 2) {
-      const [folder] = context.folders.filter(
-        folder => folder._id === itemFolderID
-      )
-      return folder
-    }
+    const [folder] = context.folders.filter(
+      folder => folder._id === itemFolderID
+    )
+    return folder
   }
 
   // Finds and returns todo items associated with the folder

@@ -21,7 +21,6 @@ class TodoProvider extends Component {
       openItem: null,
       markedForDelete: false,
       errors: [],
-      loaded: 0,
       // Actions
       setInit: {
         folders: () => {
@@ -35,8 +34,7 @@ class TodoProvider extends Component {
             .then(response => {
               console.log('got response (folders)', response.data)
               this.setState({
-                folders: response.data,
-                loaded: this.state.loaded + 1
+                folders: response.data
               })
             })
             .catch(error => {
@@ -56,7 +54,6 @@ class TodoProvider extends Component {
             .then(response => {
               console.log('got response (items)', response.data)
               this.setState({ items: response.data })
-              this.setState({ loaded: this.state.loaded + 1 })
             })
             .catch(error => {
               this.setState({
