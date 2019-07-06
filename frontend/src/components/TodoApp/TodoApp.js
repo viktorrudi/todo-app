@@ -13,8 +13,8 @@ export default function TodoApp () {
   console.log('context found in TodoApp.js', appContext)
 
   useEffect(() => {
-    todoContext.setInit.folders(appContext.token)
-    todoContext.setInit.items(appContext.token)
+    todoContext.setInit.folders()
+    todoContext.setInit.items()
   }, [])
 
   return (

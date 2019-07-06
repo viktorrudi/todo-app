@@ -6,6 +6,10 @@ const mongoose = require('mongoose')
 const config = require('./config')
 const utilities = require('./utilities')
 const cookieParser = require('cookie-parser')
+// Routes
+const itemsRouter = require('./routes/items')
+const foldersRouter = require('./routes/folders')
+const userController = require('./controllers/user')
 
 app.set('secretKey', config.auth.secret)
 
@@ -22,10 +26,6 @@ app.use(cookieParser())
 app.use(cors())
 app.use(bodyParser.json())
 
-// Routes
-const itemsRouter = require('./routes/items')
-const foldersRouter = require('./routes/folders')
-const userController = require('./controllers/user')
 // Private routes
 app.use('/api/items', utilities.validateUser, itemsRouter)
 app.use('/api/folders', utilities.validateUser, foldersRouter)
@@ -33,12 +33,12 @@ app.use('/api/folders', utilities.validateUser, foldersRouter)
 app.use('/api/register', userController.register)
 app.use('/api/login', userController.authenticate)
 
-// Connection init
+// SERVER connection
 app.listen(config.server.port, function() {
   console.log('Server is running on port: ' + config.server.port)
 })
 
-// Error catcher
+// Global error catcher
 app.use((err, req, res, next) => {
   res.json(err)
 })

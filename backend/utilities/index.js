@@ -5,8 +5,8 @@ module.exports = {
   validateUser: (req, res, next) => {
     console.log('cookies in req utilities/validateuser):', req.cookies)
     jwt.verify(
+      // Collected from browser cookies
       req.headers['x-access-token'],
-      // req.cookies['access_token'],
       req.app.get(config.auth.secret),
       async (err, decoded) => {
         try {

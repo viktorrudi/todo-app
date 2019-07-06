@@ -1,5 +1,6 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import PropTypes from 'prop-types'
 import { findItemInState, randomColor } from '../../utilities/utilities'
 
@@ -23,11 +24,11 @@ class TodoProvider extends Component {
       loaded: 0,
       // Actions
       setInit: {
-        folders: (token) => {
+        folders: () => {
           axios
             .get(this.server.folders, {
               headers: {
-                'x-access-token': token
+                'x-access-token': Cookies.get('x-access-token')
               }
             })
             .then(response => {
@@ -41,11 +42,11 @@ class TodoProvider extends Component {
               })
             })
         },
-        items: (token) => {
+        items: () => {
           axios
             .get(this.server.items, {
               headers: {
-                'x-access-token': token
+                'x-access-token': Cookies.get('x-access-token')
               }
             })
             .then(response => {
@@ -69,7 +70,8 @@ class TodoProvider extends Component {
       createFolder: this.createFolder,
       updateFolder: this.updateFolder,
       setOpenItem: this.setOpenItem,
-      updateItem: this.updateItem
+      updateItem: this.updateItem,
+      logOut: this.logOut
     }
   }
 

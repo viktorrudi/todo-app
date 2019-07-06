@@ -9,7 +9,7 @@ module.exports = {
     const { email, password } = req.body
     User.create({ email, password }, (err, result) => {
       if (err) {
-        console.log('oops')
+        console.log('users.js register error:', err)
         res.status(400).json(err)
         return
       }
@@ -40,18 +40,11 @@ module.exports = {
             { expiresIn: config.auth.expireTime }
           )
 
-          // Todo: check if cookies are stored, check cookie expiration, store token in cookie
-          res
-            .status(200)
-            .cookie('access_token', token, {
-              secure: false,
-              maxAge: 120000,
-              httpOnly: false,
-            })
-            .json({
-              message: 'User found',
-              data: { user, token },
-            })
+          res.status(200).json({
+            message: 'User found',
+            // Also passing token to store in cookies (on frontend)
+            data: { user, token },
+          })
 
           return
         }
@@ -62,4 +55,6 @@ module.exports = {
     }
     res.status(400).json({ message: 'Email & Password fields are required' })
   },
+  // User logout
+  logout: (req, res) => {},
 }

@@ -1,9 +1,19 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router'
+import Cookies from 'js-cookie'
 import PropTypes from 'prop-types'
 
 export const AppContext = createContext()
+
+// function AppProvider({history, children}) {
+//   const [loggedIn, setLoggedIn] = useState(false)
+//   const [userID, setUserID] = useState('')
+//   const [token, setToken] = useState(Cookies.get('x-access-token'))
+//   const [loginError, setLoginError] = useState('')
+//   const [httpStatus, setHttpStatus] = useState(0)
+
+// }
 
 class AppProvider extends Component {
   constructor (props) {
@@ -15,7 +25,8 @@ class AppProvider extends Component {
       loginError: '',
       httpStatus: 0,
       setLoggedIn: this.setLoggedIn,
-      handleLogin: this.handleLogin
+      handleLogin: this.handleLogin,
+      logOut: this.logOut
     }
   }
 
@@ -30,6 +41,7 @@ class AppProvider extends Component {
       email,
       password
     })
+
     // const loginTimeout = setTimeout(() => {
     //   this.setState({ loginError: 'Request timeout', httpStatus: 408 })
     // }, 2000)
@@ -41,14 +53,22 @@ class AppProvider extends Component {
       })
       .then(response => {
         console.log('login successful', response)
+
+        // Set token in cookies
+        if (Cookies.set('x-access-token', response.data.data.token)) {
+          console.log('cookies set')
+        }
+
         // clearTimeout(loginTimeout)
         this.setState({
           loginError: '',
           loggedIn: response.status === 200,
           httpStatus: response.status,
-          userID: response.data.data.user._id,
-          token: response.data.data.token
+          userID: response.data.data.user._id
+          // token: Cookies.get('x-access-token')
         })
+
+        console.log('coooookie', Cookies.get('x-access-token'))
 
         console.log('state set', this.state)
         this.props.history.push('/todo')
@@ -66,6 +86,18 @@ class AppProvider extends Component {
 
   setLoggedIn = () => {
     this.setState({ loggedIn: true })
+  }
+
+  logOut = () => {
+    this.setState({
+      loggedIn: false,
+      userID: '',
+      // token: '',
+      loginError: '',
+      httpStatus: 0
+    })
+    Cookies.remove('x-access-token')
+    this.props.history.push('/')
   }
 
   render () {
