@@ -31,7 +31,7 @@ app.use('/api/items', utilities.validateUser, itemsRouter)
 app.use('/api/folders', utilities.validateUser, foldersRouter)
 // Public routes
 app.use('/api/register', userController.register)
-app.use('/api/login', userController.authenticate)
+app.use('/api/login', userController.login)
 
 // SERVER connection
 app.listen(config.server.port, function() {

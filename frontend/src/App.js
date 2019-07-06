@@ -9,6 +9,7 @@ import AppProvider, { AppContext } from './AppContext'
 export default function App () {
   const context = useContext(AppContext)
 
+  // TODO: Set up private route to function
   const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
@@ -19,16 +20,18 @@ export default function App () {
   )
 
   return (
-    <Router>
-      <Switch>
-        <AppProvider>
-          <Route exact path="/" component={Welcome} />
-          <TodoProvider>
-            <Route exact path="/todo" component={TodoApp} />
-            {/* <PrivateRoute exact path="/todo" component={TodoApp} /> */}
-          </TodoProvider>
-        </AppProvider>
-      </Switch>
-    </Router>
+    <>
+      <Router>
+        <Switch>
+          <AppProvider>
+            <Route exact path="/" component={Welcome} />
+            <TodoProvider>
+              <Route exact path="/todo" component={TodoApp} />
+              {/* <PrivateRoute exact path="/todo" component={TodoApp} /> */}
+            </TodoProvider>
+          </AppProvider>
+        </Switch>
+      </Router>
+    </>
   )
 }

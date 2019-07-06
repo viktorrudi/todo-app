@@ -67,6 +67,10 @@
         }
         &.register-btn {
           background: $green;
+          &:disabled {
+            cursor: not-allowed;
+            background: gray;
+          }
         }
         &.login-btn {
           background: $blue;

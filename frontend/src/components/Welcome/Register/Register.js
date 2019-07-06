@@ -1,31 +1,30 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { AppContext } from '../../../AppContext'
 import PropTypes from 'prop-types'
+import PasswordChecker from './PasswordChecker'
 import '../Welcome.scss'
 
 export default function Register (props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
-
+  const [buttonIsDisabled, setButtonIsDisabled] = useState(true)
   const context = useContext(AppContext)
+
+  useEffect(() => {
+    setButtonIsDisabled(true)
+    if (
+      email.length >= 6 &&
+      password.length >= 6 &&
+      passwordRepeat === password
+    ) {
+      setButtonIsDisabled(false)
+    }
+  })
 
   const handleSubmit = e => {
     e.preventDefault()
     context.handleRegistration(email, password)
-  }
-
-  const passwordValidation = {
-    areAlike: () => {
-      if (password === passwordRepeat && password.length > 0) {
-        return 'fulfilled'
-      }
-    },
-    has8Chars: () => {
-      if (password.length >= 8 && passwordRepeat.length >= 8) {
-        return 'fulfilled'
-      }
-    }
   }
 
   const type = 'Form'
@@ -67,18 +66,13 @@ export default function Register (props) {
               onChange={e => setPasswordRepeat(e.target.value)}
             />
           </div>
-          <div className="password-checker">
-            <ul>
-              <li className={passwordValidation.has8Chars()}>
-                At least 8 characters
-              </li>
-              <li className={passwordValidation.areAlike()}>
-                Matching passwords
-              </li>
-            </ul>
-          </div>
+          <PasswordChecker
+            password={password}
+            passwordRepeat={passwordRepeat}
+          />
           <div className="input-wrapper">
             <button
+              disabled={buttonIsDisabled}
               className="register-btn"
               type="submit"
               onClick={handleSubmit}

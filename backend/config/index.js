@@ -1,6 +1,5 @@
 'use strict'
 
-// FIXME: Env file not loaded in
 const dotenv = require('dotenv').config()
 
 module.exports = {

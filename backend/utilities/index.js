@@ -19,11 +19,4 @@ module.exports = {
       }
     )
   },
-  findUserID: req => {
-    const tokenCookie = req.headers['x-access-token']
-    const base64Token = tokenCookie.split('.')[1]
-    const tokenObject = Buffer.from(base64Token, 'base64')
-    const { id } = JSON.parse(tokenObject)
-    return id
-  },
 }

@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
-// import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import '../Welcome.scss'
 import { AppContext } from '../../../AppContext'
 
-function Login (props) {
+export default function Login ({ setView }) {
   const initialText = {
     login: 'Login ',
     loggingIn: 'Logging in...'
@@ -16,33 +15,22 @@ function Login (props) {
 
   const context = useContext(AppContext)
 
-  // Remove me
-  // console.log(props)
-
   const handleSubmit = e => {
     e.preventDefault()
     setLoginText(initialText.loggingIn)
     setButtonIsDisabled(true)
-
     context.handleLogin(email, password)
-    console.log('login success, passed handleSubmit in Login.js')
   }
 
   useEffect(() => {
-    if (context.httpStatus === 401) {
-      setLoginText(context.loginError)
-      setButtonIsDisabled(true)
-    }
-    if (!context.loginError) {
-      setLoginText(initialText.login)
-    }
-    if (context.httpStatus === 200) {
-      setLoginText(initialText.loggingIn)
-    }
     if (email.length > 4 && password.length >= 4) {
       setButtonIsDisabled(false)
     } else {
       setButtonIsDisabled(true)
+    }
+    if (context.errors.length > 0) {
+      setLoginText(initialText.login)
+      setButtonIsDisabled(false)
     }
   })
 
@@ -86,7 +74,7 @@ function Login (props) {
             </button>
           </div>
         </form>
-        <div className="swap-form" onClick={() => props.setView('register')}>
+        <div className="swap-form" onClick={() => setView('register')}>
           I need to register
         </div>
       </div>
@@ -97,6 +85,3 @@ function Login (props) {
 Login.propTypes = {
   setView: PropTypes.func
 }
-
-// export default withRouter(Login)
-export default Login

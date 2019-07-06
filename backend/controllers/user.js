@@ -8,20 +8,29 @@ module.exports = {
   register: (req, res) => {
     console.log('starting registration')
     const { email, password } = req.body
-    User.create({ email, password }, (err, result) => {
-      if (err) {
-        console.log('users.js register error:', err)
-        res.status(400).json(err)
+    User.findOne({ email }, (err, userExists) => {
+      if (userExists) {
+        res.status(400).json({ message: 'user already exists' })
         return
       }
-      console.log(result)
-      res.status(201).json({ email: result.email, password: result.password })
+
+      User.create({ email, password }, (err, result) => {
+        if (err) {
+          console.log('registration error:', err)
+          res.status(500).json(err)
+          return
+        }
+        console.log(result)
+        res.status(201).json({ email: result.email, password: result.password })
+        return
+      })
       return
     })
+    return
   },
 
   // User login
-  authenticate: (req, res) => {
+  login: (req, res) => {
     console.log(
       'attempting login with: ' + req.body.email + '. pw: ' + req.body.password
     )

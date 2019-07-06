@@ -6,23 +6,13 @@ import PropTypes from 'prop-types'
 
 export const AppContext = createContext()
 
-// function AppProvider({history, children}) {
-//   const [loggedIn, setLoggedIn] = useState(false)
-//   const [userID, setUserID] = useState('')
-//   const [token, setToken] = useState(Cookies.get('x-access-token'))
-//   const [loginError, setLoginError] = useState('')
-//   const [httpStatus, setHttpStatus] = useState(0)
-
-// }
-
 class AppProvider extends Component {
   constructor (props) {
     super(props)
     this.state = {
       loggedIn: false,
-      loginError: '',
-      httpStatus: 0,
-      setLoggedIn: this.setLoggedIn,
+      errors: [],
+      loading: false,
       handleLogin: this.handleLogin,
       handleRegistration: this.handleRegistration,
       logOut: this.logOut
@@ -37,9 +27,9 @@ class AppProvider extends Component {
 
   handleLogin = (email, password) => {
     // const loginTimeout = setTimeout(() => {
-    //   this.setState({ loginError: 'Request timeout', httpStatus: 408 })
+    //   this.setState({ errors: [...this.state.errors, 'Request timeout'] })
     // }, 2000)
-
+    this.setState({ loading: true })
     axios
       .post('http://localhost:4000/api/login/', {
         email,
@@ -48,15 +38,16 @@ class AppProvider extends Component {
       .then(response => {
         console.log('login successful', response)
 
-        // Set token in cookies
+        // Set token and userID in cookies
         Cookies.set('x-access-token', response.data.data.token)
         Cookies.set('x-user-id', response.data.data.user._id)
 
         // clearTimeout(loginTimeout)
+
         this.setState({
-          loginError: '',
+          errors: [],
           loggedIn: response.status === 200,
-          httpStatus: response.status
+          loading: false
         })
 
         console.log('state set (appcontext)', this.state)
@@ -66,42 +57,40 @@ class AppProvider extends Component {
         console.log('handleLogin catch', err)
         // clearTimeout(loginTimeout)
         this.setState({
-          httpStatus: err.response.status,
-          loginError: 'Incorrect email/password'
+          errors: [...this.state.errors, 'Incorrect email/password']
         })
-        throw Error(err)
       })
   }
 
   handleRegistration = (email, password) => {
-    console.log('starting frontin registration with: ', email, password)
+    this.setState({ loading: true })
     axios
       .post('http://localhost:4000/api/register/', {
         email,
         password
       })
       .then(() => {
-        console.log('frontend login after reg', email, password)
+        // Login after registration
         this.handleLogin(email, password)
       })
       .catch(err => {
-        throw new Error(err)
+        if (err.response.status === 400) {
+          this.setState({
+            errors: [...this.state.errors, 'User already exists!'],
+            loading: false
+          })
+        }
       })
-  }
-
-  setLoggedIn = () => {
-    this.setState({ loggedIn: true })
   }
 
   logOut = () => {
     this.setState({
       loggedIn: false,
-      userID: '',
-      // token: '',
-      loginError: '',
-      httpStatus: 0
+      errors: [],
+      loading: false
     })
     Cookies.remove('x-access-token')
+    Cookies.remove('x-user-id')
     this.props.history.push('/')
   }
 
