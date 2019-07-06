@@ -1,18 +1,21 @@
 const router = require('express').Router()
+const { findUserID } = require('../utilities/')
 let TodoItem = require('../models/item.model')
 
 // **** GET **** //
 
-// Get all items
+// Get all items for the user
 router.route('/').get((req, res) => {
-  console.log('items.js req headerssss', req.cookies)
-  TodoItem.find((err, todos) => {
+  const userID = req.headers['x-user-id']
+
+  TodoItem.find((err, todoItems) => {
     if (err) throw new Error(err)
-    res.json(todos)
+    const items = todoItems.filter(item => item.ownerID === userID)
+    res.json(items)
   })
 })
 
-// Get specific item
+// Get specific item for the user
 router.route('/').get((req, res) => {
   const id = req.params.id
 

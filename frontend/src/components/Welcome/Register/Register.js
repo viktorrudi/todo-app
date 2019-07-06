@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { AppContext } from '../../../AppContext'
 import PropTypes from 'prop-types'
 import '../Welcome.scss'
 
 export default function Register (props) {
-  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordRepeat, setPasswordRepeat] = useState('')
 
+  const context = useContext(AppContext)
+
   const handleSubmit = e => {
     e.preventDefault()
+    context.handleRegistration(email, password)
   }
 
   const passwordValidation = {
@@ -39,8 +43,8 @@ export default function Register (props) {
               type="text"
               id="register_email"
               placeholder="email"
-              value={userName}
-              onChange={e => setUserName(e.target.value)}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
           <div className="input-wrapper">
@@ -74,7 +78,11 @@ export default function Register (props) {
             </ul>
           </div>
           <div className="input-wrapper">
-            <button className="register-btn" type="submit">
+            <button
+              className="register-btn"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Register
             </button>
           </div>

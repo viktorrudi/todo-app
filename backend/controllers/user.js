@@ -6,6 +6,7 @@ const config = require('../config')
 module.exports = {
   // User registration
   register: (req, res) => {
+    console.log('starting registration')
     const { email, password } = req.body
     User.create({ email, password }, (err, result) => {
       if (err) {
@@ -14,7 +15,7 @@ module.exports = {
         return
       }
       console.log(result)
-      res.status(201).json({ message: 'User registered', data: null })
+      res.status(201).json({ email: result.email, password: result.password })
       return
     })
   },

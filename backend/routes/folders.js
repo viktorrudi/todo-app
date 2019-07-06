@@ -6,8 +6,10 @@ let TodoItem = require('../models/item.model')
 
 // Get all folders
 router.route('/').get((req, res) => {
-  TodoFolder.find((err, folders) => {
+  const userID = req.headers['x-user-id']
+  TodoFolder.find((err, todoFolders) => {
     if (err) throw new Error(err)
+    const folders = todoFolders.filter(folder => folder.ownerID === userID)
     res.json(folders)
   })
 })

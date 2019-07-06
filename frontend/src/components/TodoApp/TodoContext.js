@@ -28,13 +28,16 @@ class TodoProvider extends Component {
           axios
             .get(this.server.folders, {
               headers: {
-                'x-access-token': Cookies.get('x-access-token')
+                'x-access-token': Cookies.get('x-access-token'),
+                'x-user-id': Cookies.get('x-user-id')
               }
             })
             .then(response => {
               console.log('got response (folders)', response.data)
-              this.setState({ folders: response.data })
-              this.setState({ loaded: this.state.loaded + 1 })
+              this.setState({
+                folders: response.data,
+                loaded: this.state.loaded + 1
+              })
             })
             .catch(error => {
               this.setState({
@@ -46,7 +49,8 @@ class TodoProvider extends Component {
           axios
             .get(this.server.items, {
               headers: {
-                'x-access-token': Cookies.get('x-access-token')
+                'x-access-token': Cookies.get('x-access-token'),
+                'x-user-id': Cookies.get('x-user-id')
               }
             })
             .then(response => {
@@ -100,12 +104,21 @@ class TodoProvider extends Component {
 
     // DB update
     axios
-      .post(this.server.items, {
-        text: newItemText,
-        folder: this.state.openFolder,
-        completed: false,
-        creationStamp: now.toLocaleString('en-GB')
-      })
+      .post(
+        this.server.items,
+        {
+          ownerID: Cookies.get('x-user-id'),
+          text: newItemText,
+          folder: this.state.openFolder,
+          completed: false,
+          creationStamp: now.toLocaleString('en-GB')
+        },
+        {
+          headers: {
+            'x-access-token': Cookies.get('x-access-token')
+          }
+        }
+      )
       .then(response => {
         const newItem = response.data.todo
 
@@ -133,9 +146,17 @@ class TodoProvider extends Component {
 
     // DB update
     axios
-      .patch(`${this.server.items}update-status/?id=${todoID}`, {
-        completed: newCompletedStatus
-      })
+      .patch(
+        `${this.server.items}update-status/?id=${todoID}`,
+        {
+          completed: newCompletedStatus
+        },
+        {
+          headers: {
+            'x-access-token': Cookies.get('x-access-token')
+          }
+        }
+      )
       .catch(error => {
         this.setState({
           errors: [{ message: error }]
@@ -146,10 +167,19 @@ class TodoProvider extends Component {
   createFolder = newFolderName => {
     // DB update
     axios
-      .post(this.server.folders, {
-        name: newFolderName,
-        color: randomColor()
-      })
+      .post(
+        this.server.folders,
+        {
+          ownerID: Cookies.get('x-user-id'),
+          name: newFolderName,
+          color: randomColor()
+        },
+        {
+          headers: {
+            'x-access-token': Cookies.get('x-access-token')
+          }
+        }
+      )
       .then(response => {
         const newFolder = response.data.folder
 
@@ -177,11 +207,17 @@ class TodoProvider extends Component {
     })
 
     // DB update
-    axios.delete(`${this.server.items}?id=${itemID}`).catch(error => {
-      this.setState({
-        errors: [{ message: error }]
+    axios
+      .delete(`${this.server.items}?id=${itemID}`, {
+        headers: {
+          'x-access-token': Cookies.get('x-access-token')
+        }
       })
-    })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
   }
 
   removeFolder = folderID => {
@@ -203,11 +239,17 @@ class TodoProvider extends Component {
     })
 
     // DB update - delete item from DB
-    axios.delete(`${this.server.folders}?id=${folderID}`).catch(error => {
-      this.setState({
-        errors: [{ message: error }]
+    axios
+      .delete(`${this.server.folders}?id=${folderID}`, {
+        headers: {
+          'x-access-token': Cookies.get('x-access-token')
+        }
       })
-    })
+      .catch(error => {
+        this.setState({
+          errors: [{ message: error }]
+        })
+      })
   }
 
   updateFolder = (selectedID, newName) => {
@@ -241,9 +283,17 @@ class TodoProvider extends Component {
 
     // DB update
     axios
-      .patch(`${this.server.folders}update-name/?id=${selectedID}`, {
-        name: newName
-      })
+      .patch(
+        `${this.server.folders}update-name/?id=${selectedID}`,
+        {
+          name: newName
+        },
+        {
+          headers: {
+            'x-access-token': Cookies.get('x-access-token')
+          }
+        }
+      )
       .catch(error => {
         this.setState({
           errors: [{ message: error }]
@@ -267,9 +317,17 @@ class TodoProvider extends Component {
 
       // DB update
       axios
-        .patch(`${this.server.items}update-folder/?id=${this.state.openItem}`, {
-          folder: requestedItem._id
-        })
+        .patch(
+          `${this.server.items}update-folder/?id=${this.state.openItem}`,
+          {
+            folder: requestedItem._id
+          },
+          {
+            headers: {
+              'x-access-token': Cookies.get('x-access-token')
+            }
+          }
+        )
         .catch(error => {
           this.setState({
             errors: [{ message: error }]
@@ -292,9 +350,17 @@ class TodoProvider extends Component {
 
       // DB update
       axios
-        .patch(`${this.server.items}update-text/?id=${this.state.openItem}`, {
-          text: newItemText
-        })
+        .patch(
+          `${this.server.items}update-text/?id=${this.state.openItem}`,
+          {
+            text: newItemText
+          },
+          {
+            headers: {
+              'x-access-token': Cookies.get('x-access-token')
+            }
+          }
+        )
         .catch(error => {
           this.setState({
             errors: [{ message: error }]

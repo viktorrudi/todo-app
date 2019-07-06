@@ -20,12 +20,11 @@ class AppProvider extends Component {
     super(props)
     this.state = {
       loggedIn: false,
-      userID: '',
-      token: '',
       loginError: '',
       httpStatus: 0,
       setLoggedIn: this.setLoggedIn,
       handleLogin: this.handleLogin,
+      handleRegistration: this.handleRegistration,
       logOut: this.logOut
     }
   }
@@ -37,11 +36,6 @@ class AppProvider extends Component {
   /// Actions ///
 
   handleLogin = (email, password) => {
-    console.log('starting login with:', {
-      email,
-      password
-    })
-
     // const loginTimeout = setTimeout(() => {
     //   this.setState({ loginError: 'Request timeout', httpStatus: 408 })
     // }, 2000)
@@ -55,22 +49,17 @@ class AppProvider extends Component {
         console.log('login successful', response)
 
         // Set token in cookies
-        if (Cookies.set('x-access-token', response.data.data.token)) {
-          console.log('cookies set')
-        }
+        Cookies.set('x-access-token', response.data.data.token)
+        Cookies.set('x-user-id', response.data.data.user._id)
 
         // clearTimeout(loginTimeout)
         this.setState({
           loginError: '',
           loggedIn: response.status === 200,
-          httpStatus: response.status,
-          userID: response.data.data.user._id
-          // token: Cookies.get('x-access-token')
+          httpStatus: response.status
         })
 
-        console.log('coooookie', Cookies.get('x-access-token'))
-
-        console.log('state set', this.state)
+        console.log('state set (appcontext)', this.state)
         this.props.history.push('/todo')
       })
       .catch(err => {
@@ -81,6 +70,22 @@ class AppProvider extends Component {
           loginError: 'Incorrect email/password'
         })
         throw Error(err)
+      })
+  }
+
+  handleRegistration = (email, password) => {
+    console.log('starting frontin registration with: ', email, password)
+    axios
+      .post('http://localhost:4000/api/register/', {
+        email,
+        password
+      })
+      .then(() => {
+        console.log('frontend login after reg', email, password)
+        this.handleLogin(email, password)
+      })
+      .catch(err => {
+        throw new Error(err)
       })
   }
 
