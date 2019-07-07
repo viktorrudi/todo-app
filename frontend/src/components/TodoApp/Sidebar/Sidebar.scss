@@ -12,24 +12,6 @@
   &__wrapper {
     opacity: 1;
     transition: all 0.3s ease-in-out;
-    &--seeAllFolders {
-      position: relative;
-      margin-top: 50px;
-      transform: scale(1);
-      transition: all 0.1s ease-in-out;
-      width: 100%;
-      &:hover {
-        cursor: pointer;
-        transform: scale(1.08) translateX(6px);
-      }
-    }
-    h2 {
-      opacity: 1;
-      small {
-        font-size: 50%;
-        float: right;
-      }
-    }
     h3 {
       margin-top: 50px;
       svg {
@@ -58,6 +40,24 @@
     display: block;
     svg {
       font-size: 2.5rem;
+    }
+  }
+  h2 {
+    opacity: 1;
+    small {
+      font-size: 50%;
+      float: right;
+    }
+  }
+  &--seeAllFolders {
+    position: relative;
+    margin-top: 50px;
+    transform: scale(1);
+    transition: all 0.1s ease-in-out;
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.08) translateX(6px);
     }
   }
 }

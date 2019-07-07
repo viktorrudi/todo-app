@@ -13,7 +13,7 @@ export default function TodoApp () {
   useEffect(() => {
     todoContext.setInit.folders()
     todoContext.setInit.items()
-  }, [])
+  }, [todoContext.setInit])
 
   return (
     <>

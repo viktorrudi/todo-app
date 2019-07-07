@@ -81,6 +81,24 @@ router.route('/update-status').patch((req, res) => {
   })
 })
 
+// Toggle important status of item
+router.route('/update-important').patch((req, res) => {
+  TodoItem.findById(req.query.id, (err, todo) => {
+    if (err) res.status(404).json(err)
+
+    todo.important = req.body.important
+
+    todo
+      .save()
+      .then(todo => {
+        res.json({ message: 'Todo important status updated!', todo })
+      })
+      .catch(err => {
+        res.status(400).json(err)
+      })
+  })
+})
+
 // Update todo text
 router.route('/update-text').patch((req, res) => {
   TodoItem.findById(req.query.id, (err, todo) => {
@@ -116,5 +134,23 @@ router.route('/update-folder').patch((req, res) => {
       })
   })
 })
+
+// Update which folder the item belongs to
+// router.route('/toggle-important').patch((req, res) => {
+//   TodoItem.findById(req.query.id, (err, todo) => {
+//     if (err) res.status(404).json(err)
+
+//     todo.folder = req.body.folder
+
+//     todo
+//       .save()
+//       .then(todo => {
+//         res.json({ message: 'Todo folder updated!', todo })
+//       })
+//       .catch(err => {
+//         res.status(400).json(err)
+//       })
+//   })
+// })
 
 module.exports = router

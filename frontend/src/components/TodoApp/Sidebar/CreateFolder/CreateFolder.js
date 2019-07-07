@@ -1,48 +1,28 @@
-import React, { Component } from 'react'
+import React, { useContext, useState } from 'react'
 import { TodoContext } from '../../TodoContext'
 import './CreateFolder.scss'
 
-class CreateFolder extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      newFolderName: ''
-    }
-  }
+export default function CreateFolder () {
+  const { createFolder } = useContext(TodoContext)
+  const [newFolderName, setNewFolderName] = useState('')
 
-  static contextType = TodoContext
-
-  handleNewFolderInput = e => {
-    this.setState({
-      newFolderName: e.target.value
-    })
-  }
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
+    createFolder(newFolderName)
+    setNewFolderName('')
     e.preventDefault()
-
-    this.context.createFolder(this.state.newFolderName)
-
-    this.setState({
-      newFolderName: ''
-    })
   }
+  const type = 'CreateFolder'
 
-  render () {
-    const type = 'CreateFolder'
-    return (
-      <form className={type} onSubmit={this.handleSubmit}>
-        <input
-          className={`${type}--addFolderField`}
-          type="text"
-          placeholder="Create folder"
-          onChange={this.handleNewFolderInput}
-          value={this.state.newFolderName}
-        />
-        <input type="submit" value="" hidden />
-      </form>
-    )
-  }
+  return (
+    <form className={type} onSubmit={handleSubmit}>
+      <input
+        className={`${type}--addFolderField`}
+        type="text"
+        placeholder="+ new folder"
+        onChange={e => setNewFolderName(e.target.value)}
+        value={newFolderName}
+      />
+      <input type="submit" value="" hidden />
+    </form>
+  )
 }
-
-export default CreateFolder

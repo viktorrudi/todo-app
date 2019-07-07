@@ -1,38 +1,22 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import { TodoContext } from '../../TodoContext'
+import { findItemCount } from '../../../../utilities/utilities'
 import Folder from './Folder'
 import './Folders.scss'
 
-class Folders extends Component {
-  static contextType = TodoContext
+export default function Folders () {
+  const { items, folders, openFolder } = useContext(TodoContext)
 
-  findItemCount = folder => {
-    let count = 0
-    this.context.items.map(item => {
-      if (item.folder === folder._id) {
-        count++
-      }
-      return false
-    })
-    return count
-  }
-
-  render () {
-    return (
-      <>
-        <div className="Folders">
-          {this.context.folders.map(folder => (
-            <Folder
-              key={folder._id}
-              folder={folder}
-              open={folder._id === this.context.openFolder}
-              itemCount={this.findItemCount(folder)}
-            />
-          ))}
-        </div>
-      </>
-    )
-  }
+  return (
+    <div className="Folders">
+      {folders.map(folder => (
+        <Folder
+          key={folder._id}
+          folder={folder}
+          open={folder._id === openFolder}
+          itemCount={findItemCount(items, folder)}
+        />
+      ))}
+    </div>
+  )
 }
-
-export default Folders

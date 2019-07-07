@@ -11,6 +11,9 @@ $white: #fff;
 
 $main-background: #fafbff;
 
+// Hovers
+$hoverGrow: scale(1.08) translateX(6px);
+
 // Mixins
 
 @mixin keyframes($animation-name) {

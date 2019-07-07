@@ -31,6 +31,24 @@ export function findParentTag (search, parentClass) {
   return null
 }
 
+export function findOpenItem (allItems, openItemID) {
+  const [found] = allItems.filter(folder => {
+    return openItemID === folder._id
+  })
+  return found
+}
+
+export function findItemCount (allItems, folder) {
+  let count = 0
+  allItems.map(item => {
+    if (item.folder === folder._id) {
+      count++
+    }
+    return false
+  })
+  return count
+}
+
 export function randomColor () {
   const colors = [
     '#D84343',

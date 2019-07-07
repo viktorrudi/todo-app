@@ -1,22 +1,18 @@
 import React, { useState, useContext } from 'react'
-// import { todoReducer } from '../../../../reducers'
 import { TodoContext } from '../../TodoContext'
 import './AddTodo.scss'
 
 export default function AddTodo () {
+  const { addTodoItem } = useContext(TodoContext)
   const [todoText, setTodoText] = useState('')
-  const context = useContext(TodoContext)
 
-  const handleNewTodoText = e => {
-    setTodoText(e.target.value)
-  }
   const handleSubmit = e => {
     // Will only submit if it contains anything (space excluded)
+    // Multiple spaces cut down
     if (todoText.replace(/\s/g, '').length) {
-      context.addTodoItem(todoText)
+      addTodoItem(todoText)
       setTodoText('')
     }
-
     e.preventDefault()
   }
 
@@ -28,7 +24,7 @@ export default function AddTodo () {
         type="text"
         placeholder="add item..."
         value={todoText}
-        onChange={handleNewTodoText}
+        onChange={e => setTodoText(e.target.value)}
       />
     </form>
   )

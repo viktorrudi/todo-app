@@ -25,6 +25,7 @@ export default function Sidebar () {
       </div>
       <UserOptions />
       <h2>
+        ToD
         <span role="img" aria-label="Todo">
           👌
         </span>
@@ -48,42 +49,3 @@ export default function Sidebar () {
     </aside>
   )
 }
-
-// class TodoFolders extends Component {
-//   static contextType = TodoContext
-//   static propTypes = {
-//     getSelectedFolder: PropTypes.func
-//   }
-
-//   render () {
-//     const type = 'TodoFolders'
-//     const { items, folders } = this.context
-//     return (
-//       <aside className={type}>
-//         <UserOptions />
-//         <h2>
-//           ToD
-//           <span role="img" aria-label="Todo">
-//             👌
-//           </span>
-//           <small>v.1.0.0</small>
-//         </h2>
-
-//         <div
-//           className={`${type}--seeAllFolders`}
-//           onClick={() => this.context.setOpenFolder(null)}
-//         >
-//           See All <strong>{items.length}</strong> items
-//         </div>
-
-//         <h3>
-//           <MdFolder /> Folders
-//         </h3>
-//         <Folders folders={folders} items={items} />
-//         <CreateFolder folders={folders} />
-//       </aside>
-//     )
-//   }
-// }
-
-// export default TodoFolders

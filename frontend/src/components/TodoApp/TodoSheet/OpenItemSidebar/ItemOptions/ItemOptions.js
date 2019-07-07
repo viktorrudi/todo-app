@@ -1,29 +1,19 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import ChangeFolder from './ChangeFolder'
-import { MdDelete } from 'react-icons/md'
-import { TodoContext } from '../../../TodoContext'
+import ChangeFolder from './Options/ChangeFolder'
+import DeleteItem from './Options/DeleteItem'
+import SetImportant from './Options/SetImportant'
 
-export default function ItemOptions (props) {
-  const context = useContext(TodoContext)
-
+export default function ItemOptions () {
   return (
     <>
-      Set as important
+      <SetImportant />
       <ChangeFolder />
-      <div
-        openitem={props.openItem}
-        className="small-btn btn-delete"
-        onClick={() => context.removeTodoItem(context.openItem)}
-      >
-        <MdDelete />
-        Delete note
-      </div>
+      <DeleteItem />
     </>
   )
 }
 
 ItemOptions.propTypes = {
-  openItem: PropTypes.string,
-  delete: PropTypes.func
+  openItem: PropTypes.string
 }

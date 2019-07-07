@@ -6,6 +6,7 @@ let itemSchema = new Schema({
   text: { type: String, required: true },
   folder: { type: Schema.Types.Mixed, required: false },
   completed: { type: Boolean, required: false },
+  important: { type: Boolean, required: false },
   creationStamp: { type: String, required: false },
 })
 

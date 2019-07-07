@@ -1,43 +1,34 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { TodoContext } from '../../TodoContext'
 
-class Folder extends Component {
-  static contextType = TodoContext
+export default function Folder ({ folder, open, itemCount }) {
+  const { setMarkedForDelete, setOpenFolder } = useContext(TodoContext)
 
-  static propTypes = {
-    folder: PropTypes.object,
-    itemCount: PropTypes.number,
-    open: PropTypes.bool
+  const handleClick = e => {
+    setMarkedForDelete(false)
+    setOpenFolder(e.target.id)
   }
 
-  handleClick = e => {
-    this.context.setMarkedForDelete(false)
-    this.context.setOpenFolder(e.target.id)
-  }
-
-  render () {
-    const type = 'Folder'
-    const { folder, open, itemCount } = this.props
-
-    return (
-      <div
-        className={open ? `${type} ${type}--open` : type}
-        onMouseOver={this.handleHover}
-        onMouseLeave={this.handleHover}
-        onClick={this.handleClick}
-        id={folder._id}
-      >
-        <span
-          className={`${type}--icon`}
-          style={{ backgroundColor: folder.color }}
-        />
-        <p className={`${type}--name`}>{folder.name}</p>
-        <span className={`${type}--badge`}>{itemCount}</span>
-        <span className={`${type}--delete`}>x</span>
-      </div>
-    )
-  }
+  const type = 'Folder'
+  return (
+    <div
+      className={open ? `${type} ${type}--open` : type}
+      onClick={handleClick}
+      id={folder._id}
+    >
+      <span
+        className={`${type}--icon`}
+        style={{ backgroundColor: folder.color }}
+      />
+      <p className={`${type}--name`}>{folder.name}</p>
+      <span className={`${type}--badge`}>{itemCount}</span>
+    </div>
+  )
 }
 
-export default Folder
+Folder.propTypes = {
+  folder: PropTypes.object,
+  itemCount: PropTypes.number,
+  open: PropTypes.bool
+}

@@ -28,3 +28,10 @@
     color: darken($red, 15%);
   }
 }
+
+.btn-important {
+  color: darken($yellow, 15%);
+  &:hover {
+    color: $yellow;
+  }
+}

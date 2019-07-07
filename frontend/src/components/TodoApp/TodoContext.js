@@ -108,6 +108,7 @@ class TodoProvider extends Component {
           text: newItemText,
           folder: this.state.openFolder,
           completed: false,
+          important: false,
           creationStamp: now.toLocaleString('en-GB')
         },
         {
@@ -351,6 +352,40 @@ class TodoProvider extends Component {
           `${this.server.items}update-text/?id=${this.state.openItem}`,
           {
             text: newItemText
+          },
+          {
+            headers: {
+              'x-access-token': Cookies.get('x-access-token')
+            }
+          }
+        )
+        .catch(error => {
+          this.setState({
+            errors: [{ message: error }]
+          })
+        })
+    }
+    if (task === 'TOGGLE_ITEM_IMPORTANT') {
+      let [target] = this.state.items.filter(item => item._id === requestedItem)
+      let newStatus = !target.important
+
+      // State update
+      this.setState(prevState => {
+        const updatedItems = prevState.items.map(item => {
+          if (item._id === requestedItem) {
+            item.important = newStatus
+          }
+          return item
+        })
+        return updatedItems
+      })
+
+      // DB update
+      axios
+        .patch(
+          `${this.server.items}update-important/?id=${requestedItem}`,
+          {
+            important: newStatus
           },
           {
             headers: {
