@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import AddTodo from './AddTodo/AddTodo'
 import TodoItems from './TodoItems/TodoItems'
 import ListHeader from './ListHeader/ListHeader'
-import OpenItem from './OpenItem/OpenItem'
+import OpenItemSidebar from './OpenItemSidebar/OpenItemSidebar'
 import './TodoSheet.scss'
 
 class TodoSheet extends Component {
@@ -36,20 +36,6 @@ class TodoSheet extends Component {
     })
   }
 
-  handleChangeOpenItem = (task, item) => {
-    if (task === 'change_text') {
-      this.props.handleUpdateTodo(task, item)
-      this.setState({
-        openItem: true,
-        item
-      })
-    }
-    if (task === 'delete_item') {
-      this.props.handleDeleteTodo(item._id)
-      this.handleClose()
-    }
-  }
-
   render () {
     const type = 'TodoSheet'
     const { changeFolderName, deleteFolder, toggleCompletedTodo } = this.props
@@ -74,11 +60,10 @@ class TodoSheet extends Component {
               folders={folders}
               toggleCompletedTodo={toggleCompletedTodo}
               openFolder={openFolder}
-              clickedItem={this.handleClick}
             />
           </div>
         </div>
-        {openItem && <OpenItem items={items} openItem={openItem} />}
+        {openItem && <OpenItemSidebar />}
       </>
     )
   }

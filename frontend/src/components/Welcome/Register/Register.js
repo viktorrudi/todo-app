@@ -20,7 +20,7 @@ export default function Register (props) {
     ) {
       setButtonIsDisabled(false)
     }
-  })
+  }, [email, password, passwordRepeat])
 
   const handleSubmit = e => {
     e.preventDefault()

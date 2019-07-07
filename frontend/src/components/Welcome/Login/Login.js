@@ -32,7 +32,7 @@ export default function Login ({ setView }) {
       setLoginText(initialText.login)
       setButtonIsDisabled(false)
     }
-  })
+  }, [email, password, context.errors])
 
   const type = 'Form'
   return (
@@ -41,41 +41,43 @@ export default function Login ({ setView }) {
         <span role="img" aria-label="Login">
           👌
         </span>
-        <h2>Login</h2>
-        <form handleSubmit={handleSubmit}>
-          <div className="input-wrapper">
-            <label htmlFor="email" />
-            <input
-              type="text"
-              id="login_email"
-              placeholder="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
+        <div className="welcome-effect">
+          <h2>Login</h2>
+          <form handleSubmit={handleSubmit}>
+            <div className="input-wrapper">
+              <label htmlFor="email" />
+              <input
+                type="text"
+                id="login_email"
+                placeholder="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="input-wrapper">
+              <label htmlFor="password" />
+              <input
+                type="password"
+                id="login_password"
+                placeholder="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="input-wrapper">
+              <button
+                disabled={buttonIsDisabled}
+                className={`login-btn ${context.loginError ? 'error' : null}`}
+                type="submit"
+                onClick={handleSubmit}
+              >
+                {loginText}
+              </button>
+            </div>
+          </form>
+          <div className="swap-form" onClick={() => setView('register')}>
+            I need to register
           </div>
-          <div className="input-wrapper">
-            <label htmlFor="password" />
-            <input
-              type="password"
-              id="login_password"
-              placeholder="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="input-wrapper">
-            <button
-              disabled={buttonIsDisabled}
-              className={`login-btn ${context.loginError ? 'error' : null}`}
-              type="submit"
-              onClick={handleSubmit}
-            >
-              {loginText}
-            </button>
-          </div>
-        </form>
-        <div className="swap-form" onClick={() => setView('register')}>
-          I need to register
         </div>
       </div>
     </div>

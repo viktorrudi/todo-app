@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { TodoContext } from './TodoContext'
-import TodoFolders from './TodoFolders/TodoFolders'
+import Sidebar from './Sidebar/Sidebar'
 import TodoSheet from './TodoSheet/TodoSheet'
 import Loader from '../Loader/Loader'
 import { AppContext } from '../../AppContext'
@@ -18,7 +18,7 @@ export default function TodoApp () {
   return (
     <>
       {appContext.loading ? <Loader /> : null}
-      <TodoFolders />
+      <Sidebar />
       <TodoSheet />
     </>
   )

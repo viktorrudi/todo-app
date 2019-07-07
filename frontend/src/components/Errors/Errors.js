@@ -13,7 +13,7 @@ export default function Errors () {
         setVisible(false)
       }, 3000)
     }
-  }, [context.errors])
+  }, [context.errors, visible])
 
   return (
     <div className={`Errors ${visible ? 'error-visible' : 'error-hidden'}`}>

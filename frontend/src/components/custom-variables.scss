@@ -10,3 +10,52 @@ $light-gray: #eaeaea;
 $white: #fff;
 
 $main-background: #fafbff;
+
+// Mixins
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
+
+// Animations
+
+@include keyframes(fadeInGrow) {
+  0% {
+    opacity: 0;
+    max-height: 0px;
+  }
+  50% {
+    opacity: 0;
+    max-height: 0px;
+  }
+  99% {
+    // opacity: 0.5;
+    max-height: 300px;
+  }
+  100% {
+    opacity: 1;
+    max-height: 600px;
+  }
+}

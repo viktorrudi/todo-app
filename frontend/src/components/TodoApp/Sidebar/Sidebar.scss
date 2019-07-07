@@ -1,6 +1,6 @@
 @import '../../custom-variables.scss';
 
-.TodoFolders {
+.Sidebar {
   float: left;
   min-height: 100vh;
   margin: 0;
@@ -44,7 +44,7 @@
   &.closed {
     position: relative;
     min-width: 45px;
-    .TodoFolders__wrapper,
+    .Sidebar__wrapper,
     h2,
     .UserOptions {
       opacity: 0;

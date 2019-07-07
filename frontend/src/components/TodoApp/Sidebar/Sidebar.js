@@ -4,9 +4,9 @@ import Folders from './Folders/Folders'
 import CreateFolder from './CreateFolder/CreateFolder'
 import UserOptions from '../UserOptions/UserOptions'
 import { MdFolder, MdMenu } from 'react-icons/md'
-import './TodoFolders.scss'
+import './Sidebar.scss'
 
-export default function TodoFolders () {
+export default function Sidebar () {
   const { items, folders, setOpenFolder } = useContext(TodoContext)
   const [isOpen, setOpen] = useState(true)
 
@@ -16,7 +16,7 @@ export default function TodoFolders () {
     }
   }, [])
 
-  const type = 'TodoFolders'
+  const type = 'Sidebar'
 
   return (
     <aside className={`${type} ${isOpen ? 'open' : 'closed'}`}>

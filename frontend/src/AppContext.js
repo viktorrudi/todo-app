@@ -23,6 +23,13 @@ class AppProvider extends Component {
     children: PropTypes.array
   }
 
+  componentDidMount () {
+    // Redirect to login if not logged in
+    if (!Cookies.get('x-access-token')) {
+      this.props.history.push('/')
+    }
+  }
+
   /// Actions ///
 
   handleLogin = (email, password) => {
