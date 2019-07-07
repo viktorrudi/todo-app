@@ -31,11 +31,6 @@ export function findParentTag (search, parentClass) {
   return null
 }
 
-export function findItemFromID (allItems, id) {
-  const [item] = allItems.filter(item => item._id === id)
-  return item
-}
-
 export function randomColor () {
   const colors = [
     '#D84343',
