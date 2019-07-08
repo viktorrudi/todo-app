@@ -11,7 +11,7 @@ export default function SetImportant () {
     const item = findOpenItem(items, openItem)
     if (item.important) setImportant(item.important)
     setImportant(!item.important)
-  })
+  }, [items, openItem])
 
   return (
     <div

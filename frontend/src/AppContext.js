@@ -95,6 +95,8 @@ class AppProvider extends Component {
               loading: false
             })
             break
+          default:
+            break
         }
       })
   }

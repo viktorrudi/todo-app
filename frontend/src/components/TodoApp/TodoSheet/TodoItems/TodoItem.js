@@ -18,6 +18,8 @@ export default function TodoItem ({ item, findFolder }) {
       case 'DIV':
         setOpenItem(clickedItem._id)
         break
+      default:
+        break
     }
   }
 

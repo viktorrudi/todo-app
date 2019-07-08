@@ -32,7 +32,7 @@ export default function Login ({ setView }) {
       setLoginText(initialText.login)
       setButtonIsDisabled(false)
     }
-  }, [email, password, context.errors])
+  }, [email, password, context.errors, initialText.login])
 
   const type = 'Form'
   return (
