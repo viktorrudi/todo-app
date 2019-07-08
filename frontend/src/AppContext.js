@@ -64,7 +64,8 @@ class AppProvider extends Component {
         console.log('handleLogin catch', err)
         // clearTimeout(loginTimeout)
         this.setState({
-          errors: [...this.state.errors, 'Incorrect email/password']
+          errors: [...this.state.errors, 'Incorrect email/password'],
+          loading: false
         })
       })
   }
@@ -81,11 +82,19 @@ class AppProvider extends Component {
         this.handleLogin(email, password)
       })
       .catch(err => {
-        if (err.response.status === 400) {
-          this.setState({
-            errors: [...this.state.errors, 'User already exists!'],
-            loading: false
-          })
+        switch (err.response) {
+          case undefined:
+            this.setState({
+              errors: [...this.state.errors, 'Sorry, something is not working properly right now. DB could be offline.'],
+              loading: false
+            })
+            break
+          case 400:
+            this.setState({
+              errors: [...this.state.errors, 'User already exists!'],
+              loading: false
+            })
+            break
         }
       })
   }

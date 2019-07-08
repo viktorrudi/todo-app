@@ -15,7 +15,6 @@ $main-background: #fafbff;
 $hoverGrow: scale(1.08) translateX(6px);
 
 // Mixins
-
 @mixin keyframes($animation-name) {
   @-webkit-keyframes #{$animation-name} {
     @content;
@@ -43,7 +42,6 @@ $hoverGrow: scale(1.08) translateX(6px);
 }
 
 // Animations
-
 @include keyframes(fadeInGrow) {
   0% {
     opacity: 0;
@@ -54,7 +52,6 @@ $hoverGrow: scale(1.08) translateX(6px);
     max-height: 0px;
   }
   99% {
-    // opacity: 0.5;
     max-height: 300px;
   }
   100% {

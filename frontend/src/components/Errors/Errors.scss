@@ -1,17 +1,32 @@
-@import '../custom-variables.scss';
+@import "../custom-variables.scss";
 
-.Errors {
+.Errors__wrapper {
   position: fixed;
-  color: #fff;
-  top: 10px;
-  right: 10px;
-  background: $red;
-  padding: 10px 20px;
-  transition: all 0.2s ease-in-out;
-  &.error-visible {
-    opacity: 1;
-  }
-  &.error-hidden {
-    opacity: 0;
+  top: 20px;
+  right: 50%;
+  transform: translateX(50%);
+  .Errors {
+    color: #fff;
+    background: $red;
+    padding: 10px 30px;
+    position: relative;
+    margin-bottom: 10px;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid darken($red, 20%);
+    span {
+      position: absolute;
+      left: -17px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+    }
+    &.error-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    &.error-hidden {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
   }
 }

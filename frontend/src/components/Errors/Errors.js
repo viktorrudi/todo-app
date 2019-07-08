@@ -4,24 +4,24 @@ import './Errors.scss'
 
 export default function Errors () {
   const [visible, setVisible] = useState(false)
-  const context = useContext(AppContext)
+  const { errors } = useContext(AppContext)
 
   useEffect(() => {
-    if (!visible && context.errors.length > 0) {
+    if (!visible && errors.length > 0) {
       setVisible(true)
       setTimeout(() => {
         setVisible(false)
-      }, 3000)
+        errors.length = 0
+      }, 4000)
     }
-  }, [context.errors, visible])
+  }, [errors, visible])
 
   return (
-    <div className={`Errors ${visible ? 'error-visible' : 'error-hidden'}`}>
-      {context.errors.map(error => (
-        <p>
-          {/* <span className={visible ? 'error-visible' : 'error-hidden'}> */}
-          ERROR: {error}
-        </p>
+    <div className="Errors__wrapper">
+      {errors.map(error => (
+        <div className={`Errors ${visible ? 'error-visible' : 'error-hidden'}`}>
+          <span role="img" aria-label="Error">😨</span> {error}
+        </div>
       ))}
     </div>
   )
