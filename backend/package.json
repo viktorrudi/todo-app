@@ -1,13 +1,13 @@
 {
-  "name": "todoapp_controller",
+  "name": "todoapp_backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend for ToDo",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Viktor Rudi",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
