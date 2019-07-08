@@ -1,0 +1,32 @@
+@import '../../../custom-variables.scss';
+
+.AddTodo {
+  display: flex;
+  position: relative;
+  &__addTodoField {
+    width: 100%;
+    padding: 20px;
+    font-size: 1.8rem;
+    float: left;
+    position: relative;
+    border: 1px solid $light-gray;
+    border-radius: 5px;
+    box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    }
+  }
+  &__action {
+    &--add {
+      position: absolute;
+      cursor: pointer;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      border: none;
+      background: none;
+    }
+  }
+}

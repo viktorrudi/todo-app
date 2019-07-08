@@ -1,0 +1,32 @@
+@import './components/custom-variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+body {
+  color: $text-main;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Karla', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Spinner
+.css-12imlsk-wrapper-wrapper {
+  position: fixed !important;
+  width: 100vw !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  .css-1x6aoof-style,
+  .css-l4j5ob-style {
+    background-color: $blue !important;
+  }
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+  background: $main-background;
+}

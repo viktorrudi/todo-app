@@ -1,0 +1,30 @@
+@import '../../custom-variables.scss';
+
+.UserOptions {
+  display: flex;
+  justify-content: space-between;
+  opacity: 1;
+  margin-top: 15px;
+  &__option {
+    color: $gray;
+    transition: all 0.1s ease-in-out;
+    white-space: nowrap;
+    &:hover {
+      cursor: pointer;
+    }
+    svg {
+      position: relative;
+      top: 3px;
+    }
+    &.logout {
+      &:hover {
+        color: $red;
+      }
+    }
+    &.settings {
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+@import '../../custom-variables.scss';
+
+.Sidebar {
+  float: left;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0 20px;
+  box-shadow: 5px 0 10px 0 rgba(213, 221, 243, 0.3);
+  z-index: 2;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  &__wrapper {
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    h3 {
+      margin-top: 50px;
+      svg {
+        position: relative;
+        top: 3px;
+      }
+    }
+  }
+  &.open {
+    min-width: 220px;
+  }
+  &.closed {
+    position: relative;
+    min-width: 45px;
+    .Sidebar__wrapper,
+    h2,
+    .UserOptions {
+      opacity: 0;
+    }
+  }
+  .MenuIcon {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    margin-top: 5px;
+    display: block;
+    svg {
+      font-size: 2.5rem;
+    }
+  }
+  h2 {
+    opacity: 1;
+    small {
+      font-size: 50%;
+      float: right;
+    }
+  }
+  &--seeAllFolders {
+    position: relative;
+    margin-top: 50px;
+    transform: scale(1);
+    transition: all 0.1s ease-in-out;
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.08) translateX(6px);
+    }
+  }
+}

@@ -1,0 +1,61 @@
+$text-main: rgb(46, 55, 72);
+$item-spacing: 10px;
+
+$red: #ce5c4e;
+$yellow: #f7d05f;
+$green: #4a9e64;
+$blue: #5d8aee;
+$gray: #adadad;
+$light-gray: #eaeaea;
+$white: #fff;
+
+$main-background: #fafbff;
+
+// Hovers
+$hoverGrow: scale(1.08) translateX(6px);
+
+// Mixins
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
+
+// Animations
+@include keyframes(fadeInGrow) {
+  0% {
+    opacity: 0;
+    max-height: 0px;
+  }
+  50% {
+    opacity: 0;
+    max-height: 0px;
+  }
+  99% {
+    max-height: 300px;
+  }
+  100% {
+    opacity: 1;
+    max-height: 600px;
+  }
+}

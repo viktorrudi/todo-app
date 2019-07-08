@@ -1,0 +1,37 @@
+@import '../custom-variables.scss';
+
+.TodoSheet {
+  width: 100%;
+  margin: 0 15px;
+}
+
+.small-btn {
+  cursor: pointer;
+  padding: 10px 0;
+  margin: 5px 0;
+  list-style: none;
+  transition: box-shadow 0.1s ease-in-out;
+  vertical-align: middle;
+  transition: all 0.1s ease-in-out;
+}
+
+.btn-update {
+  color: $green;
+  &:hover {
+    color: darken($green, 15%);
+  }
+}
+
+.btn-delete {
+  color: $red;
+  &:hover {
+    color: darken($red, 15%);
+  }
+}
+
+.btn-important {
+  color: darken($yellow, 15%);
+  &:hover {
+    color: $yellow;
+  }
+}

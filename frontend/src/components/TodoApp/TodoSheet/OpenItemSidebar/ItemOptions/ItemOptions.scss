@@ -1,0 +1,26 @@
+@import '../../../../custom-variables.scss';
+
+.ChangeFolder {
+  &__folders {
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: all 0.2s ease-in-out;
+    &--folder {
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      &:hover {
+        transform: $hoverGrow;
+      }
+    }
+    &.closed {
+      max-height: 0px;
+      opacity: 0;
+    }
+    &.open {
+      max-height: 103px;
+      opacity: 1;
+    }
+  }
+}

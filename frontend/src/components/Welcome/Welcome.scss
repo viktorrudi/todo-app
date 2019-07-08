@@ -1,0 +1,137 @@
+@import "../custom-variables.scss";
+
+.Welcome__view {
+  display: flex;
+  width: 100%;
+  transform: translateX(0);
+  transition: all 0.4s ease-in-out;
+  &.register {
+    transform: translateX(-100%);
+  }
+  &.login {
+    transform: translateX(0);
+  }
+}
+
+.Form__container {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+  &--wrapper {
+    position: relative;
+    h2 {
+      text-align: center;
+    }
+    .input-wrapper {
+      margin: 10px 0;
+      label {
+        font-size: 1.2rem;
+      }
+      input {
+        display: block;
+        background: $white;
+        border: none;
+        padding: 20px 25px;
+        margin-top: 10px;
+        font-size: 1.6rem;
+        box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease-in-out;
+        &:focus {
+          outline: none;
+          box-shadow: 0px 0 20px 0 rgba(0, 0, 0, 0.1);
+        }
+      }
+      button[type="submit"] {
+        padding: 10px 15px;
+        font-size: 1rem;
+        background: $green;
+        color: $white;
+        width: 100%;
+        box-shadow: 0px 0 20px 0 rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease-in-out;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        &:hover {
+          box-shadow: 0px 0 20px 0 rgba(0, 0, 0, 0.2);
+        }
+        &:focus {
+          outline: none;
+          box-shadow: 0px 0 20px 0 rgba(0, 0, 0, 0.1);
+        }
+        &.register-btn {
+          background: $green;
+          &:disabled {
+            cursor: not-allowed;
+            background: gray;
+          }
+        }
+        &.login-btn {
+          background: $blue;
+          &:disabled {
+            cursor: not-allowed;
+            background: gray;
+          }
+          &.error {
+            background: $red;
+          }
+        }
+      }
+    }
+    span[role="img"] {
+      display: block;
+      text-align: center;
+      font-size: 6rem;
+    }
+    .password-checker {
+      display: flex;
+      justify-content: center;
+      ul {
+        list-style: none;
+        margin: 10px 0;
+        padding: 0;
+        display: inline-block;
+        li {
+          opacity: 0.3;
+          transition: opacity 0.2s ease-in-out;
+          &:before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            margin-right: 7px;
+            display: inline-block;
+            background: $red;
+            border-radius: 50%;
+          }
+          &.fulfilled {
+            opacity: 1;
+            &:before {
+              background: $green;
+            }
+          }
+        }
+      }
+    }
+    .welcome-effect {
+      @include animation("fadeInGrow 2s 1");
+    }
+  }
+  .swap-form {
+    text-align: center;
+    font-size: 1rem;
+    color: $gray;
+    padding: 5px 0;
+    cursor: pointer;
+    background: none;
+    transition: color 0.1s ease-in-out;
+    &:hover {
+      color: $text-main;
+    }
+  }
+}

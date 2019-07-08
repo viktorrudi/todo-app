@@ -1,0 +1,56 @@
+{
+  "name": "todoapp",
+  "homepage": "http://188.166.43.148/todo/build",
+  "version": "1.0.0",
+  "description": "Backend for ToDo",
+  "author": "Viktor Rudi",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "axios": "^0.19.0",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dnd": "^9.0.1",
+    "react-dnd-html5-backend": "^9.0.0",
+    "react-dom": "^16.8.6",
+    "react-icons": "^3.7.0",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.0",
+    "react-spinners": "^0.5.4",
+    "react-spring": "^8.0.20"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}

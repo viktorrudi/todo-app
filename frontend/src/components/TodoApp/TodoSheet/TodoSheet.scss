@@ -1,0 +1,7 @@
+@import '../../custom-variables.scss';
+
+.TodoSheet {
+  &__items {
+    margin-top: $item-spacing;
+  }
+}

@@ -1,0 +1,47 @@
+@import '../../../custom-variables.scss';
+
+.ListHeader {
+  padding: 10px 0 0 0;
+  form {
+    display: inline-block;
+    min-width: 50%;
+  }
+  &__folder--input {
+    background: none;
+    padding: 10px 3px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border-radius: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+    border: none;
+    transition: all 0.1s ease-in-out;
+    &:hover {
+      box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
+    }
+    &:focus {
+      outline: none;
+      padding: 10px 10px;
+      background: #fff;
+      box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
+    }
+  }
+  &__folder--delete {
+    position: relative;
+    top: 7px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $gray;
+    margin: 0 5px;
+    float: right;
+    cursor: pointer;
+    svg {
+      font-size: 1.3rem;
+      position: relative;
+      top: 3px;
+    }
+    span {
+      position: relative;
+      bottom: 2px;
+    }
+  }
+}
