@@ -4,22 +4,34 @@ import { findOpenItem } from '../../../../../../utilities/utilities'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 
 export default function SetImportant () {
-  const { items, openItem, updateItem } = useContext(TodoContext)
+  const context = useContext(TodoContext)
   const [important, setImportant] = useState(false)
 
   useEffect(() => {
-    const item = findOpenItem(items, openItem)
+    const item = findOpenItem(context.items, context.openItem)
     if (item.important) setImportant(item.important)
     setImportant(!item.important)
-  }, [items, openItem])
+  }, [context])
 
+  const type = 'SetImportant'
   return (
-    <div
-      className="small-btn btn-important"
-      onClick={() => updateItem('TOGGLE_ITEM_IMPORTANT', openItem)}
+    <span
+      className={type}
+      onClick={() =>
+        context.updateItem('TOGGLE_ITEM_IMPORTANT', context.openItem)
+      }
     >
-      {important ? <MdStarBorder /> : <MdStar />}
-      Important
-    </div>
+      {important ? (
+        <>
+          <MdStarBorder />
+          <label>Set as important</label>
+        </>
+      ) : (
+        <>
+          <MdStar />
+          <label>Set as unimportant</label>
+        </>
+      )}
+    </span>
   )
 }

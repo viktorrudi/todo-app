@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { TodoContext } from '../TodoContext'
 import Folders from './Folders/Folders'
+import ChangeView from './ChangeView/ChangeView'
 import CreateFolder from './CreateFolder/CreateFolder'
 import UserOptions from '../UserOptions/UserOptions'
 import { MdFolder, MdMenu } from 'react-icons/md'
@@ -33,16 +34,8 @@ export default function Sidebar () {
       </h2>
 
       <div className={`${type}__wrapper`}>
-        <div
-          className={`${type}--seeAllFolders`}
-          onClick={() => setOpenFolder(null)}
-        >
-          See All <strong>{items.length}</strong> items
-        </div>
-
-        <h3>
-          <MdFolder /> Folders
-        </h3>
+        <ChangeView />
+        <hr />
         <Folders folders={folders} items={items} />
         <CreateFolder folders={folders} />
       </div>

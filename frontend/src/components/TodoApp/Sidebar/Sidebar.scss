@@ -12,13 +12,6 @@
   &__wrapper {
     opacity: 1;
     transition: all 0.3s ease-in-out;
-    h3 {
-      margin-top: 50px;
-      svg {
-        position: relative;
-        top: 3px;
-      }
-    }
   }
   &.open {
     min-width: 220px;
@@ -49,12 +42,11 @@
       float: right;
     }
   }
-  &--seeAllFolders {
-    position: relative;
-    margin-top: 50px;
+  .option {
+    padding: 10px 5px;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
-    width: 100%;
+    // width: 100%;
     &:hover {
       cursor: pointer;
       transform: scale(1.08) translateX(6px);

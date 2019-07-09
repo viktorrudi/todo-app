@@ -15,13 +15,8 @@ export default function ChangeFolder () {
 
   const type = 'ChangeFolder'
   return (
-    <>
-      <div
-        className={`${type} small-btn btn-update`}
-        onClick={() => setOpenFolder(!openFolderChange)}
-      >
-        <MdFolder /> Change folder
-      </div>
+    <span className={type} onClick={() => setOpenFolder(!openFolderChange)}>
+      <MdFolder /> <label>Change folder</label>
       <div
         className={`${type}__folders ${openFolderChange ? 'open' : 'closed'}`}
       >
@@ -35,6 +30,6 @@ export default function ChangeFolder () {
           </div>
         ))}
       </div>
-    </>
+    </span>
   )
 }

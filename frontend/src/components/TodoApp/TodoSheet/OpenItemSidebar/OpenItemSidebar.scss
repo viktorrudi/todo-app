@@ -11,7 +11,6 @@
     top: 0;
     bottom: 0;
     margin: 0;
-    // transform: translateX(-50%);
     box-shadow: 0px 0 50px 0 rgba(0, 0, 0, 0.4);
     position: fixed;
     z-index: 8;
@@ -19,31 +18,69 @@
     transition: opacity 0.2s ease-in-out;
   }
   &__actions {
-    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 30px 0;
     width: 100%;
     padding-left: 0;
-    svg {
-      position: relative;
-      top: 3px;
-      margin-right: 10px;
-    }
   }
-  &__note-input {
-    font-size: 1rem;
-    flex: 0 0 100%;
-    box-sizing: border-box;
-    width: 100%;
-    display: block;
-    border: none;
-    box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: auto;
+  &__note-change {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    textarea {
+      font-size: 1rem;
+      flex: 0 0 100%;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 100%;
+      min-height: 150px;
+      display: block;
+      border: none;
+      box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin: auto;
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+      }
+    }
+    button {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -18px;
+      margin-top: 5px;
+      background: none;
+      border: none;
+      border-radius: 5px;
+      text-align: right;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 8px 15px;
+      background: $light-gray;
+      transition: all 0.1s ease-in-out;
+      // font-weight: 700;
+      &:hover {
+        cursor: pointer;
+        background: darken($blue, 15%);
+        color: #fff;
+      }
+      &:focus {
+        outline: none;
+      }
+      svg {
+        position: relative;
+        top: 1px;
+      }
+    }
   }
   &__info {
     position: relative;
     &--time {
       font-size: 0.8rem;
-      text-align: right;
+      text-align: center;
       padding: 5px 0;
     }
   }

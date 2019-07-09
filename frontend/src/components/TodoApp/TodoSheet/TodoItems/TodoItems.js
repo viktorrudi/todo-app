@@ -3,38 +3,46 @@ import TodoItem from './TodoItem'
 import NoItems from './NoItems/NoItems'
 import './TodoItem.scss'
 import _ from 'lodash'
-import { findItemsInFolder } from '../../../../utilities/utilities'
 import { TodoContext } from '../../TodoContext'
 
 export default function TodoItems () {
-  const { openFolder, items, folders } = useContext(TodoContext)
+  const { viewItems, openFolder, items, folders } = useContext(TodoContext)
+
+  let importantItems = items.filter(item => item.important)
+  console.log('imp', importantItems)
+  let itemsInFolder = items.filter(item => item.folder === openFolder)
+  console.log('opn', itemsInFolder)
+
+  let selectedView
+  if (viewItems === 'all') {
+    selectedView = items
+  }
+  if (viewItems === 'important') {
+    selectedView = items.filter(item => item.important)
+  }
+  if (viewItems === 'folder') {
+    selectedView = items.filter(item => item.folder === openFolder)
+  }
 
   const findItemFolder = itemFolderID => {
     const [folder] = folders.filter(folder => folder._id === itemFolderID)
     return folder
   }
 
-  // Finds and returns todo items associated with the folder
-  let itemsInOpenedFolder
-  if (openFolder) {
-    itemsInOpenedFolder = findItemsInFolder(items, openFolder)
-  }
-
-  // Sort by date
-  const dateFilter = _.sortBy(itemsInOpenedFolder || items, item => {
+  // Sorting
+  selectedView = _.sortBy(selectedView || items, item => {
     return new Date(item.creationStamp)
-  }).reverse()
+  })
+  selectedView = _.sortBy(selectedView, ['important']).reverse()
+  selectedView = _.sortBy(selectedView, ['completed'])
 
-  // Sorted by having uncompleted tasks first, and completed at the end
-  let completedSorted = _.sortBy(dateFilter, ['completed'])
-
-  let allItems = completedSorted.map(item => (
+  let itemsToDisplay = selectedView.map(item => (
     <TodoItem key={item._id} item={item} findFolder={findItemFolder} />
   ))
 
   return (
     <main className="TodoWrapper">
-      {allItems.length ? allItems : <NoItems />}
+      {itemsToDisplay.length ? itemsToDisplay : <NoItems />}
     </main>
   )
 }

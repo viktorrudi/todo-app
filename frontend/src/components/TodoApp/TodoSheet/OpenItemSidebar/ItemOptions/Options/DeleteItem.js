@@ -4,15 +4,14 @@ import { MdDelete } from 'react-icons/md'
 
 export default function DeleteItem () {
   const { openItem, removeTodoItem } = useContext(TodoContext)
-
+  const type = 'DeleteItem'
   return (
-    <div
-      openitem={openItem}
-      className="small-btn btn-delete"
+    <span
+      className={type}
+      // className="small-btn btn-delete"
       onClick={() => removeTodoItem(openItem)}
     >
-      <MdDelete />
-      Delete note
-    </div>
+      <MdDelete /> <label>Delete item</label>
+    </span>
   )
 }

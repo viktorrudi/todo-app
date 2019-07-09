@@ -3,7 +3,7 @@ import './OpenItemSidebar.scss'
 import ItemOptions from './ItemOptions/ItemOptions'
 import { findOpenItem } from '../../../../utilities/utilities'
 import { TodoContext } from '../../TodoContext'
-import { MdClose } from 'react-icons/md'
+import { MdClose, MdCheck } from 'react-icons/md'
 
 export default function OpenItemSidebar () {
   const { updateItem, items, openItem, setOpenItem } = useContext(TodoContext)
@@ -23,24 +23,25 @@ export default function OpenItemSidebar () {
   return (
     <div className={`${type} ${openItem ? 'open' : 'closed'}`}>
       <div className={`${type}__close`} onClick={() => setOpenItem(null)}>
-        <MdClose />
-        Close
+        <MdClose /> Close
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          className={`${type}__note-input`}
-          type="text"
-          value={itemText}
-          onChange={e => setItemText(e.target.value)}
-        />
-      </form>
 
       <div className={`${type}__info`}>
         <div className={`${type}__info--time`}>
           Created {findOpenItem(items, openItem).creationStamp}
         </div>
       </div>
+
+      <form className={`${type}__note-change`} onSubmit={handleSubmit}>
+        <textarea
+          type="text"
+          value={itemText}
+          onChange={e => setItemText(e.target.value)}
+        />
+        <button type="submit">
+          <MdCheck /> Save
+        </button>
+      </form>
 
       <div className={`${type}__actions`}>
         <ItemOptions />

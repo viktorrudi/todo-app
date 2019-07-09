@@ -17,6 +17,7 @@ class TodoProvider extends Component {
       // Values
       items: [],
       folders: [],
+      viewItems: 'all',
       openFolder: null,
       openItem: null,
       markedForDelete: false,
@@ -39,7 +40,7 @@ class TodoProvider extends Component {
             })
             .catch(error => {
               this.setState({
-                errors: [{ message: error }]
+                errors: [...this.state.errors, error]
               })
             })
         },
@@ -57,11 +58,12 @@ class TodoProvider extends Component {
             })
             .catch(error => {
               this.setState({
-                errors: [{ message: error }]
+                errors: [...this.state.errors, error]
               })
             })
         }
       },
+      setItemView: this.setItemView,
       setMarkedForDelete: this.setMarkedForDelete,
       toggleTodoComplete: this.toggleTodoComplete,
       addTodoItem: this.addTodoItem,
@@ -96,6 +98,12 @@ class TodoProvider extends Component {
     })
   }
 
+  setItemView = view => {
+    this.setState({
+      viewItems: view
+    })
+  }
+
   addTodoItem = newItemText => {
     const now = new Date()
 
@@ -125,7 +133,7 @@ class TodoProvider extends Component {
       })
       .catch(error => {
         this.setState({
-          errors: [{ message: error }]
+          errors: [...this.state.errors, error]
         })
       })
   }
@@ -157,7 +165,7 @@ class TodoProvider extends Component {
       )
       .catch(error => {
         this.setState({
-          errors: [{ message: error }]
+          errors: [...this.state.errors, error]
         })
       })
   }
@@ -186,7 +194,7 @@ class TodoProvider extends Component {
       })
       .catch(error => {
         this.setState({
-          errors: [{ message: error }]
+          errors: [...this.state.errors, error]
         })
       })
   }
@@ -213,7 +221,7 @@ class TodoProvider extends Component {
       })
       .catch(error => {
         this.setState({
-          errors: [{ message: error }]
+          errors: [...this.state.errors, error]
         })
       })
   }
@@ -245,7 +253,7 @@ class TodoProvider extends Component {
       })
       .catch(error => {
         this.setState({
-          errors: [{ message: error }]
+          errors: [...this.state.errors, error]
         })
       })
   }
@@ -294,7 +302,7 @@ class TodoProvider extends Component {
       )
       .catch(error => {
         this.setState({
-          errors: [{ message: error }]
+          errors: [...this.state.errors, error]
         })
       })
   }
@@ -328,7 +336,7 @@ class TodoProvider extends Component {
         )
         .catch(error => {
           this.setState({
-            errors: [{ message: error }]
+            errors: [...this.state.errors, error]
           })
         })
     }
@@ -361,7 +369,7 @@ class TodoProvider extends Component {
         )
         .catch(error => {
           this.setState({
-            errors: [{ message: error }]
+            errors: [...this.state.errors, error]
           })
         })
     }
@@ -395,7 +403,7 @@ class TodoProvider extends Component {
         )
         .catch(error => {
           this.setState({
-            errors: [{ message: error }]
+            errors: [...this.state.errors, error]
           })
         })
     }

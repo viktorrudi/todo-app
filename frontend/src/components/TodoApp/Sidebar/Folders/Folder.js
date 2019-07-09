@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import { TodoContext } from '../../TodoContext'
 
 export default function Folder ({ folder, open, itemCount }) {
-  const { setMarkedForDelete, setOpenFolder } = useContext(TodoContext)
+  const { setItemView, setMarkedForDelete, setOpenFolder } = useContext(
+    TodoContext
+  )
 
   const handleClick = e => {
     setMarkedForDelete(false)
     setOpenFolder(e.target.id)
+    setItemView('folder')
   }
 
   const type = 'Folder'
@@ -22,7 +25,9 @@ export default function Folder ({ folder, open, itemCount }) {
         style={{ backgroundColor: folder.color }}
       />
       <p className={`${type}--name`}>{folder.name}</p>
-      <span className={`${type}--badge`}>{itemCount}</span>
+      <span className={`${type}--badge`}>
+        {itemCount > 99 ? '99+' : itemCount}
+      </span>
     </div>
   )
 }
