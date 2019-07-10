@@ -24,7 +24,12 @@
   }
 }
 .SetImportant {
-  color: $yellow;
+  color: darken($yellow, 25%);
+  svg {
+    color: $yellow;
+    stroke: darken($yellow, 25%);
+    stroke-width: 1;
+  }
 }
 .DeleteItem {
   color: $red;

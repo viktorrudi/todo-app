@@ -8,11 +8,6 @@ import { TodoContext } from '../../TodoContext'
 export default function TodoItems () {
   const { viewItems, openFolder, items, folders } = useContext(TodoContext)
 
-  let importantItems = items.filter(item => item.important)
-  console.log('imp', importantItems)
-  let itemsInFolder = items.filter(item => item.folder === openFolder)
-  console.log('opn', itemsInFolder)
-
   let selectedView
   if (viewItems === 'all') {
     selectedView = items
@@ -22,6 +17,9 @@ export default function TodoItems () {
   }
   if (viewItems === 'folder') {
     selectedView = items.filter(item => item.folder === openFolder)
+  }
+  if (viewItems === 'no-completed') {
+    selectedView = items.filter(item => !item.completed)
   }
 
   const findItemFolder = itemFolderID => {

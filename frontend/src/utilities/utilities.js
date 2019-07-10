@@ -38,6 +38,17 @@ export function findOpenItem (allItems, openItemID) {
   return found
 }
 
+export const findFromID = {
+  folder: (id, folders) => {
+    const [value] = folders.filter(folder => folder._id === id)
+    return value
+  },
+  item: (id, items) => {
+    const [value] = items.filter(item => item._id === id)
+    return value
+  }
+}
+
 export function findItemCount (allItems, folder) {
   let count = 0
   allItems.map(item => {

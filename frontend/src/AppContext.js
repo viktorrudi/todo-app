@@ -25,7 +25,7 @@ class AppProvider extends Component {
 
   componentDidMount () {
     // Redirect to login if not logged in
-    if (!Cookies.get('x-access-token')) {
+    if (!Cookies.get('x-access-token') && !Cookies.get('x-user-id')) {
       this.props.history.push('/')
     }
   }
@@ -33,9 +33,16 @@ class AppProvider extends Component {
   /// Actions ///
 
   handleLogin = (email, password) => {
-    // const loginTimeout = setTimeout(() => {
-    //   this.setState({ errors: [...this.state.errors, 'Request timeout'] })
-    // }, 2000)
+    const loginTimeout = setTimeout(() => {
+      this.setState({
+        errors: [
+          ...this.state.errors,
+          'Sorry, it took to long to log you in. Please try again later.'
+        ],
+        loading: false
+      })
+    }, 7000)
+
     this.setState({ loading: true })
     axios
       .post('http://localhost:4000/api/login/', {
@@ -45,11 +52,11 @@ class AppProvider extends Component {
       .then(response => {
         console.log('login successful', response)
 
-        // Set token and userID in cookies
-        Cookies.set('x-access-token', response.data.data.token)
-        Cookies.set('x-user-id', response.data.data.user._id)
+        // Set token and userID in cookies. Expires in 7 days
+        Cookies.set('x-access-token', response.data.data.token, { expires: 7 })
+        Cookies.set('x-user-id', response.data.data.user._id, { expires: 7 })
 
-        // clearTimeout(loginTimeout)
+        clearTimeout(loginTimeout)
 
         this.setState({
           errors: [],
@@ -62,7 +69,7 @@ class AppProvider extends Component {
       })
       .catch(err => {
         console.log('handleLogin catch', err)
-        // clearTimeout(loginTimeout)
+        clearTimeout(loginTimeout)
         this.setState({
           errors: [...this.state.errors, 'Incorrect email/password'],
           loading: false
@@ -71,6 +78,16 @@ class AppProvider extends Component {
   }
 
   handleRegistration = (email, password) => {
+    const registerTimeout = setTimeout(() => {
+      this.setState({
+        errors: [
+          ...this.state.errors,
+          'Sorry, it took to long to register you. Please try again later.'
+        ],
+        loading: false
+      })
+    }, 7000)
+
     this.setState({ loading: true })
     axios
       .post('http://localhost:4000/api/register/', {
@@ -78,18 +95,24 @@ class AppProvider extends Component {
         password
       })
       .then(() => {
+        clearTimeout(registerTimeout)
         // Login after registration
         this.handleLogin(email, password)
       })
       .catch(err => {
         switch (err.response) {
           case undefined:
+            clearTimeout(registerTimeout)
             this.setState({
-              errors: [...this.state.errors, 'Sorry, something is not working properly right now. DB could be offline.'],
+              errors: [
+                ...this.state.errors,
+                'Sorry, something is not working properly right now. DB could be offline.'
+              ],
               loading: false
             })
             break
           case 400:
+            clearTimeout(registerTimeout)
             this.setState({
               errors: [...this.state.errors, 'User already exists!'],
               loading: false

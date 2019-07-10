@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { TodoContext } from '../../TodoContext'
-import { MdStar, MdList } from 'react-icons/md'
+import { MdStar, MdInbox } from 'react-icons/md'
 
 export default function ChangeView () {
   const { setItemView, setOpenFolder } = useContext(TodoContext)
@@ -8,16 +8,19 @@ export default function ChangeView () {
   return (
     <>
       <div
-        className="option"
+        className="AllItems option"
         onClick={() => {
           setItemView('all')
           setOpenFolder(null)
         }}
       >
-        <MdList /> All items
+        <MdInbox /> All items
       </div>
 
-      <div className="option" onClick={() => setItemView('important')}>
+      <div
+        className="Important option"
+        onClick={() => setItemView('important')}
+      >
         <MdStar /> Important items
       </div>
     </>

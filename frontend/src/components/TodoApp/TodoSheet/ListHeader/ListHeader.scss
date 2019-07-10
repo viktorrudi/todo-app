@@ -1,13 +1,14 @@
 @import '../../../custom-variables.scss';
 
 .ListHeader {
-  padding: 10px 0 0 0;
+  position: relative;
+  padding: 10px 0;
   form {
-    display: inline-block;
-    min-width: 50%;
+    display: flex;
   }
   &__folder--input {
     background: none;
+    width: 100%;
     padding: 10px 3px;
     font-size: 1.3rem;
     font-weight: 500;
@@ -26,14 +27,30 @@
     }
   }
   &__folder--delete {
-    position: relative;
-    top: 7px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    background: $main-background;
+    padding: 4px 7px;
     font-weight: 700;
     font-size: 1rem;
     color: $gray;
     margin: 0 5px;
     float: right;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    .confirm {
+      color: $red;
+      position: relative;
+      transition: all 0.2s ease-in-out;
+      svg {
+        font-size: 1.3rem;
+        position: relative;
+        margin-left: 5px;
+        top: 5px;
+      }
+    }
     svg {
       font-size: 1.3rem;
       position: relative;
@@ -42,6 +59,35 @@
     span {
       position: relative;
       bottom: 2px;
+    }
+  }
+  button[type='submit'] {
+    cursor: pointer;
+    max-width: 0px;
+    transition: all 0.2s ease-in-out;
+    background: $main-background;
+    border: none;
+    outline: none;
+    &.hidden {
+      opacity: 0;
+      max-width: 0px;
+      padding: 0;
+    }
+    &.visible {
+      max-width: 100px;
+      margin-right: 5px;
+      opacity: 1;
+      &:hover {
+        svg {
+          color: darken($blue, 20%);
+        }
+      }
+    }
+    svg {
+      position: relative;
+      top: 1px;
+      font-size: 1.5rem;
+      color: $gray;
     }
   }
 }

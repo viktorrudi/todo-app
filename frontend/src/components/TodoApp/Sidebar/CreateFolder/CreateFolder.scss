@@ -1,3 +1,5 @@
+@import '../../../custom-variables.scss';
+
 .CreateFolder {
   display: flex;
   &--addFolderField {
@@ -8,6 +10,35 @@
     padding: 10px 5px;
     &:focus {
       outline: none;
+    }
+  }
+  button[type='submit'] {
+    cursor: pointer;
+    max-width: 0px;
+    transition: all 0.2s ease-in-out;
+    background: $main-background;
+    border: none;
+    outline: none;
+    padding: 0;
+    &.hidden {
+      opacity: 0;
+      max-width: 0px;
+      padding: 0;
+    }
+    &.visible {
+      max-width: 100px;
+      opacity: 1;
+      &:hover {
+        svg {
+          color: darken($blue, 20%);
+        }
+      }
+    }
+    svg {
+      position: relative;
+      top: 1px;
+      font-size: 1.2rem;
+      color: $gray;
     }
   }
 }

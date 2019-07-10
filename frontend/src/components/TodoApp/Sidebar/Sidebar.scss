@@ -1,4 +1,4 @@
-@import "../../custom-variables.scss";
+@import '../../custom-variables.scss';
 
 .Sidebar {
   position: relative;
@@ -11,6 +11,7 @@
   overflow: hidden;
   transition: all 0.5s ease-in-out;
   min-width: 220px;
+  max-width: 220px;
   @media (max-width: 800px) {
     position: fixed;
     min-width: 200px;
@@ -22,8 +23,6 @@
   &__wrapper {
     opacity: 1;
     transition: all 0.3s ease-in-out;
-  }
-  &.open {
   }
   &.closed {
     position: fixed;
@@ -64,14 +63,35 @@
       float: right;
     }
   }
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid $light-gray;
+    margin: 20px 0;
+    padding: 0;
+  }
   .option {
-    padding: 10px 5px;
+    padding: 10px 0px;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
     white-space: nowrap;
+    font-size: 1.2rem;
     &:hover {
       cursor: pointer;
       transform: scale(1.08) translateX(6px);
+    }
+    svg {
+      position: relative;
+      top: 3px;
+    }
+    &.AllItems svg {
+      color: $blue;
+    }
+    &.Important svg {
+      color: $yellow;
+      stroke: darken($yellow, 25%);
+      stroke-width: 1;
     }
   }
 }
