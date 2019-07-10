@@ -14,12 +14,12 @@ export default function UserFooter () {
       >
         <MdExitToApp /> Log out
       </span>
-      <span
+      {/* <span
         className="UserOptions__option settings"
         // onClick={}
       >
         <MdSettings /> Settings
-      </span>
+      </span> */}
     </footer>
   )
 }

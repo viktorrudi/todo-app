@@ -1,8 +1,9 @@
-@import '../../../custom-variables.scss';
+@import "../../../custom-variables.scss";
 
 .Folders {
   .Folder {
     padding: 10px 5px;
+    white-space: nowrap;
     transform: scale(1);
     transition: all 0.1s ease-in-out;
     &:hover {
@@ -11,7 +12,7 @@
     }
 
     &--icon {
-      content: '';
+      content: "";
       pointer-events: none;
       display: inline-block;
       width: 8px;
