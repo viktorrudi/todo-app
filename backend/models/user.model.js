@@ -17,8 +17,8 @@ let userSchema = new Schema({
   isDisabled: { type: Boolean, default: false },
 })
 
-// Hashing password before storing it in the database. Not using arrow function because of "this"
-userSchema.pre('save', function (next) {
+// Hashing password before storing it in the database. Not using arrow function because of "this" kw
+userSchema.pre('save', function(next) {
   const user = this
   bcrypt.hash(user.password, 10, async (err, hash) => {
     if (err) next(err)

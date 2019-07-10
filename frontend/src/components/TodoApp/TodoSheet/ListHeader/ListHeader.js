@@ -17,7 +17,7 @@ export default function ListHeader () {
     setOpenFolderNewName(thisFolder.name)
     setMarkedForDelete(false)
     setShowEditButton(false)
-  }, [openFolder])
+  }, [openFolder, folders, setMarkedForDelete])
 
   const type = 'ListHeader'
   return (

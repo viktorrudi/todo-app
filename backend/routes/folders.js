@@ -10,7 +10,7 @@ router.route('/').get((req, res) => {
   TodoFolder.find((err, todoFolders) => {
     if (err) throw new Error(err)
     const folders = todoFolders.filter(folder => folder.ownerID === userID)
-    res.json(folders)
+    res.status(200).json(folders)
   })
 })
 
@@ -19,7 +19,7 @@ router.route('/').get((req, res) => {
   const id = req.params.id
   TodoFolder.findById(id, (err, folders) => {
     if (err) throw new Error(err)
-    res.json(folders)
+    res.status(200).json(folders)
   })
 })
 
@@ -67,7 +67,7 @@ router.route('/update-name').patch((req, res) => {
     folder
       .save()
       .then(folder => {
-        res.json({ message: 'Folder name updated!', folder })
+        res.status(200).json({ message: 'Folder name updated!', folder })
       })
       .catch(err => {
         res.status(400).json(err)

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../../AppContext'
-import { MdExitToApp, MdSettings } from 'react-icons/md'
+import { MdExitToApp } from 'react-icons/md'
 
 import './UserOptions.scss'
 
@@ -14,12 +14,6 @@ export default function UserFooter () {
       >
         <MdExitToApp /> Log out
       </span>
-      {/* <span
-        className="UserOptions__option settings"
-        // onClick={}
-      >
-        <MdSettings /> Settings
-      </span> */}
     </footer>
   )
 }

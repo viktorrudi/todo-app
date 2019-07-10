@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const { findUserID } = require('../utilities/')
 let TodoItem = require('../models/item.model')
 
 // **** GET **** //
@@ -134,23 +133,5 @@ router.route('/update-folder').patch((req, res) => {
       })
   })
 })
-
-// Update which folder the item belongs to
-// router.route('/toggle-important').patch((req, res) => {
-//   TodoItem.findById(req.query.id, (err, todo) => {
-//     if (err) res.status(404).json(err)
-
-//     todo.folder = req.body.folder
-
-//     todo
-//       .save()
-//       .then(todo => {
-//         res.json({ message: 'Todo folder updated!', todo })
-//       })
-//       .catch(err => {
-//         res.status(400).json(err)
-//       })
-//   })
-// })
 
 module.exports = router

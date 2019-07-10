@@ -65,6 +65,4 @@ module.exports = {
     }
     res.status(400).json({ message: 'Email & Password fields are required' })
   },
-  // User logout
-  logout: (req, res) => {},
 }
