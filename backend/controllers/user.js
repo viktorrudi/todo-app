@@ -10,7 +10,7 @@ module.exports = {
     const { email, password } = req.body
     User.findOne({ email }, (err, userExists) => {
       if (userExists) {
-        res.status(400).json({ message: 'user already exists' })
+        res.status(409).json({ message: 'User already exists!' })
         return
       }
 

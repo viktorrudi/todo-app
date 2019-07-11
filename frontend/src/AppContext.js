@@ -19,10 +19,6 @@ class AppProvider extends Component {
     }
   }
 
-  static propTypes = {
-    children: PropTypes.array
-  }
-
   componentDidMount () {
     // Redirect to login if not logged in
     if (!Cookies.get('x-access-token') && !Cookies.get('x-user-id')) {
@@ -133,6 +129,10 @@ class AppProvider extends Component {
     Cookies.remove('x-access-token')
     Cookies.remove('x-user-id')
     this.props.history.push('/')
+  }
+
+  static propTypes = {
+    children: PropTypes.array
   }
 
   render () {
