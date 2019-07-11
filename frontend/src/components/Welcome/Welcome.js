@@ -12,7 +12,7 @@ export default function Welcome () {
   return (
     <>
       {context.loading ? <Loader /> : null}
-      <Errors />
+      <Errors messages={context.errors} />
       <span className={`Welcome__view ${view}`}>
         <Login setView={setView} />
         <Register setView={setView} />

@@ -6,14 +6,12 @@ import { MdStar } from 'react-icons/md'
 import './TodoItem.scss'
 
 export default function TodoItem ({ item, findFolder }) {
-  const { openFolder, toggleTodoComplete, setOpenItem } = useContext(
-    TodoContext
-  )
+  const { openFolder, updateItem, setOpenItem } = useContext(TodoContext)
 
   const handleClick = (e, clickedItem) => {
     switch (e.target.tagName) {
       case 'SPAN':
-        toggleTodoComplete(item._id)
+        updateItem('TOGGLE_COMPLETE', item._id)
         break
       case 'DIV':
         setOpenItem(clickedItem._id)

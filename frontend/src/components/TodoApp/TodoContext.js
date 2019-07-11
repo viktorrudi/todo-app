@@ -2,7 +2,11 @@ import React, { Component, createContext } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import PropTypes from 'prop-types'
-import { findItemInState, randomColor } from '../../utilities/utilities'
+import {
+  findItemInState,
+  randomColor,
+  findFromID
+} from '../../utilities/utilities'
 
 export const TodoContext = createContext()
 
@@ -11,7 +15,10 @@ class TodoProvider extends Component {
     super(props)
     this.server = {
       items: 'http://localhost:4000/api/items/',
-      folders: 'http://localhost:4000/api/folders/'
+      folders: 'http://localhost:4000/api/folders/',
+      tokenHeader: {
+        headers: { 'x-access-token': Cookies.get('x-access-token') }
+      }
     }
     this.state = {
       // Values
@@ -23,6 +30,21 @@ class TodoProvider extends Component {
       markedForDelete: false,
       errors: [],
       // Actions
+      addTodoItem: this.addTodoItem,
+      removeTodoItem: this.removeTodoItem,
+      createFolder: this.createFolder,
+      removeFolder: this.removeFolder,
+      updateFolder: this.updateFolder,
+      updateItem: this.updateItem,
+      logOut: this.logOut,
+
+      // Only state updates
+      setOpenItem: itemID => this.setState({ openItem: itemID }),
+      setOpenFolder: folderID => this.setState({ openFolder: folderID }),
+      setItemView: view => this.setState({ viewItems: view }),
+      setMarkedForDelete: status => this.setState({ markedForDelete: status }),
+
+      // Initialization (after logging in)
       setInit: {
         folders: () => {
           axios
@@ -40,7 +62,7 @@ class TodoProvider extends Component {
             })
             .catch(error => {
               this.setState({
-                errors: [...this.state.errors, error]
+                errors: [...this.state.errors, error.message]
               })
             })
         },
@@ -58,52 +80,15 @@ class TodoProvider extends Component {
             })
             .catch(error => {
               this.setState({
-                errors: [...this.state.errors, error]
+                errors: [...this.state.errors, error.message]
               })
             })
         }
-      },
-      setItemView: this.setItemView,
-      setMarkedForDelete: this.setMarkedForDelete,
-      toggleTodoComplete: this.toggleTodoComplete,
-      addTodoItem: this.addTodoItem,
-      removeTodoItem: this.removeTodoItem,
-      removeFolder: this.removeFolder,
-      setOpenFolder: this.setOpenFolder,
-      createFolder: this.createFolder,
-      updateFolder: this.updateFolder,
-      setOpenItem: this.setOpenItem,
-      updateItem: this.updateItem,
-      logOut: this.logOut
+      }
     }
   }
 
   /// Actions ///
-
-  setOpenItem = itemID => {
-    this.setState({
-      openItem: itemID
-    })
-  }
-
-  setOpenFolder = folderID => {
-    this.setState({
-      openFolder: folderID
-    })
-  }
-
-  setMarkedForDelete = status => {
-    this.setState({
-      markedForDelete: status
-    })
-  }
-
-  setItemView = view => {
-    this.setState({
-      viewItems: view
-    })
-  }
-
   addTodoItem = newItemText => {
     const now = new Date()
 
@@ -119,11 +104,7 @@ class TodoProvider extends Component {
           important: false,
           creationStamp: now.toLocaleString('en-GB')
         },
-        {
-          headers: {
-            'x-access-token': Cookies.get('x-access-token')
-          }
-        }
+        this.server.tokenHeader
       )
       .then(response => {
         const newItem = response.data.todo
@@ -133,39 +114,7 @@ class TodoProvider extends Component {
       })
       .catch(error => {
         this.setState({
-          errors: [...this.state.errors, error]
-        })
-      })
-  }
-
-  toggleTodoComplete = todoID => {
-    let [target] = this.state.items.filter(item => item._id === todoID)
-    let newCompletedStatus = !target.completed
-
-    // State update
-    this.setState(prevState => {
-      return prevState.items.map(item => {
-        if (todoID === item._id) item.completed = newCompletedStatus
-        return item
-      })
-    })
-
-    // DB update
-    axios
-      .patch(
-        `${this.server.items}update-status/?id=${todoID}`,
-        {
-          completed: newCompletedStatus
-        },
-        {
-          headers: {
-            'x-access-token': Cookies.get('x-access-token')
-          }
-        }
-      )
-      .catch(error => {
-        this.setState({
-          errors: [...this.state.errors, error]
+          errors: [...this.state.errors, error.message]
         })
       })
   }
@@ -180,11 +129,7 @@ class TodoProvider extends Component {
           name: newFolderName,
           color: randomColor()
         },
-        {
-          headers: {
-            'x-access-token': Cookies.get('x-access-token')
-          }
-        }
+        this.server.tokenHeader
       )
       .then(response => {
         const newFolder = response.data.folder
@@ -194,7 +139,7 @@ class TodoProvider extends Component {
       })
       .catch(error => {
         this.setState({
-          errors: [...this.state.errors, error]
+          errors: [...this.state.errors, error.message]
         })
       })
   }
@@ -214,14 +159,10 @@ class TodoProvider extends Component {
 
     // DB update
     axios
-      .delete(`${this.server.items}?id=${itemID}`, {
-        headers: {
-          'x-access-token': Cookies.get('x-access-token')
-        }
-      })
+      .delete(`${this.server.items}?id=${itemID}`, this.server.tokenHeader)
       .catch(error => {
         this.setState({
-          errors: [...this.state.errors, error]
+          errors: [...this.state.errors, error.message]
         })
       })
   }
@@ -241,171 +182,173 @@ class TodoProvider extends Component {
       // Returning to main overview of tasks
       prevState.openFolder = null
       prevState.openItem = null
-      return prevState.folders
+      return prevState
     })
 
     // DB update - delete item from DB
     axios
-      .delete(`${this.server.folders}?id=${folderID}`, {
-        headers: {
-          'x-access-token': Cookies.get('x-access-token')
-        }
-      })
+      .delete(`${this.server.folders}?id=${folderID}`, this.server.tokenHeader)
       .catch(error => {
         this.setState({
-          errors: [...this.state.errors, error]
+          errors: [...this.state.errors, error.message]
         })
       })
   }
 
-  updateFolder = (selectedID, newName) => {
-    // TODO: Make into a receiver of tasks (reducer?)
-    this.setState(prevState => {
-      const targetedFolder = {
-        _id: selectedID,
-        name: newName
-      }
-
-      // Return complete folder object matching selectedID
-      let [foundFolder] = prevState.folders.filter(prevFolder => {
-        return prevFolder._id === targetedFolder._id
-      })
-
-      // Renaming the found folder with the asked name
-      foundFolder.name = targetedFolder.name
-
-      // Inserting object with updated name into new array
-      const updatedFolders = prevState.folders.map(prevFolder => {
-        if (foundFolder === prevFolder) {
-          foundFolder = prevFolder
-        }
-        return prevFolder
-      })
-
-      // Update existing folders with array of new folders (with renamed folder)
-      prevState.folders = updatedFolders
-      return prevState.folders
-    })
-
-    // DB update
-    axios
-      .patch(
-        `${this.server.folders}update-name/?id=${selectedID}`,
-        {
-          name: newName
-        },
-        {
-          headers: {
-            'x-access-token': Cookies.get('x-access-token')
+  updateFolder = (task, selectedID, newName) => {
+    switch (task) {
+      case 'UPDATE_FOLDER_NAME':
+        this.setState(prevState => {
+          const targetedFolder = {
+            _id: selectedID,
+            name: newName
           }
-        }
-      )
-      .catch(error => {
-        this.setState({
-          errors: [...this.state.errors, error]
+
+          let foundFolder = findFromID.folder(selectedID, this.state.folders)
+          foundFolder.name = targetedFolder.name
+
+          // Inserting object with updated name into new array
+          const updatedFolders = prevState.folders.map(prevFolder => {
+            if (foundFolder === prevFolder) {
+              foundFolder = prevFolder
+            }
+            return prevFolder
+          })
+
+          // Update existing folders with array of new folders (with renamed folder)
+          prevState.folders = updatedFolders
+          return prevState.folders
         })
-      })
+
+        // DB update
+        axios
+          .patch(
+            `${this.server.folders}update-name/?id=${selectedID}`,
+            { name: newName },
+            this.server.tokenHeader
+          )
+          .catch(error => {
+            this.setState({ errors: [...this.state.errors, error.message] })
+          })
+        break
+      default:
+        break
+    }
   }
 
   updateItem = (task, requestedItem, newItemText) => {
-    if (task === 'CHANGE_ITEM_FOLDER') {
-      this.setState(prevState => {
-        const updatedItems = prevState.items.map(item => {
-          // Matches item with the ID of the open item
-          if (item._id === this.state.openItem) {
-            item.folder = requestedItem._id
-          }
-          return item
-        })
-        prevState.items = updatedItems
-        return prevState
-      })
-
-      // DB update
-      axios
-        .patch(
-          `${this.server.items}update-folder/?id=${this.state.openItem}`,
-          {
-            folder: requestedItem._id
-          },
-          {
-            headers: {
-              'x-access-token': Cookies.get('x-access-token')
+    switch (task) {
+      case 'CHANGE_ITEM_FOLDER': {
+        this.setState(prevState => {
+          const updatedItems = prevState.items.map(item => {
+            // Matches item with the ID of the open item
+            if (item._id === this.state.openItem) {
+              item.folder = requestedItem._id
             }
-          }
-        )
-        .catch(error => {
-          this.setState({
-            errors: [...this.state.errors, error]
+            return item
+          })
+          prevState.items = updatedItems
+          return prevState
+        })
+
+        // DB update
+        axios
+          .patch(
+            `${this.server.items}update-folder/?id=${this.state.openItem}`,
+            { folder: requestedItem._id },
+            this.server.tokenHeader
+          )
+          .catch(error => {
+            this.setState({ errors: [...this.state.errors, error.message] })
+          })
+        break
+      }
+
+      case 'TOGGLE_COMPLETE': {
+        let target = findFromID.item(requestedItem, this.state.items)
+        let newCompletedStatus = !target.completed
+
+        // State update
+        this.setState(prevState => {
+          return prevState.items.map(item => {
+            if (requestedItem === item._id) item.completed = newCompletedStatus
+            return item
           })
         })
-    }
 
-    if (task === 'UPDATE_ITEM_TEXT') {
-      // State update
-      this.setState(prevState => {
-        const updatedItems = prevState.items.map(item => {
-          if (item._id === requestedItem) {
-            item.text = newItemText
-          }
-          return item
-        })
-        prevState.items = updatedItems
-        return prevState
-      })
-
-      // DB update
-      axios
-        .patch(
-          `${this.server.items}update-text/?id=${this.state.openItem}`,
-          {
-            text: newItemText
-          },
-          {
-            headers: {
-              'x-access-token': Cookies.get('x-access-token')
-            }
-          }
-        )
-        .catch(error => {
-          this.setState({
-            errors: [...this.state.errors, error]
+        // DB update
+        axios
+          .patch(
+            `${this.server.items}update-status/?id=${requestedItem}`,
+            {
+              completed: newCompletedStatus
+            },
+            this.server.tokenHeader
+          )
+          .catch(error => {
+            this.setState({
+              errors: [...this.state.errors, error.message]
+            })
           })
-        })
-    }
-    if (task === 'TOGGLE_ITEM_IMPORTANT') {
-      let [target] = this.state.items.filter(item => item._id === requestedItem)
-      let newStatus = !target.important
-
-      // State update
-      this.setState(prevState => {
-        const updatedItems = prevState.items.map(item => {
-          if (item._id === requestedItem) {
-            item.important = newStatus
-          }
-          return item
-        })
-        return updatedItems
-      })
-
-      // DB update
-      axios
-        .patch(
-          `${this.server.items}update-important/?id=${requestedItem}`,
-          {
-            important: newStatus
-          },
-          {
-            headers: {
-              'x-access-token': Cookies.get('x-access-token')
+        break
+      }
+      case 'UPDATE_ITEM_TEXT': {
+        // State update
+        this.setState(prevState => {
+          const updatedItems = prevState.items.map(item => {
+            if (item._id === requestedItem) {
+              item.text = newItemText
             }
-          }
-        )
-        .catch(error => {
-          this.setState({
-            errors: [...this.state.errors, error]
+            return item
           })
+          prevState.items = updatedItems
+          return prevState
         })
+
+        // DB update
+        axios
+          .patch(
+            `${this.server.items}update-text/?id=${this.state.openItem}`,
+            { text: newItemText },
+            this.server.tokenHeader
+          )
+          .catch(error => {
+            this.setState({ errors: [...this.state.errors, error.message] })
+          })
+        break
+      }
+
+      case 'TOGGLE_ITEM_IMPORTANT': {
+        let item = findFromID.item(requestedItem, this.state.items)
+        let newStatus = !item.important
+
+        // State update
+        this.setState(prevState => {
+          const updatedItems = prevState.items.map(item => {
+            if (item._id === requestedItem) {
+              item.important = newStatus
+            }
+            return item
+          })
+          return updatedItems
+        })
+
+        // DB update
+        axios
+          .patch(
+            `${this.server.items}update-important/?id=${requestedItem}`,
+            { important: newStatus },
+            this.server.tokenHeader
+          )
+          .catch(error => {
+            this.setState({
+              errors: [...this.state.errors, error.message]
+            })
+          })
+        break
+      }
+      default:
+        break
     }
   }
 

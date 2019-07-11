@@ -24,7 +24,7 @@ export default function ListHeader () {
     <div className={type}>
       <form
         onSubmit={e => {
-          updateFolder(openFolder, openFolderNewName)
+          updateFolder('UPDATE_FOLDER_NAME', openFolder, openFolderNewName)
           setShowEditButton(false)
           e.preventDefault()
         }}

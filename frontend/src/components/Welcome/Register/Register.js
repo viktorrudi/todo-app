@@ -35,7 +35,7 @@ export default function Register (props) {
           👋
         </span>
         <h2>Register</h2>
-        <form handleSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
             <label htmlFor="email" />
             <input

@@ -8,7 +8,7 @@ let TodoItem = require('../models/item.model')
 router.route('/').get((req, res) => {
   const userID = req.headers['x-user-id']
   TodoFolder.find((err, todoFolders) => {
-    if (err) throw new Error(err)
+    if (err) res.status(500).json({ message: 'Unable to retrieve folders' })
     const folders = todoFolders.filter(folder => folder.ownerID === userID)
     res.status(200).json(folders)
   })
@@ -18,7 +18,7 @@ router.route('/').get((req, res) => {
 router.route('/').get((req, res) => {
   const id = req.params.id
   TodoFolder.findById(id, (err, folders) => {
-    if (err) throw new Error(err)
+    if (err) res.status(500).json({ message: 'Unable to retrieve folder' })
     res.status(200).json(folders)
   })
 })
@@ -34,7 +34,7 @@ router.route('/').post((req, res) => {
       res.status(200).json({ message: 'Folder added!', folder })
     })
     .catch(err => {
-      res.status(400).json(err.message)
+      res.status(400).json({ message: err.message })
     })
 })
 
@@ -52,7 +52,7 @@ router.route('/').delete((req, res) => {
     .then(folder => {
       res.status(200).json({ message: 'Folder and items deleted!', folder })
     })
-    .catch(err => res.json(err))
+    .catch(err => res.json({ message: err.message }))
 })
 
 // **** PATCH **** //
@@ -70,7 +70,7 @@ router.route('/update-name').patch((req, res) => {
         res.status(200).json({ message: 'Folder name updated!', folder })
       })
       .catch(err => {
-        res.status(400).json(err)
+        res.status(400).json({ message: err.message })
       })
   })
 })
@@ -88,7 +88,7 @@ router.route('/update-color').patch((req, res) => {
         res.json({ message: 'Folder color updated!', folder })
       })
       .catch(err => {
-        res.status(400).json(err)
+        res.status(400).json({ message: err.message })
       })
   })
 })

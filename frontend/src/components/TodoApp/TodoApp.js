@@ -3,6 +3,7 @@ import { TodoContext } from './TodoContext'
 import Sidebar from './Sidebar/Sidebar'
 import TodoSheet from './TodoSheet/TodoSheet'
 import Loader from '../Loader/Loader'
+import Errors from '../Errors/Errors'
 import { AppContext } from '../../AppContext'
 import './TodoApp.scss'
 
@@ -17,6 +18,7 @@ export default function TodoApp () {
 
   return (
     <>
+      {todoContext.errors ? <Errors messages={todoContext.errors} /> : null}
       {appContext.loading ? <Loader /> : null}
       <Sidebar />
       <TodoSheet />

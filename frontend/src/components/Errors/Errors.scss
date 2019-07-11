@@ -1,10 +1,11 @@
-@import "../custom-variables.scss";
+@import '../custom-variables.scss';
 
 .Errors__wrapper {
   position: fixed;
   top: 20px;
   right: 50%;
   transform: translateX(50%);
+  z-index: 9;
   .Errors {
     color: #fff;
     background: $red;

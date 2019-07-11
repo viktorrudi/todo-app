@@ -6,7 +6,6 @@ const config = require('../config')
 module.exports = {
   // User registration
   register: (req, res) => {
-    console.log('starting registration')
     const { email, password } = req.body
     User.findOne({ email }, (err, userExists) => {
       if (userExists) {
@@ -16,11 +15,9 @@ module.exports = {
 
       User.create({ email, password }, (err, result) => {
         if (err) {
-          console.log('registration error:', err)
           res.status(500).json(err)
           return
         }
-        console.log(result)
         res.status(201).json({ email: result.email, password: result.password })
         return
       })
@@ -31,13 +28,9 @@ module.exports = {
 
   // User login
   login: (req, res) => {
-    console.log(
-      'attempting login with: ' + req.body.email + '. pw: ' + req.body.password
-    )
     const { email, password } = req.body
     if (email && password) {
       User.findOne({ email }, async (err, user) => {
-        console.log('found user:', user)
         if (err) res.status(500).json(err)
         // If password is correct, create token and send it back
         if (user && bcrypt.compareSync(password, user.password)) {

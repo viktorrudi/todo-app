@@ -43,7 +43,7 @@ export default function Login ({ setView }) {
         </span>
         <div className="welcome-effect">
           <h2>Login</h2>
-          <form handleSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="input-wrapper">
               <label htmlFor="email" />
               <input

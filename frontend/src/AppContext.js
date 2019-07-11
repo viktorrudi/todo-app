@@ -20,7 +20,7 @@ class AppProvider extends Component {
   }
 
   componentDidMount () {
-    // Redirect to login if not logged in
+    // Redirect to login page if user isn't logged in
     if (!Cookies.get('x-access-token') && !Cookies.get('x-user-id')) {
       this.props.history.push('/')
     }
@@ -63,13 +63,28 @@ class AppProvider extends Component {
         console.log('state set (appcontext)', this.state)
         this.props.history.push('/todo')
       })
-      .catch(err => {
-        console.log('handleLogin catch', err)
-        clearTimeout(loginTimeout)
-        this.setState({
-          errors: [...this.state.errors, 'Incorrect email/password'],
-          loading: false
-        })
+
+      .catch(({ message, response }) => {
+        // Check if DB is online
+        if (message === 'Network Error') {
+          clearTimeout(loginTimeout)
+          this.setState({
+            errors: [
+              ...this.state.errors,
+              'Sorry, something is not working properly right now. DB could be offline.'
+            ],
+            loading: false
+          })
+          return
+        }
+        // Incorrect email/password
+        if (response.status === 401) {
+          clearTimeout(loginTimeout)
+          this.setState({
+            errors: [...this.state.errors, response.data.message],
+            loading: false
+          })
+        }
       })
   }
 
@@ -95,27 +110,26 @@ class AppProvider extends Component {
         // Login after registration
         this.handleLogin(email, password)
       })
-      .catch(err => {
-        switch (err.response) {
-          case undefined:
-            clearTimeout(registerTimeout)
-            this.setState({
-              errors: [
-                ...this.state.errors,
-                'Sorry, something is not working properly right now. DB could be offline.'
-              ],
-              loading: false
-            })
-            break
-          case 400:
-            clearTimeout(registerTimeout)
-            this.setState({
-              errors: [...this.state.errors, 'User already exists!'],
-              loading: false
-            })
-            break
-          default:
-            break
+      .catch(({ message, response }) => {
+        // Check if DB is online
+        if (message === 'Network Error') {
+          clearTimeout(registerTimeout)
+          this.setState({
+            errors: [
+              ...this.state.errors,
+              'Sorry, something is not working properly right now. DB could be offline.'
+            ],
+            loading: false
+          })
+          return
+        }
+        // If user already exists
+        if (response.status === 409) {
+          clearTimeout(registerTimeout)
+          this.setState({
+            errors: [...this.state.errors, response.data.message],
+            loading: false
+          })
         }
       })
   }
@@ -132,7 +146,8 @@ class AppProvider extends Component {
   }
 
   static propTypes = {
-    children: PropTypes.array
+    children: PropTypes.array,
+    history: PropTypes.object
   }
 
   render () {

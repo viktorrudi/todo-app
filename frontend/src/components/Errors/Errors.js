@@ -1,28 +1,37 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { AppContext } from '../../AppContext'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import './Errors.scss'
 
-export default function Errors () {
+export default function Errors ({ messages }) {
   const [visible, setVisible] = useState(false)
-  const { errors } = useContext(AppContext)
 
   useEffect(() => {
-    if (!visible && errors.length > 0) {
+    if (!visible && messages.length > 0) {
       setVisible(true)
       setTimeout(() => {
         setVisible(false)
-        errors.length = 0
+        messages.length = 0
       }, 4000)
     }
-  }, [errors, visible])
+  }, [messages, visible])
 
   return (
     <div className="Errors__wrapper">
-      {errors.map(error => (
-        <div className={`Errors ${visible ? 'error-visible' : 'error-hidden'}`}>
-          <span role="img" aria-label="Error">😨</span> {error}
+      {messages.map((errorMessage, index) => (
+        <div
+          key={index}
+          className={`Errors ${visible ? 'error-visible' : 'error-hidden'}`}
+        >
+          <span role="img" aria-label="Error">
+            😨
+          </span>{' '}
+          {errorMessage}
         </div>
       ))}
     </div>
   )
+}
+
+Errors.propTypes = {
+  messages: PropTypes.array
 }
