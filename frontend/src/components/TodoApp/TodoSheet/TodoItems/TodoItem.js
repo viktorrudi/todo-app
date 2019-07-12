@@ -3,12 +3,14 @@ import { useDrag } from 'react-dnd'
 import { TodoContext } from '../../TodoContext'
 import PropTypes from 'prop-types'
 import { propTypeForItems } from '../../../../proptypes'
+import { findFromID } from '../../../../utilities/utilities'
 import { MdStar } from 'react-icons/md'
 import './TodoItem.scss'
 
 export default function TodoItem ({ item, findFolder }) {
-  const { openFolder, updateItem, setOpenItem } = useContext(TodoContext)
+  const { openFolder, updateItem, setOpenItem, folders } = useContext(TodoContext)
 
+  // Handle drag and drop (inserts items ID into the movable object)
   const [{ isDragging }, drag] = useDrag({
     item: { type: 'TODO_ITEM', itemID: item._id },
     collect: monitor => ({
@@ -30,8 +32,8 @@ export default function TodoItem ({ item, findFolder }) {
     }
   }
 
-  let itemFolder
-  itemFolder = findFolder(item.folder)
+  // Returns related folder for the item
+  const itemFolder = findFromID.folder(item.folder, folders)
 
   const type = 'TodoItem'
   return (
@@ -42,7 +44,9 @@ export default function TodoItem ({ item, findFolder }) {
       style={
         isDragging
           ? {
-            opacity: '.4'
+            maxHeight: 0,
+            padding: 0,
+            opacity: 0
           }
           : null
       }

@@ -34,9 +34,12 @@ router.route('/').post((req, res) => {
     .save()
     .then(todo => {
       res.status(200).json({ message: 'Todo added!', todo })
+      console.log('saved todo item: ', todo);
     })
     .catch(err => {
+      console.log('error adding item: ', err);
       res.status(400).json({ message: err.message })
+      return
     })
 })
 

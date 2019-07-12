@@ -6,36 +6,30 @@ import _ from 'lodash'
 import { TodoContext } from '../../TodoContext'
 
 export default function TodoItems () {
-  const { viewItems, openFolder, items, folders } = useContext(TodoContext)
+  const { viewItems, openFolder, items } = useContext(TodoContext)
 
+  // Toggeling the view of the items
   let selectedView
-  if (viewItems === 'all') {
-    selectedView = items
-  }
-  if (viewItems === 'important') {
-    selectedView = items.filter(item => item.important)
-  }
-  if (viewItems === 'folder') {
-    selectedView = items.filter(item => item.folder === openFolder)
-  }
-  if (viewItems === 'no-completed') {
-    selectedView = items.filter(item => !item.completed)
-  }
-
-  const findItemFolder = itemFolderID => {
-    const [folder] = folders.filter(folder => folder._id === itemFolderID)
-    return folder
+  switch (viewItems) {
+    case 'all': selectedView = items
+      break
+    case 'important': selectedView = items.filter(item => item.important)
+      break
+    case 'folder': selectedView = items.filter(item => item.folder === openFolder)
+      break
+    case 'no-completed': selectedView = items.filter(item => !item.completed)
+      break
+    default:
+      break
   }
 
   // Sorting
-  selectedView = _.sortBy(selectedView || items, item => {
-    return new Date(item.creationStamp)
-  })
+  // selectedView = _.sortBy(selectedView || items, item => new Date(item.creationStamp))
   selectedView = _.sortBy(selectedView, ['important']).reverse()
   selectedView = _.sortBy(selectedView, ['completed'])
 
   let itemsToDisplay = selectedView.map(item => (
-    <TodoItem key={item._id} item={item} findFolder={findItemFolder} />
+    <TodoItem key={item._id} item={item} />
   ))
 
   return (

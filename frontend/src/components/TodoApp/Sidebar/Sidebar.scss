@@ -1,4 +1,4 @@
-@import '../../custom-variables.scss';
+@import "../../custom-variables.scss";
 
 .Sidebar {
   position: relative;
@@ -92,6 +92,9 @@
       color: $yellow;
       stroke: darken($yellow, 25%);
       stroke-width: 1;
+    }
+    &.active {
+      font-weight: 700;
     }
   }
 }

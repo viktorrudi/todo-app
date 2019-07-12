@@ -4,7 +4,7 @@ import { TodoContext } from '../../TodoContext'
 import { MdStar, MdInbox } from 'react-icons/md'
 
 export default function ChangeView () {
-  const { updateItem, setItemView, setOpenFolder } = useContext(TodoContext)
+  const { updateItem, setItemView, viewItems, setOpenFolder } = useContext(TodoContext)
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'TODO_ITEM',
@@ -19,7 +19,7 @@ export default function ChangeView () {
     <>
       <div
         ref={drop}
-        className="AllItems option"
+        className={`AllItems option ${viewItems === 'all' ? 'active' : ''}`}
         style={isOver ? { background: '#efefef' } : null}
         onClick={() => {
           setItemView('all')
@@ -30,7 +30,7 @@ export default function ChangeView () {
       </div>
 
       <div
-        className="Important option"
+        className={`Important option ${viewItems === 'important' ? 'active' : ''}`}
         onClick={() => setItemView('important')}
       >
         <MdStar /> Important items
