@@ -18,12 +18,13 @@
   }
   &__action--done {
     // Hiding checkbox
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
+    display: none;
+    // position: absolute;
+    // left: -10000px;
+    // top: auto;
+    // width: 1px;
+    // height: 1px;
+    // overflow: hidden;
 
     // Setting checkbox untoggled border
     &:hover ~ .check-toggle {

@@ -89,6 +89,7 @@ class AppProvider extends Component {
   }
 
   handleRegistration = (email, password) => {
+    console.log('starting reg with', email, password)
     const registerTimeout = setTimeout(() => {
       this.setState({
         errors: [

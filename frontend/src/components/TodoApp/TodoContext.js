@@ -236,7 +236,7 @@ class TodoProvider extends Component {
     }
   }
 
-  updateItem = (task, requestedItem, newItemText) => {
+  updateItem = (task, requestedItem, updatedContent) => {
     switch (task) {
       case 'CHANGE_ITEM_FOLDER': {
         this.setState(prevState => {
@@ -256,6 +256,34 @@ class TodoProvider extends Component {
           .patch(
             `${this.server.items}update-folder/?id=${this.state.openItem}`,
             { folder: requestedItem._id },
+            this.server.tokenHeader
+          )
+          .catch(error => {
+            this.setState({ errors: [...this.state.errors, error.message] })
+          })
+        break
+      }
+
+      case 'CHANGE_ITEM_FOLDER_DND': {
+        // requestedItem = item id (not folder id for item)
+        // updatedContent = target folder ID
+        const movedItem = findFromID.item(requestedItem, this.state.items)
+        this.setState(prevState => {
+          const updatedItems = prevState.items.map(item => {
+            if (item._id === movedItem._id) {
+              item.folder = updatedContent
+            }
+            return item
+          })
+          prevState.items = updatedItems
+          return prevState
+        })
+
+        // DB update
+        axios
+          .patch(
+            `${this.server.items}update-folder/?id=${movedItem._id}`,
+            { folder: updatedContent },
             this.server.tokenHeader
           )
           .catch(error => {
@@ -297,7 +325,7 @@ class TodoProvider extends Component {
         this.setState(prevState => {
           const updatedItems = prevState.items.map(item => {
             if (item._id === requestedItem) {
-              item.text = newItemText
+              item.text = updatedContent
             }
             return item
           })
@@ -309,7 +337,7 @@ class TodoProvider extends Component {
         axios
           .patch(
             `${this.server.items}update-text/?id=${this.state.openItem}`,
-            { text: newItemText },
+            { text: updatedContent },
             this.server.tokenHeader
           )
           .catch(error => {

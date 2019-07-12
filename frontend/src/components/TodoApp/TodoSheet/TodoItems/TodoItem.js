@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useDrag } from 'react-dnd'
 import { TodoContext } from '../../TodoContext'
 import PropTypes from 'prop-types'
 import { propTypeForItems } from '../../../../proptypes'
@@ -7,6 +8,14 @@ import './TodoItem.scss'
 
 export default function TodoItem ({ item, findFolder }) {
   const { openFolder, updateItem, setOpenItem } = useContext(TodoContext)
+
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: 'TODO_ITEM', itemID: item._id },
+    collect: monitor => ({
+      item: monitor.getItem(),
+      isDragging: !!monitor.isDragging()
+    })
+  })
 
   const handleClick = (e, clickedItem) => {
     switch (e.target.tagName) {
@@ -27,14 +36,23 @@ export default function TodoItem ({ item, findFolder }) {
   const type = 'TodoItem'
   return (
     <div
+      ref={drag}
       className={`${type} ${item.important ? 'important' : ''}`}
       onClick={e => handleClick(e, item)}
+      style={
+        isDragging
+          ? {
+            opacity: '.4'
+          }
+          : null
+      }
     >
       {/* Custom checkbox */}
       <label>
         <input
           type="checkbox"
           className={`${type}__action--done`}
+          style={isDragging ? { display: '#none' } : null}
           onChange={handleClick}
           checked={item.completed}
           id={item._id}
