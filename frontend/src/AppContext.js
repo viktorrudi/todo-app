@@ -21,7 +21,9 @@ class AppProvider extends Component {
 
   componentDidMount () {
     // Redirect to login page if user isn't logged in
-    if (!Cookies.get('x-access-token') && !Cookies.get('x-user-id')) {
+    if (!Cookies.get('x-access-token') || !Cookies.get('x-user-id')) {
+      Cookies.remove('x-access-token')
+      Cookies.remove('x-user-id')
       this.props.history.push('/')
     }
   }
@@ -33,7 +35,7 @@ class AppProvider extends Component {
       this.setState({
         errors: [
           ...this.state.errors,
-          'Sorry, it took to long to log you in. Please try again later.'
+          'Sorry, it took too long to log you in. Please try again later.'
         ],
         loading: false
       })
@@ -60,7 +62,7 @@ class AppProvider extends Component {
           loading: false
         })
 
-        console.log('state set (appcontext)', this.state)
+        // Cookies set. Redirecting to todo route (runs TodoApp.js)
         this.props.history.push('/todo')
       })
 

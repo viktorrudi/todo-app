@@ -16,8 +16,12 @@ class TodoProvider extends Component {
     this.server = {
       items: 'http://localhost:4000/api/items/',
       folders: 'http://localhost:4000/api/folders/',
-      tokenHeader: {
-        headers: { 'x-access-token': Cookies.get('x-access-token') }
+      header: {
+        headers: {
+          // FIXME: THese aree undefined on first load. Works after refresh
+          'x-access-token': Cookies.get('x-access-token'),
+          'x-user-id': Cookies.get('x-user-id')
+        }
       }
     }
     this.state = {
@@ -29,6 +33,7 @@ class TodoProvider extends Component {
       openItem: null,
       markedForDelete: false,
       errors: [],
+
       // Actions
       addTodoItem: this.addTodoItem,
       removeTodoItem: this.removeTodoItem,
@@ -47,15 +52,19 @@ class TodoProvider extends Component {
       // Initialization (after logging in)
       setInit: {
         folders: () => {
+          if (!this.server.headers) {
+            console.log('refreshing')
+            // window.location.reload()
+          }
           axios
             .get(this.server.folders, {
               headers: {
+                // FIXME: THese aree undefined on first load
                 'x-access-token': Cookies.get('x-access-token'),
                 'x-user-id': Cookies.get('x-user-id')
               }
             })
             .then(response => {
-              console.log('got response (folders)', response.data)
               this.setState({
                 folders: response.data
               })
@@ -67,9 +76,16 @@ class TodoProvider extends Component {
             })
         },
         items: () => {
+          if (this.server.headers === undefined) {
+            console.log(this.server.headers)
+            console.log('refreshing')
+            // window.location.reload()
+          }
+
           axios
             .get(this.server.items, {
               headers: {
+                // FIXME: THese aree undefined on first load
                 'x-access-token': Cookies.get('x-access-token'),
                 'x-user-id': Cookies.get('x-user-id')
               }
@@ -90,6 +106,7 @@ class TodoProvider extends Component {
 
   /// Actions ///
   addTodoItem = newItemText => {
+    console.log(this.server.header)
     const now = new Date()
 
     // DB update
@@ -104,7 +121,7 @@ class TodoProvider extends Component {
           important: false,
           creationStamp: now.toLocaleString('en-GB')
         },
-        this.server.tokenHeader
+        this.server.header
       )
       .then(response => {
         const newItem = response.data.todo
@@ -129,7 +146,7 @@ class TodoProvider extends Component {
           name: newFolderName,
           color: randomColor()
         },
-        this.server.tokenHeader
+        this.server.header
       )
       .then(response => {
         const newFolder = response.data.folder
@@ -159,7 +176,7 @@ class TodoProvider extends Component {
 
     // DB update
     axios
-      .delete(`${this.server.items}?id=${itemID}`, this.server.tokenHeader)
+      .delete(`${this.server.items}?id=${itemID}`, this.server.header)
       .catch(error => {
         this.setState({
           errors: [...this.state.errors, error.message]
@@ -187,7 +204,7 @@ class TodoProvider extends Component {
 
     // DB update - delete item from DB
     axios
-      .delete(`${this.server.folders}?id=${folderID}`, this.server.tokenHeader)
+      .delete(`${this.server.folders}?id=${folderID}`, this.server.header)
       .catch(error => {
         this.setState({
           errors: [...this.state.errors, error.message]
@@ -225,7 +242,7 @@ class TodoProvider extends Component {
           .patch(
             `${this.server.folders}update-name/?id=${selectedID}`,
             { name: newName },
-            this.server.tokenHeader
+            this.server.header
           )
           .catch(error => {
             this.setState({ errors: [...this.state.errors, error.message] })
@@ -256,7 +273,7 @@ class TodoProvider extends Component {
           .patch(
             `${this.server.items}update-folder/?id=${this.state.openItem}`,
             { folder: requestedItem._id },
-            this.server.tokenHeader
+            this.server.header
           )
           .catch(error => {
             this.setState({ errors: [...this.state.errors, error.message] })
@@ -284,7 +301,7 @@ class TodoProvider extends Component {
           .patch(
             `${this.server.items}update-folder/?id=${movedItem._id}`,
             { folder: updatedContent },
-            this.server.tokenHeader
+            this.server.header
           )
           .catch(error => {
             this.setState({ errors: [...this.state.errors, error.message] })
@@ -311,7 +328,7 @@ class TodoProvider extends Component {
             {
               completed: newCompletedStatus
             },
-            this.server.tokenHeader
+            this.server.header
           )
           .catch(error => {
             this.setState({
@@ -338,7 +355,7 @@ class TodoProvider extends Component {
           .patch(
             `${this.server.items}update-text/?id=${this.state.openItem}`,
             { text: updatedContent },
-            this.server.tokenHeader
+            this.server.header
           )
           .catch(error => {
             this.setState({ errors: [...this.state.errors, error.message] })
@@ -366,7 +383,7 @@ class TodoProvider extends Component {
           .patch(
             `${this.server.items}update-important/?id=${requestedItem}`,
             { important: newStatus },
-            this.server.tokenHeader
+            this.server.header
           )
           .catch(error => {
             this.setState({
