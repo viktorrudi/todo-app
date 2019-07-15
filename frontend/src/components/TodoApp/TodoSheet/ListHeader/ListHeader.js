@@ -19,6 +19,8 @@ export default function ListHeader () {
     setShowEditButton(false)
   }, [openFolder, folders, setMarkedForDelete])
 
+  console.log(openFolder)
+
   const type = 'ListHeader'
   return (
     <div className={type}>
@@ -33,7 +35,6 @@ export default function ListHeader () {
           <MdEdit />
         </button>
         <input
-          id={openFolder._id}
           className={`${type}__folder--input`}
           type="text"
           value={openFolderNewName}

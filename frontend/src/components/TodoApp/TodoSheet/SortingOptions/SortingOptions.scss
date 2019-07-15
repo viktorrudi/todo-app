@@ -1,0 +1,27 @@
+@import "../../../custom-variables.scss";
+
+.SortingOptions {
+  &__hide-completed {
+    margin: 5px 0 10px;
+    background: $blue;
+    border-radius: 20px;
+    display: inline-block;
+    color: #fff;
+    padding: 2px 10px 0px 0px;
+    opacity: 0.3;
+    transition: opacity 0.2s ease-in-out;
+    &:hover {
+      opacity: 1;
+    }
+    label {
+      border-radius: 50%;
+      cursor: pointer;
+      p {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        padding-left: 5px;
+      }
+    }
+  }
+}

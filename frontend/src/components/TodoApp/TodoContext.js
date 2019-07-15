@@ -29,6 +29,7 @@ class TodoProvider extends Component {
       items: [],
       folders: [],
       viewItems: 'all',
+      showCompleted: 'true',
       openFolder: null,
       openItem: null,
       markedForDelete: false,
@@ -44,6 +45,7 @@ class TodoProvider extends Component {
       logOut: this.logOut,
 
       // Only state updates
+      setShowCompleted: status => this.setState({ showCompleted: status }),
       setOpenItem: itemID => this.setState({ openItem: itemID }),
       setOpenFolder: folderID => this.setState({ openFolder: folderID }),
       setItemView: view => this.setState({ viewItems: view }),

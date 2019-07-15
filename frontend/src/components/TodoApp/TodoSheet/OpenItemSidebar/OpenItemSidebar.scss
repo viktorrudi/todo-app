@@ -1,4 +1,4 @@
-@import '../../../custom-variables.scss';
+@import "../../../custom-variables.scss";
 
 .OpenItemSidebar {
   min-width: 250px;
@@ -30,7 +30,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     textarea {
-      font-size: 1rem;
+      font-size: 1.2rem;
       flex: 0 0 100%;
       box-sizing: border-box;
       width: 100%;

@@ -1,4 +1,4 @@
-@import '../../../custom-variables.scss';
+@import "../../../custom-variables.scss";
 
 .TodoItem {
   display: flex;
@@ -56,7 +56,7 @@
       height: 1.1rem;
       display: inline-block;
       vertical-align: middle;
-      border: 2px solid lighten($blue, 15%);
+      border: 2px solid $blue;
       border-radius: 50%;
       cursor: pointer;
     }

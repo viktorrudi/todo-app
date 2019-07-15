@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { TodoContext } from '../../TodoContext'
 
 export default function TodoItems () {
-  const { viewItems, openFolder, items } = useContext(TodoContext)
+  const { viewItems, showCompleted, openFolder, items } = useContext(TodoContext)
 
   // Toggeling the view of the items
   let selectedView
@@ -23,8 +23,12 @@ export default function TodoItems () {
       break
   }
 
+  // Toggle display of completed items
+  if (!showCompleted) {
+    selectedView = selectedView.filter(item => !item.completed)
+  }
+
   // Sorting
-  // selectedView = _.sortBy(selectedView || items, item => new Date(item.creationStamp))
   selectedView = _.sortBy(selectedView, ['important']).reverse()
   selectedView = _.sortBy(selectedView, ['completed'])
 

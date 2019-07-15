@@ -7,7 +7,7 @@ import { findFromID } from '../../../../utilities/utilities'
 import { MdStar } from 'react-icons/md'
 import './TodoItem.scss'
 
-export default function TodoItem ({ item, findFolder }) {
+export default function TodoItem ({ item }) {
   const { openFolder, updateItem, setOpenItem, folders } = useContext(TodoContext)
 
   // Handle drag and drop (inserts items ID into the movable object)
