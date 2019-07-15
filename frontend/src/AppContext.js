@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 export const AppContext = createContext()
 
 class AppProvider extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       loggedIn: false,
@@ -19,7 +19,7 @@ class AppProvider extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // Redirect to login page if user isn't logged in
     if (!Cookies.get('x-access-token') || !Cookies.get('x-user-id')) {
       Cookies.remove('x-access-token')
@@ -153,7 +153,7 @@ class AppProvider extends Component {
     history: PropTypes.object
   }
 
-  render () {
+  render() {
     return (
       <AppContext.Provider value={this.state}>
         {this.props.children}

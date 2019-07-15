@@ -14,6 +14,12 @@ export default function TodoApp () {
   const appContext = useContext(AppContext)
 
   useEffect(() => {
+    // FIXME: Forces a reload after login/registration so cookies can be used to talk to API
+    if (!window.location.hash) {
+      window.location = window.location + '#👌'
+      window.location.reload()
+    }
+
     todoContext.setInit.folders()
     todoContext.setInit.items()
   }, [todoContext.setInit])

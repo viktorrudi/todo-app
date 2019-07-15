@@ -12,10 +12,9 @@ module.exports = {
         res.status(409).json({ message: 'User already exists!' })
         return
       }
-
       User.create({ email, password }, (err, result) => {
         if (err) {
-          res.status(500).json(err)
+          res.status(400).json({ message: err._message })
           return
         }
         res.status(201).json({ email: result.email, password: result.password })
