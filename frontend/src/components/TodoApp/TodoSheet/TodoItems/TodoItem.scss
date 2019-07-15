@@ -108,4 +108,10 @@
   &.visible {
     opacity: 1;
   }
+  &.completed {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }

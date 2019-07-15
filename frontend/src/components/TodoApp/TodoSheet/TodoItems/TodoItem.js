@@ -44,7 +44,12 @@ export default function TodoItem ({ item }) {
   return (
     <div
       ref={drag}
-      className={`${type} ${itemVisible ? 'visible' : ''} ${item.important ? 'important' : ''}`}
+      className={`
+        ${type} 
+        ${itemVisible ? 'visible' : ''} 
+        ${item.important ? 'important' : ''}
+        ${item.completed ? 'completed' : ''}
+      `}
       onClick={e => handleClick(e, item)}
       style={
         isDragging
@@ -71,7 +76,6 @@ export default function TodoItem ({ item }) {
 
       <div
         className={`${type}__item`}
-        style={item.completed ? { color: '#aaa' } : { color: '#000' }}
       >
         {item.text}
         {openFolder ? null : (
