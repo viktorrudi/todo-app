@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { TodoContext } from '../../TodoContext'
 import PropTypes from 'prop-types'
@@ -9,6 +9,11 @@ import './TodoItem.scss'
 
 export default function TodoItem ({ item }) {
   const { openFolder, updateItem, setOpenItem, folders } = useContext(TodoContext)
+  const [itemVisible, setItemVisible] = useState(false)
+
+  setTimeout(() => {
+    setItemVisible(true)
+  }, 100)
 
   // Handle drag and drop (inserts items ID into the movable object)
   const [{ isDragging }, drag] = useDrag({
@@ -39,7 +44,7 @@ export default function TodoItem ({ item }) {
   return (
     <div
       ref={drag}
-      className={`${type} ${item.important ? 'important' : ''}`}
+      className={`${type} ${itemVisible ? 'visible' : ''} ${item.important ? 'important' : ''}`}
       onClick={e => handleClick(e, item)}
       style={
         isDragging
