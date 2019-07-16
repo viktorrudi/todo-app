@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { TodoContext } from '../../TodoContext'
 import PropTypes from 'prop-types'
@@ -8,7 +8,9 @@ import { MdStar } from 'react-icons/md'
 import './TodoItem.scss'
 
 export default function TodoItem ({ item }) {
-  const { openFolder, updateItem, setOpenItem, folders } = useContext(TodoContext)
+  const { openFolder, updateItem, setOpenItem, folders } = useContext(
+    TodoContext
+  )
   const [itemVisible, setItemVisible] = useState(false)
 
   setTimeout(() => {
@@ -74,9 +76,7 @@ export default function TodoItem ({ item }) {
         <span className="check-toggle" onClick={handleClick} />
       </label>
 
-      <div
-        className={`${type}__item`}
-      >
+      <div className={`${type}__item`}>
         {item.text}
         {openFolder ? null : (
           <aside className={`${type}__item--folder`}>

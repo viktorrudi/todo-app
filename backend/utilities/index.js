@@ -3,7 +3,6 @@ const config = require('../config')
 
 module.exports = {
   validateUser: (req, res, next) => {
-    // console.log('validateuser func (util):', req.headers)
     jwt.verify(
       // Collected from browser cookies
       req.headers['x-access-token'],

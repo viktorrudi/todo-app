@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 export const AppContext = createContext()
 
 class AppProvider extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       loggedIn: false,
@@ -19,7 +19,7 @@ class AppProvider extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     // Redirect to login page if user isn't logged in
     if (!Cookies.get('x-access-token') || !Cookies.get('x-user-id')) {
       Cookies.remove('x-access-token')
@@ -48,8 +48,6 @@ class AppProvider extends Component {
         password
       })
       .then(response => {
-        console.log('login successful', response)
-
         // Set token and userID in cookies. Expires in 7 days
         Cookies.set('x-access-token', response.data.data.token, { expires: 7 })
         Cookies.set('x-user-id', response.data.data.user._id, { expires: 7 })
@@ -91,7 +89,6 @@ class AppProvider extends Component {
   }
 
   handleRegistration = (email, password) => {
-    console.log('starting reg with', email, password)
     const registerTimeout = setTimeout(() => {
       this.setState({
         errors: [
@@ -153,7 +150,7 @@ class AppProvider extends Component {
     history: PropTypes.object
   }
 
-  render() {
+  render () {
     return (
       <AppContext.Provider value={this.state}>
         {this.props.children}

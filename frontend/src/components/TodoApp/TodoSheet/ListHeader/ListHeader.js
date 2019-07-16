@@ -19,8 +19,6 @@ export default function ListHeader () {
     setShowEditButton(false)
   }, [openFolder, folders, setMarkedForDelete])
 
-  console.log(openFolder)
-
   const type = 'ListHeader'
   return (
     <div className={type}>

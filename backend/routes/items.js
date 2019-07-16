@@ -5,9 +5,7 @@ let TodoItem = require('../models/item.model')
 
 // Get all items for the user
 router.route('/').get((req, res) => {
-  // FIXME: Returns undefined on first login + register =?
   const userID = req.headers['x-user-id']
-  console.log('getting all items. UserID from header:', userID)
 
   TodoItem.find((err, todoItems) => {
     if (err) res.status(404).json({ message: 'Unable to retrieve items' })
@@ -36,16 +34,8 @@ router.route('/').post((req, res) => {
     .save()
     .then(todo => {
       res.status(200).json({ message: 'Todo added!', todo })
-      console.log('saved todo item: ', todo)
     })
     .catch(err => {
-      // FIXME, not receiving token in header on first attempt
-      console.log(
-        '__________error adding item: ',
-        err,
-        '__________error ITEMS.JS (BACKEND) HHHHEADERS:',
-        req.headers
-      )
       res.status(400).json({ message: err.message })
       return
     })

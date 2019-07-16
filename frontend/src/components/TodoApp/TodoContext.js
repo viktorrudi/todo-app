@@ -18,7 +18,6 @@ class TodoProvider extends Component {
       folders: 'http://localhost:4000/api/folders/',
       header: {
         headers: {
-          // FIXME: THese aree undefined on first load. Works after refresh
           'x-access-token': Cookies.get('x-access-token'),
           'x-user-id': Cookies.get('x-user-id')
         }
@@ -54,52 +53,19 @@ class TodoProvider extends Component {
       // Initialization (after logging in)
       setInit: {
         folders: () => {
-          if (!this.server.headers) {
-            console.log('refreshing')
-            // window.location.reload()
-          }
           axios
-            .get(this.server.folders, {
-              headers: {
-                // FIXME: THese aree undefined on first load
-                'x-access-token': Cookies.get('x-access-token'),
-                'x-user-id': Cookies.get('x-user-id')
-              }
-            })
-            .then(response => {
-              this.setState({
-                folders: response.data
-              })
-            })
+            .get(this.server.folders, this.server.header)
+            .then(({ data }) => this.setState({ folders: data }))
             .catch(error => {
-              this.setState({
-                errors: [...this.state.errors, error.message]
-              })
+              this.setState({ errors: [...this.state.errors, error.message] })
             })
         },
         items: () => {
-          if (this.server.headers === undefined) {
-            console.log(this.server.headers)
-            console.log('refreshing')
-            // window.location.reload()
-          }
-
           axios
-            .get(this.server.items, {
-              headers: {
-                // FIXME: THese aree undefined on first load
-                'x-access-token': Cookies.get('x-access-token'),
-                'x-user-id': Cookies.get('x-user-id')
-              }
-            })
-            .then(response => {
-              console.log('got response (items)', response.data)
-              this.setState({ items: response.data })
-            })
+            .get(this.server.items, this.server.header)
+            .then(({ data }) => this.setState({ items: data }))
             .catch(error => {
-              this.setState({
-                errors: [...this.state.errors, error.message]
-              })
+              this.setState({ errors: [...this.state.errors, error.message] })
             })
         }
       }
@@ -108,7 +74,6 @@ class TodoProvider extends Component {
 
   /// Actions ///
   addTodoItem = newItemText => {
-    console.log(this.server.header)
     const now = new Date()
 
     // DB update
