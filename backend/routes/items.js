@@ -8,9 +8,9 @@ router.route('/').get((req, res) => {
   const userID = req.headers['x-user-id']
 
   TodoItem.find((err, todoItems) => {
-    if (err) res.status(404).json({ message: 'Unable to retrieve items' })
+    if (err) return res.status(404).json({ message: 'Unable to retrieve items' })
     const items = todoItems.filter(item => item.ownerID === userID)
-    res.json(items)
+    return res.status(200).json(items)
   })
 })
 
