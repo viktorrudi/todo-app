@@ -15,10 +15,12 @@ let userSchema = new Schema({
   },
   password: { type: String, required: true },
   isDisabled: { type: Boolean, default: false },
+  passwordResetToken: { type: String },
+  passwordResetTokenExpires: { type: Date },
 })
 
 // Hashing password before storing it in the database. Not using arrow function because of "this" kw
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   const user = this
   bcrypt.hash(user.password, 10, async (err, hash) => {
     if (err) next(err)
