@@ -8,26 +8,26 @@ module.exports = {
       auth: {
         user: mailing.from,
         pass: mailing.password,
-      }
+      },
     })
 
-    console.log(user);
+    console.log(user)
 
     const mailOptions = {
       from: mailing.from,
       // to: user.email,
       to: 'vrudi91@gmail.com',
       subject: 'Link to reset your password',
-      text: `Click here: ${server.apiURI}/user/reset-password/${token}`
+      html: `Copy this: <strong>${token}</strong>`,
     }
 
-    console.log(mailOptions);
+    console.log(mailOptions)
 
-    console.log('Staring email sending');
+    console.log('Staring email sending')
 
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) return res.status(500).json({ message: err })
       res.status(200).json({ message: 'Password reset email sent', response })
     })
-  }
+  },
 }

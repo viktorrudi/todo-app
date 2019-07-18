@@ -34,11 +34,11 @@ app.use('/api/register', userController.register)
 app.use('/api/login', userController.login)
 // Password reset routes
 app.use('/api/user/request_password_reset', userController.requestPasswordReset)
-app.use('/api/user/check_reset_token', userController.checkResetToken)
+// app.use('/api/user/check_reset_token', userController.checkResetToken)
 app.use('/api/user/password_reset', userController.passwordReset)
 
 // SERVER connection
-app.listen(config.server.port, function () {
+app.listen(config.server.port, function() {
   console.log('Server is running on port: ' + config.server.port)
 })
 
