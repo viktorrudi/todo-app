@@ -39,7 +39,7 @@ export default function Register (props) {
           <div className="input-wrapper">
             <label htmlFor="email" />
             <input
-              type="text"
+              type="email"
               id="register_email"
               placeholder="email"
               value={email}

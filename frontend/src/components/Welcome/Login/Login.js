@@ -47,7 +47,7 @@ export default function Login ({ setView }) {
             <div className="input-wrapper">
               <label htmlFor="email" />
               <input
-                type="text"
+                type="email"
                 id="login_email"
                 placeholder="email"
                 value={email}
@@ -64,10 +64,17 @@ export default function Login ({ setView }) {
                 onChange={e => setPassword(e.target.value)}
               />
             </div>
+            <div
+              className="swap-form"
+              onClick={() => setView('forgot-password')}
+              style={{ textAlign: 'right' }}
+            >
+              I forgot my password
+            </div>
             <div className="input-wrapper">
               <button
                 disabled={buttonIsDisabled}
-                className={`login-btn ${context.loginError ? 'error' : null}`}
+                className={`default-btn ${context.loginError ? 'error' : null}`}
                 type="submit"
                 onClick={handleSubmit}
               >

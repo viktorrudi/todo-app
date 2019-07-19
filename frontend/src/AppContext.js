@@ -15,6 +15,7 @@ class AppProvider extends Component {
       loading: false,
       handleLogin: this.handleLogin,
       handleRegistration: this.handleRegistration,
+      resetPassword: this.resetPassword,
       logOut: this.logOut
     }
   }
@@ -132,6 +133,12 @@ class AppProvider extends Component {
           })
         }
       })
+  }
+
+  resetPassword = {
+    requestReset (email) {
+      console.log(email)
+    }
   }
 
   logOut = () => {
