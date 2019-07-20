@@ -1,61 +1,44 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { AppContext } from '../../../AppContext'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import RequestPassword from './RequestPassword'
+import ResetPassword from './ResetPassword'
 import './ForgotPassword.scss'
 
 export default function ForgotPassword ({ setView }) {
-  const [email, setEmail] = useState('')
-  const [buttonIsDisabled, setButtonIsDisabled] = useState(true)
-  const { resetPassword, loginError } = useContext(AppContext)
-
-  useEffect(() => {
-    if (email.length > 5) {
-      setButtonIsDisabled(false)
-    } else {
-      setButtonIsDisabled(true)
-    }
-  }, [email])
-
-  const handleSubmit = e => {
-    e.preventDefault()
-    resetPassword.requestReset(email)
-  }
+  const [sentToken, setSentToken] = useState(false)
+  const [emailRequester, setEmailRequester] = useState('')
 
   const type = 'Form'
   return (
     <div id="forgot-password" className={`${type}__container`}>
       <div className={`${type}__container--wrapper`}>
-        <span role="img" aria-label="Login">
+        <span role="img" aria-label="forgot password">
           🤕
         </span>
         <div className="welcome-effect">
-          <h2>Forgot password</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="input-wrapper">
-              <label htmlFor="email" />
-              <input
-                type="email"
-                id="reset_email"
-                placeholder="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="input-wrapper">
-              <button
-                disabled={buttonIsDisabled}
-                className={`default-btn ${loginError ? 'error' : null}`}
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Send reset email
-              </button>
-            </div>
-          </form>
-          <div className="swap-form" onClick={() => setView('login')}>
+          <h2>Reset password</h2>
+          {sentToken ? null : (
+            <RequestPassword
+              setSentToken={setSentToken}
+              setEmailRequester={setEmailRequester}
+            />
+          )}
+          {sentToken ? <ResetPassword email={emailRequester} /> : null}
+          <div
+            className="swap-form"
+            onClick={() => {
+              setView('login')
+              setSentToken(false)
+            }}
+          >
             Login instead
           </div>
         </div>
       </div>
     </div>
   )
+}
+
+ForgotPassword.propTypes = {
+  setView: PropTypes.func
 }

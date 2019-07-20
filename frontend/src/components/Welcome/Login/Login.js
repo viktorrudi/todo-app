@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import '../Welcome.scss'
 import { AppContext } from '../../../AppContext'
+import '../Welcome.scss'
 
 export default function Login ({ setView }) {
   const initialText = {

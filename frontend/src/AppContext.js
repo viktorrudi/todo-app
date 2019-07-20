@@ -12,11 +12,17 @@ class AppProvider extends Component {
     this.state = {
       loggedIn: false,
       errors: [],
+      notifications: [],
       loading: false,
       handleLogin: this.handleLogin,
       handleRegistration: this.handleRegistration,
       resetPassword: this.resetPassword,
-      logOut: this.logOut
+      logOut: this.logOut,
+      setError: error =>
+        this.setState({
+          errors: [...this.state.errors, error]
+        }),
+      setLoading: status => this.setState({ loading: status })
     }
   }
 
@@ -136,8 +142,45 @@ class AppProvider extends Component {
   }
 
   resetPassword = {
-    requestReset (email) {
-      console.log(email)
+    requestReset: async email => {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('http://localhost:4000/api/user/request_password_reset', {
+            email
+          })
+          .then(response => resolve(response))
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    setNewPassword: (token, email, password) => {
+      this.setState({ loading: true })
+      axios
+        .post(
+          `http://localhost:4000/api/user/password_reset?passwordResetToken=${token}`,
+          {
+            email,
+            password
+          }
+        )
+        .then(({ data }) => {
+          this.setState({
+            notifications: [
+              ...this.state.notifications,
+              'Your password has been changed'
+            ],
+            loading: false
+          })
+          this.handleLogin(data.email, password)
+        })
+        .catch(err => {
+          this.setState({
+            errors: [...this.state.errors, err.message],
+            loading: false
+          })
+          console.log(err)
+        })
     }
   }
 

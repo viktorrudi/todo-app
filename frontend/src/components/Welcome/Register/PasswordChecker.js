@@ -15,10 +15,6 @@ export default function PasswordChecker ({ password, passwordRepeat }) {
     }
   }
 
-  // useEffect(() => {
-
-  // }, [password, passwordRepeat])
-
   return (
     <div className="password-checker">
       <ul>
@@ -33,5 +29,6 @@ export default function PasswordChecker ({ password, passwordRepeat }) {
 
 PasswordChecker.propTypes = {
   password: PropTypes.string,
-  passwordRepeat: PropTypes.string
+  passwordRepeat: PropTypes.string,
+  setButtonIsDisabled: PropTypes.func
 }

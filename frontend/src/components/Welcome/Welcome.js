@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader'
 import { AppContext } from '../../AppContext'
 
 export default function Welcome () {
-  const [view, setView] = useState('login')
+  const [view, setView] = useState('password-reset')
   const context = useContext(AppContext)
 
   return (
