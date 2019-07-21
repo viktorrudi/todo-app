@@ -1,5 +1,5 @@
-@import "./components/custom-variables.scss";
-@import url("https://fonts.googleapis.com/css?family=Karla:400,700&display=swap");
+@import './components/custom-variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
 
 body {
   color: $text-main;
@@ -12,8 +12,8 @@ body {
 
 body,
 textarea {
-  font-family: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: 'Karla', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
 }
 
@@ -33,4 +33,27 @@ textarea {
   min-height: 100vh;
   overflow: hidden;
   background: $main-background;
+}
+
+// Global colors
+.red {
+  background: $red;
+}
+.green {
+  background: $green;
+}
+.blue {
+  background: $blue;
+}
+.yellow {
+  background: $yellow;
+}
+.gray {
+  background: $gray;
+}
+.orange {
+  background: $orange;
+}
+.pink {
+  background: $pink;
 }

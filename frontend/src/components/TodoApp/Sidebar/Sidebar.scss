@@ -1,4 +1,4 @@
-@import "../../custom-variables.scss";
+@import '../../custom-variables.scss';
 
 .Sidebar {
   position: relative;
@@ -41,6 +41,7 @@
     display: none;
     background: $blue;
     color: #fff;
+    z-index: 10;
     padding: 10px;
     border-radius: 50%;
     box-shadow: 5px 0 10px 0 rgba(213, 221, 243, 0.3);

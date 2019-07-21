@@ -3,7 +3,7 @@ import { TodoContext } from '../../TodoContext'
 import './AddTodo.scss'
 
 export default function AddTodo () {
-  const { addTodoItem } = useContext(TodoContext)
+  const { addTodoItem, viewItems } = useContext(TodoContext)
   const [todoText, setTodoText] = useState('')
 
   const handleSubmit = e => {
@@ -18,7 +18,10 @@ export default function AddTodo () {
 
   const type = 'AddTodo'
   return (
-    <form className={type} onSubmit={handleSubmit}>
+    <form
+      className={`${type} ${viewItems === 'important' ? 'visible' : 'hidden'}`}
+      onSubmit={handleSubmit}
+    >
       <input
         className={`${type}__addTodoField`}
         type="text"

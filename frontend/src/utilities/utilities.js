@@ -61,15 +61,7 @@ export function findItemCount (allItems, folder) {
 }
 
 export function randomColor () {
-  const colors = [
-    '#D84343',
-    '#0F9D58',
-    '#F4B400',
-    '#4285F4',
-    '#4D4D4D',
-    '#43459D',
-    '#4DBFD9'
-  ]
+  const colors = ['red', 'blue', 'gray', 'orange', 'pink', 'green', 'yellow']
   const randomColor = Math.floor(Math.floor(Math.random() * colors.length) + 0)
   return colors[randomColor]
 }

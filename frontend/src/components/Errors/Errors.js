@@ -13,6 +13,7 @@ export default function Errors ({ messages }) {
         messages.length = 0
       }, 4000)
     }
+    if (messages.length > 2) messages.shift()
   }, [messages, visible])
 
   return (

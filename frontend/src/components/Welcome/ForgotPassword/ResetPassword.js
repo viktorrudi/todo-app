@@ -36,7 +36,6 @@ export default function ResetPassword ({ email }) {
           value={token}
           onChange={e => setToken(e.target.value)}
         />
-
         <input
           type="password"
           id="newPassword"
@@ -44,7 +43,6 @@ export default function ResetPassword ({ email }) {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-
         <input
           type="password"
           id="newPasswordAgain"
@@ -53,7 +51,6 @@ export default function ResetPassword ({ email }) {
           onChange={e => setPasswordRepeat(e.target.value)}
         />
       </div>
-
       <PasswordChecker
         password={password}
         passwordRepeat={passwordRepeat}

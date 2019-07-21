@@ -3,7 +3,9 @@ import { TodoContext } from '../../TodoContext'
 import './SortingOptions.scss'
 
 export default function SortingOptions () {
-  const { showCompleted, setShowCompleted } = useContext(TodoContext)
+  const { showCompleted, setShowCompleted, showOptions } = useContext(
+    TodoContext
+  )
 
   const handleChange = () => {
     showCompleted ? setShowCompleted(false) : setShowCompleted(true)
@@ -11,7 +13,7 @@ export default function SortingOptions () {
 
   const type = 'SortingOptions'
   return (
-    <div className={type}>
+    <div className={`${type} ${showOptions ? 'visible' : 'hidden'}`}>
       <div className={`${type}__hide-completed`}>
         <label>
           <input

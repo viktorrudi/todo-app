@@ -36,10 +36,7 @@ export default function Folder ({ folder, open, itemCount }) {
       ref={drop}
       style={isOver ? { background: '#efefef' } : null}
     >
-      <span
-        className={`${type}--icon`}
-        style={{ backgroundColor: folder.color }}
-      />
+      <span className={`${type}--icon ${folder.color}`} />
       <p className={`${type}--name`}>{folder.name}</p>
       <span className={`${type}--badge`}>
         {itemCount > 99 ? '99+' : itemCount}

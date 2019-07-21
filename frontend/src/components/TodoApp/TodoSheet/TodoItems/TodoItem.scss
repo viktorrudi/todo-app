@@ -1,4 +1,4 @@
-@import "../../../custom-variables.scss";
+@import '../../../custom-variables.scss';
 
 .TodoItem {
   display: flex;
@@ -71,12 +71,12 @@
     word-break: break-word;
     width: 100%;
     &--folder {
-      color: $gray;
+      color: #fff;
       position: absolute;
       top: -6px;
       right: 9px;
       font-size: 0.7rem;
-      background: #efefef;
+      // background: #efefef;
       padding: 2px 5px;
       z-index: 5;
       border-radius: 3px;

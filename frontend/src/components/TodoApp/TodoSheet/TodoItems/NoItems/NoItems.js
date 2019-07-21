@@ -1,10 +1,19 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
+import { TodoContext } from '../../../TodoContext'
 import './NoItems.scss'
 
-class NoItems extends Component {
-  render () {
-    return <div className="NoItems">You haven't added any items yet!</div>
-  }
-}
+export default function NoItems () {
+  const { viewItems } = useContext(TodoContext)
 
-export default NoItems
+  return (
+    <div className="NoItems">
+      <span role="img" aria-label="No items">
+        {viewItems === 'important' ? '😔' : '🥺'}
+      </span>
+      <br />
+      {viewItems === 'important'
+        ? 'You dont have any important items'
+        : 'There are no items here. Add one, please!'}
+    </div>
+  )
+}

@@ -3,6 +3,7 @@
 .AddTodo {
   display: flex;
   position: relative;
+  transition: all 0.1s ease-in-out;
   &__addTodoField {
     width: 100%;
     padding: 20px;
@@ -28,5 +29,13 @@
       border: none;
       background: none;
     }
+  }
+  &.visible {
+    opacity: 0;
+    max-height: 0px;
+  }
+  &.hidden {
+    opacity: 1;
+    max-height: 100px;
   }
 }

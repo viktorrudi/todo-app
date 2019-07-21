@@ -26,6 +26,11 @@ module.exports = {
     if (email && password) {
       return User.findOne({ email }, async (err, user) => {
         if (err) return res.status(500).json(err)
+        if (user.isDisabled) {
+          return res.status(401).json({
+            message: 'Your account is disabled.',
+          })
+        }
 
         // If password is correct, create token and send
         // it back to be stored in a cookie

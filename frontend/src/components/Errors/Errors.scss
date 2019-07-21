@@ -3,8 +3,7 @@
 .Errors__wrapper {
   position: fixed;
   top: 20px;
-  right: 50%;
-  transform: translateX(50%);
+  right: -1px;
   z-index: 9;
   .Errors {
     color: #fff;
@@ -16,10 +15,10 @@
     border: 1px solid darken($red, 20%);
     span {
       position: absolute;
-      left: -17px;
-      top: 50%;
+      left: -15px;
+      top: 55%;
       transform: translateY(-50%);
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
     &.error-visible {
       transform: translateY(0) rotateX(0deg);
