@@ -14,3 +14,19 @@ In this applicaton you will be able to register user accounts (with a visual inp
 > Backend: `bcrypt`, `dotenv`, `jsonwebtoken`, `mongoose`, `nodemon`, `nodemailer`
 
 > Eslint: Used [Standard](https://github.com/standard/eslint-config-standard) configuration.
+
+# Interested in contributing?
+
+You are very welcome to contribute to this project. To get started, fork or clone this repo, and run the following:
+
+1. Install all dependencies with `npm i`
+2. In the **frontend** directory: `npm run start`
+3. In the **backend** directory: `nodemon server`
+4. Set up a .env file in the **backend** directory with the following variables with something you can use:
+
+```
+DB_CONNECTION=
+PORT=4000
+MAILING_ACCOUNT=
+MAILING_PASSWORD=
+```
