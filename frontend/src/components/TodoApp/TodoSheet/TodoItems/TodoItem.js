@@ -79,7 +79,7 @@ export default function TodoItem ({ item }) {
       <div className={`${type}__item`}>
         {item.text}
         {openFolder ? null : (
-          <aside className={`${type}__item--folder ${itemFolder.color}`}>
+          <aside className={`${type}__item--folder ${itemFolder.color || ''}`}>
             {itemFolder ? itemFolder.name : null}
           </aside>
         )}

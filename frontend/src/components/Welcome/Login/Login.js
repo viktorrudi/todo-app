@@ -87,7 +87,11 @@ export default function Login ({ setView }) {
             I need to register
           </div>
           <div className="about-app">
-            <a href="https://github.com/viktorrudi/todo-app" target="_blank">
+            <a
+              href="https://github.com/viktorrudi/todo-app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaGithub />
             </a>
           </div>

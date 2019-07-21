@@ -32,8 +32,6 @@ export default function RequestPassword ({ setSentToken, setEmailRequester }) {
       if (sent.status === 200) {
         setSentToken(true)
         setLoading(false)
-        console.log(sent.data.message)
-        // Do it
       }
     } catch (err) {
       setLoading(false)

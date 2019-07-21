@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const config = require('./config')
 const utilities = require('./utilities')
 const cookieParser = require('cookie-parser')
+const log = require('./utilities/logger')
 // Routes
 const itemsRouter = require('./routes/items')
 const foldersRouter = require('./routes/folders')
@@ -17,9 +18,9 @@ app.set('secretKey', config.auth.secret)
 mongoose
   .connect(config.db.uri, { useNewUrlParser: true })
   .then(() => {
-    console.log('connected to db')
+    log.info('connected to db')
   })
-  .catch(err => console.log(err))
+  .catch(err => log.error(err))
 
 // Middleware
 app.use(cookieParser())
@@ -39,7 +40,7 @@ app.use('/api/user/password_reset', userController.passwordReset)
 
 // SERVER connection
 app.listen(config.server.port, function() {
-  console.log('Server is running on port: ' + config.server.port)
+  log.info('Server is running on port: ' + config.server.port)
 })
 
 // Global error catcher
@@ -51,8 +52,8 @@ app.use((err, req, res, next) => {
 process.stdin.resume() //so the program will not close instantly
 
 function exitHandler(options, exitCode) {
-  if (options.cleanup) console.log('clean exit')
-  if (exitCode || exitCode === 0) console.log(exitCode)
+  if (options.cleanup) log.info('clean exit')
+  if (exitCode || exitCode === 0) log.info(exitCode)
   if (options.exit) process.exit()
 }
 

@@ -1,51 +1,21 @@
 export function findItemInState (id, items) {
-  for (var i = 0; i < items.length; i++) {
-    if (items[i]._id === id) {
-      return items[i]
-    }
-  }
-}
-
-export function currentTime (dateObject) {
-  const date = dateObject
-  return `${date.getHours()}:${date.getMinutes()}`
-}
-
-export function currentDate (dateObject) {
-  const date = dateObject
-  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
-}
-
-export function findItemsInFolder (propsItems, folderID) {
-  const filteredItems = propsItems.filter(
-    propItem => propItem.folder === folderID
-  )
-  return filteredItems
-}
-
-export function findParentTag (search, parentClass) {
-  while (search.parentNode) {
-    search = search.parentNode
-    if (search.className === parentClass) return Boolean(search)
-  }
-  return null
+  const [found] = items.filter(item => id === item._id)
+  return found
 }
 
 export function findOpenItem (allItems, openItemID) {
-  const [found] = allItems.filter(folder => {
-    return openItemID === folder._id
-  })
+  const [found] = allItems.filter(folder => openItemID === folder._id)
   return found
 }
 
 export const findFromID = {
   folder: (id, folders) => {
     const [value] = folders.filter(folder => folder._id === id)
-    return value
+    return value || {}
   },
   item: (id, items) => {
     const [value] = items.filter(item => item._id === id)
-    return value
+    return value || {}
   }
 }
 
@@ -62,6 +32,6 @@ export function findItemCount (allItems, folder) {
 
 export function randomColor () {
   const colors = ['red', 'blue', 'gray', 'orange', 'pink', 'green', 'yellow']
-  const randomColor = Math.floor(Math.floor(Math.random() * colors.length) + 0)
+  const randomColor = Math.floor(Math.floor(Math.random() * colors.length))
   return colors[randomColor]
 }

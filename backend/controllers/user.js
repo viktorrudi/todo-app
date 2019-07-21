@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const log = require('../utilities/logger')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
@@ -15,6 +16,7 @@ module.exports = {
       }
       User.create({ email, password }, (err, { email, password }) => {
         if (err) return res.status(400).json({ message: err._message })
+        log.info('User created:', email)
         return res.status(201).json({ email, password })
       })
     })
@@ -27,6 +29,7 @@ module.exports = {
       return User.findOne({ email }, async (err, user) => {
         if (err) return res.status(500).json(err)
         if (user.isDisabled) {
+          log.info('Disabled user attempted login', email)
           return res.status(401).json({
             message: 'Your account is disabled.',
           })
@@ -43,6 +46,7 @@ module.exports = {
             // Options
             { expiresIn: config.auth.expireTime }
           )
+          log.info('User logging in:', user.email)
           return res.status(200).json({
             message: 'User found',
             // Also passing token to store in cookies (on frontend)
@@ -50,11 +54,17 @@ module.exports = {
           })
         }
         // Wrong email or password
+        log.info(
+          'User attempted login, but with incorrect details:',
+          user.email
+        )
         return res
           .status(401)
           .json({ message: 'Wrong Email/Password', data: null })
       })
     }
+
+    log.error('Error on login, missing email/password field')
     return res
       .status(400)
       .json({ message: 'Email & Password fields are required' })
@@ -65,6 +75,10 @@ module.exports = {
     User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
+          log.info(
+            'User attempted password reset with invaid email:',
+            req.body.email
+          )
           return res
             .status(400)
             .json({ message: 'Email not found. Are you sure you registered?' })
@@ -80,13 +94,23 @@ module.exports = {
             passwordResetTokenExpires: Date.now() + config.mailing.resetTimer,
           }
         )
-          .then(user => {
+          .then(() => {
+            log.info('Sending reset token to user:', req.body.email)
             // Send password reset message
-            mailing.passwordResetRequest(req, res, user, token)
+            mailing.passwordResetRequest(req, res, token)
           })
-          .catch(err => res.status(500).json({ message: err }))
+          .catch(err => {
+            log.error('Error updating user with password reset token:', err)
+            return res.status(500).json({ message: err })
+          })
       })
-      .catch(err => res.status(500).json({ message: err }))
+      .catch(err => {
+        log.error(
+          'Unable to find user with email inserted for password reset:',
+          err
+        )
+        return res.status(500).json({ message: err })
+      })
   },
 
   // Checking password sent token if it matches with DB, update new password
@@ -98,6 +122,9 @@ module.exports = {
     const passwordResetToken = req.query.passwordResetToken
 
     if (!emailRequester || !newPassword || !passwordResetToken) {
+      log.error(
+        'Password reset error: Missing email, password or reset password token'
+      )
       return res
         .status(400)
         .json({ message: 'Missing email, password or reset password token' })
@@ -112,6 +139,7 @@ module.exports = {
         const validToken = user.passwordResetTokenExpires.getTime() > Date.now()
         // Checking if token is found and if its not expired yet
         if (!user || !validToken) {
+          log.info('User attempted reset with invalid/expired token')
           return res
             .status(400)
             .json({ message: 'Invalid or expired reset link' })
@@ -132,6 +160,7 @@ module.exports = {
               }
             )
               .then(() => {
+                log.info('User updated password:', emailRequester)
                 // Send back a response with updated info
                 return res.status(200).json({
                   message: 'Password updated',
@@ -140,21 +169,24 @@ module.exports = {
                 })
               })
               .catch(err => {
+                log.info('Error updating user with resetted password:', err)
                 return res
                   .status(500)
                   .json({ message: 'Oops, something happened' })
               })
           })
-          .catch(err =>
-            res
+          .catch(err => {
+            log.error('Error hashing password in password reset:', err)
+            return res
               .status(500)
               .json({ message: 'Error hashing password', error: err })
-          )
+          })
       })
-      .catch(err =>
-        res
+      .catch(err => {
+        log.error('Error finding reset token with email in database:', err)
+        return res
           .status(400)
           .json({ message: 'Invalid or expired reset link', error: err })
-      )
+      })
   },
 }

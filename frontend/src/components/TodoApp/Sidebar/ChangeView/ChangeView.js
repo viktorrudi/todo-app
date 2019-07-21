@@ -1,12 +1,15 @@
+/* eslint-disable standard/object-curly-even-spacing */
 import React, { useContext } from 'react'
 import { useDrop } from 'react-dnd'
 import { TodoContext } from '../../TodoContext'
 import { MdStar, MdInbox } from 'react-icons/md'
 
 export default function ChangeView () {
-  const { updateItem, setItemView, viewItems, setOpenFolder } = useContext(TodoContext)
+  const { updateItem, setItemView, viewItems, setOpenFolder } = useContext(
+    TodoContext
+  )
 
-  const [{ isOver, canDrop }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: 'TODO_ITEM',
     collect: monitor => ({
       isOver: !!monitor.isOver(),
@@ -30,7 +33,9 @@ export default function ChangeView () {
       </div>
 
       <div
-        className={`Important option ${viewItems === 'important' ? 'active' : ''}`}
+        className={`Important option ${
+          viewItems === 'important' ? 'active' : ''
+        }`}
         onClick={() => setItemView('important')}
       >
         <MdStar /> Important items

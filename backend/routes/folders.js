@@ -8,7 +8,8 @@ let TodoItem = require('../models/item.model')
 router.route('/').get((req, res) => {
   const userID = req.headers['x-user-id']
   TodoFolder.find((err, todoFolders) => {
-    if (err) return res.status(500).json({ message: 'Unable to retrieve folders' })
+    if (err)
+      return res.status(500).json({ message: 'Unable to retrieve folders' })
     const folders = todoFolders.filter(folder => folder.ownerID === userID)
     return res.status(200).json(folders)
   })
@@ -19,7 +20,7 @@ router.route('/').get((req, res) => {
   const id = req.params.id
   TodoFolder.findById(id, (err, folders) => {
     if (err) res.status(500).json({ message: 'Unable to retrieve folder' })
-    res.status(200).json(folders)
+    return res.status(200).json(folders)
   })
 })
 
@@ -30,12 +31,8 @@ router.route('/').post((req, res) => {
   const folder = new TodoFolder(req.body)
   folder
     .save()
-    .then(folder => {
-      res.status(200).json({ message: 'Folder added!', folder })
-    })
-    .catch(err => {
-      res.status(400).json({ message: err.message })
-    })
+    .then(folder => res.status(200).json({ message: 'Folder added!', folder }))
+    .catch(err => res.status(400).json({ message: err.message }))
 })
 
 // **** DELETE **** //
@@ -50,7 +47,9 @@ router.route('/').delete((req, res) => {
   // Delete folder and log response
   TodoFolder.findByIdAndDelete(folderID)
     .then(folder => {
-      res.status(200).json({ message: 'Folder and items deleted!', folder })
+      return res
+        .status(200)
+        .json({ message: 'Folder and items deleted!', folder })
     })
     .catch(err => res.json({ message: err.message }))
 })
@@ -61,16 +60,15 @@ router.route('/').delete((req, res) => {
 router.route('/update-name').patch((req, res) => {
   TodoFolder.findById(req.query.id, (err, folder) => {
     if (err) res.status(404).json(err)
-
     folder.name = req.body.name
 
     folder
       .save()
       .then(folder => {
-        res.status(200).json({ message: 'Folder name updated!', folder })
+        return res.status(200).json({ message: 'Folder name updated!', folder })
       })
       .catch(err => {
-        res.status(400).json({ message: err.message })
+        return res.status(400).json({ message: err.message })
       })
   })
 })
@@ -85,10 +83,10 @@ router.route('/update-color').patch((req, res) => {
     folder
       .save()
       .then(folder => {
-        res.json({ message: 'Folder color updated!', folder })
+        return res.json({ message: 'Folder color updated!', folder })
       })
       .catch(err => {
-        res.status(400).json({ message: err.message })
+        return res.status(400).json({ message: err.message })
       })
   })
 })

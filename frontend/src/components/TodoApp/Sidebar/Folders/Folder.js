@@ -11,7 +11,7 @@ export default function Folder ({ folder, open, itemCount }) {
     setOpenFolder
   } = useContext(TodoContext)
 
-  const [{ isOver, canDrop }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: 'TODO_ITEM',
     collect: monitor => ({
       isOver: !!monitor.isOver(),

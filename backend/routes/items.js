@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const log = require('../utilities/logger')
 let TodoItem = require('../models/item.model')
 
 // **** GET **** //
@@ -8,7 +9,8 @@ router.route('/').get((req, res) => {
   const userID = req.headers['x-user-id']
 
   TodoItem.find((err, todoItems) => {
-    if (err) return res.status(404).json({ message: 'Unable to retrieve items' })
+    if (err)
+      return res.status(404).json({ message: 'Unable to retrieve items' })
     const items = todoItems.filter(item => item.ownerID === userID)
     return res.status(200).json(items)
   })
@@ -32,13 +34,8 @@ router.route('/').post((req, res) => {
 
   todo
     .save()
-    .then(todo => {
-      res.status(200).json({ message: 'Todo added!', todo })
-    })
-    .catch(err => {
-      res.status(400).json({ message: err.message })
-      return
-    })
+    .then(todo => res.status(200).json({ message: 'Todo added!', todo }))
+    .catch(err => res.status(400).json({ message: err.message }))
 })
 
 // **** DELETE **** //
@@ -46,19 +43,15 @@ router.route('/').post((req, res) => {
 // Delete item
 router.route('/').delete((req, res) => {
   TodoItem.findByIdAndDelete(req.query.id)
-    .then(item => {
-      res.status(200).json({ message: 'Todo deleted!', item })
-    })
+    .then(item => res.status(200).json({ message: 'Todo deleted!', item }))
     .catch(err => res.json({ message: err.message }))
 })
 
 // Delete all items
 router.route('/all').delete((req, res) => {
   TodoItem.deleteMany({})
-    .then(item => {
-      res.status(200).json({ message: 'All items deleted!', item })
-    })
-    .catch(err => res.json({ message: err.message }))
+    .then(item => res.status(200).json({ message: 'All items deleted!', item }))
+    .catch(err => res.status(500).json({ message: err.message }))
 })
 
 // **** PATCH **** //
