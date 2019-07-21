@@ -1,5 +1,18 @@
 const nodemailer = require('nodemailer')
-const { mailing, server } = require('../config')
+const { mailing } = require('../config')
+
+const resetPasswordMessage = (user, token) => {
+  return `
+    <p>
+    Someone has requested a password reset of your account, ${user.email}. 
+    To reset your password, copy the code below and paste it in the <strong>reset code</strong> field.
+    </p>
+    <div style="margin-top:20px; background:#5d8aee; padding:15px; width:100%">
+      <h2 style="color:#fff; text-align:center">Reset code:</h2>
+      <h1 style="color:#fff;font-weight:700; text-align:center;">${token}</h1>
+    </div>
+    `
+}
 
 module.exports = {
   passwordResetRequest: (req, res, user, token) => {
@@ -18,7 +31,7 @@ module.exports = {
       // to: user.email,
       to: 'vrudi91@gmail.com',
       subject: 'Link to reset your password',
-      html: `Copy this: <strong>${token}</strong>`,
+      html: resetPasswordMessage(user, token),
     }
 
     console.log(mailOptions)

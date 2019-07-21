@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { AppContext } from '../../../AppContext'
+import { FaGithub } from 'react-icons/fa'
 import '../Welcome.scss'
 
 export default function Login ({ setView }) {
@@ -84,6 +85,11 @@ export default function Login ({ setView }) {
           </form>
           <div className="swap-form" onClick={() => setView('register')}>
             I need to register
+          </div>
+          <div className="about-app">
+            <a href="https://github.com/viktorrudi/todo-app" target="_blank">
+              <FaGithub />
+            </a>
           </div>
         </div>
       </div>
