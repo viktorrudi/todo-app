@@ -12,7 +12,6 @@ class AppProvider extends Component {
     this.state = {
       loggedIn: false,
       errors: [],
-      notifications: [],
       loading: false,
       handleLogin: this.handleLogin,
       handleRegistration: this.handleRegistration,
@@ -165,21 +164,14 @@ class AppProvider extends Component {
           }
         )
         .then(({ data }) => {
-          this.setState({
-            notifications: [
-              ...this.state.notifications,
-              'Your password has been changed'
-            ],
-            loading: false
-          })
+          // Login with email received in return and unhashed password first retrieved
           this.handleLogin(data.email, password)
         })
         .catch(err => {
           this.setState({
-            errors: [...this.state.errors, err.message],
+            errors: [...this.state.errors, err.response.data.message],
             loading: false
           })
-          console.log(err)
         })
     }
   }

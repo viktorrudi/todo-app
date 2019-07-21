@@ -22,19 +22,14 @@ module.exports = {
 
   // User login
   login: (req, res) => {
-    console.log('LOGGING IN')
     const { email, password } = req.body
     if (email && password) {
-      console.log('EMAIL AND PASSWORD FOUND')
       return User.findOne({ email }, async (err, user) => {
-        console.log('STARTING FINDONE')
-        if (err) {
-          console.log('ENTERED FIRST ERROR_________:', err)
-          return res.status(500).json(err)
-        }
-        // If password is correct, create token and send it back
+        if (err) return res.status(500).json(err)
+
+        // If password is correct, create token and send
+        // it back to be stored in a cookie
         if (user && bcrypt.compareSync(password, user.password)) {
-          console.log('PASSWORD CORRECT. SIGNING TOKEN')
           const token = await jwt.sign(
             // Paylod
             { id: user._id },
@@ -43,21 +38,18 @@ module.exports = {
             // Options
             { expiresIn: config.auth.expireTime }
           )
-          console.log('NOW GOING TO RETURN 200 WITH:', user, token)
           return res.status(200).json({
             message: 'User found',
             // Also passing token to store in cookies (on frontend)
             data: { user, token },
           })
         }
-        console.log('INCORRECT USRNAME OR PW')
         // Wrong email or password
         return res
           .status(401)
           .json({ message: 'Wrong Email/Password', data: null })
       })
     }
-    console.log('INCORRECT FIELDS')
     return res
       .status(400)
       .json({ message: 'Email & Password fields are required' })
@@ -67,12 +59,13 @@ module.exports = {
   requestPasswordReset: (req, res) => {
     User.findOne({ email: req.body.email })
       .then(user => {
-        if (!user)
+        if (!user) {
           return res
             .status(400)
             .json({ message: 'Email not found. Are you sure you registered?' })
-        const token = crypto.randomBytes(20).toString('hex')
+        }
 
+        const token = crypto.randomBytes(20).toString('hex')
         User.update(
           // Matches user with email
           { email: user.email },
@@ -97,15 +90,17 @@ module.exports = {
   passwordReset: (req, res) => {
     const newPassword = req.body.password
     const emailRequester = req.body.email
+    const passwordResetToken = req.query.passwordResetToken
 
-    if (!emailRequester || !newPassword || !req.query.passwordResetToken) {
+    if (!emailRequester || !newPassword || !passwordResetToken) {
       return res
         .status(400)
         .json({ message: 'Missing email, password or reset password token' })
     }
     // Find user from password reset token
     User.findOne({
-      passwordResetToken: req.query.passwordResetToken,
+      email: emailRequester,
+      passwordResetToken,
     })
       .then(user => {
         // Using .getTime() because Mongoose stores it as ISO string
@@ -130,14 +125,20 @@ module.exports = {
                 passwordResetToken: null,
                 passwordResetTokenExpires: null,
               }
-            ).then(() => {
-              // Send back a response with updated info
-              return res.status(200).json({
-                message: 'Password updated',
-                email: emailRequester,
-                password: hashedPassword,
+            )
+              .then(() => {
+                // Send back a response with updated info
+                return res.status(200).json({
+                  message: 'Password updated',
+                  email: emailRequester,
+                  password: hashedPassword,
+                })
               })
-            })
+              .catch(err => {
+                return res
+                  .status(500)
+                  .json({ message: 'Oops, something happened' })
+              })
           })
           .catch(err =>
             res
@@ -147,7 +148,7 @@ module.exports = {
       })
       .catch(err =>
         res
-          .status(500)
+          .status(400)
           .json({ message: 'Invalid or expired reset link', error: err })
       )
   },

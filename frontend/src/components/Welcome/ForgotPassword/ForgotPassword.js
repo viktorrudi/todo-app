@@ -13,10 +13,10 @@ export default function ForgotPassword ({ setView }) {
     <div id="forgot-password" className={`${type}__container`}>
       <div className={`${type}__container--wrapper`}>
         <span role="img" aria-label="forgot password">
-          🤕
+          {sentToken ? '📨' : '🤕'}
         </span>
         <div className="welcome-effect">
-          <h2>Reset password</h2>
+          <h2>{sentToken ? 'Check your email' : 'Reset password'}</h2>
           {sentToken ? null : (
             <RequestPassword
               setSentToken={setSentToken}

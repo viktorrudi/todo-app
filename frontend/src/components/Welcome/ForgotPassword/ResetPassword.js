@@ -28,12 +28,11 @@ export default function ResetPassword ({ email }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="input-wrapper">
-        <label htmlFor="email" />
         <input
           autoComplete="off"
           type="text"
           id="reset_token"
-          placeholder="reset code"
+          placeholder="insert reset code"
           value={token}
           onChange={e => setToken(e.target.value)}
         />
@@ -54,11 +53,13 @@ export default function ResetPassword ({ email }) {
           onChange={e => setPasswordRepeat(e.target.value)}
         />
       </div>
+
       <PasswordChecker
         password={password}
         passwordRepeat={passwordRepeat}
         setButtonIsDisabled={setButtonIsDisabled}
       />
+
       <div className="input-wrapper">
         <button
           disabled={buttonIsDisabled}
