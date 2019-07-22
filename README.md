@@ -11,7 +11,7 @@ In this applicaton you will be able to register user accounts (with a visual inp
 
 > Dependencies
 > Frontend: `js-cookie`, `react-icons`, `react-spinners`, `axios`, `lodash`, `react-dnd`
-> Backend: `bcrypt`, `dotenv`, `jsonwebtoken`, `mongoose`, `nodemon`, `nodemailer`
+> Backend: `bcrypt`, `dotenv`, `jsonwebtoken`, `mongoose`, `nodemon`, `nodemailer`, `pino`
 
 > Eslint: Used [Standard](https://github.com/standard/eslint-config-standard) configuration.
 
