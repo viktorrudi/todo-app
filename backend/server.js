@@ -12,8 +12,6 @@ const itemsRouter = require('./routes/items')
 const foldersRouter = require('./routes/folders')
 const userController = require('./controllers/user')
 
-app.set('secretKey', config.auth.secret)
-
 // Mongoose connection
 mongoose
   .connect(config.db.uri, { useNewUrlParser: true })
