@@ -11,7 +11,7 @@ module.exports = {
     uri: process.env.DB_CONNECTION,
   },
   auth: {
-    secret: 'secretKey',
+    secret: process.env.AUTH_SECRET,
     expireTime: '1h',
     saltRounds: 10,
   },
