@@ -27,13 +27,13 @@ module.exports = {
     const mailOptions = {
       from: mailing.from,
       to: req.body.email,
-      subject: 'Link to reset your password',
+      subject: 'Todo - Your password reset code',
       html: resetPasswordMessage(req.body.email, token),
     }
 
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) return res.status(500).json({ message: err })
-      res.status(200).json({ message: 'Password reset email sent', response })
+      return res.status(200).json({ message: 'Password reset email sent', response })
     })
   },
 }
