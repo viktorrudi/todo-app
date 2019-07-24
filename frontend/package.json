@@ -1,6 +1,5 @@
 {
   "name": "todoapp",
-  "homepage": "http://188.166.43.148/todo/build",
   "version": "1.0.0",
   "description": "Backend for ToDo",
   "author": "Viktor Rudi",

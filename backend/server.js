@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const path = require('path')
 const mongoose = require('mongoose')
 const config = require('./config')
 const utilities = require('./utilities')
@@ -39,7 +40,7 @@ app.use('/api/user/request_password_reset', userController.requestPasswordReset)
 app.use('/api/user/password_reset', userController.passwordReset)
 
 // SERVER connection
-app.listen(config.server.port, function () {
+app.listen(config.server.port, function() {
   log.info('Server is running on port: ' + config.server.port)
 })
 
@@ -48,6 +49,13 @@ app.use((err, req, res, next) => {
   log.error('Entered global error catcher with:', err)
   res.status(500).json(err)
 })
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 // App stop
 process.stdin.resume() //so the program will not close instantly
