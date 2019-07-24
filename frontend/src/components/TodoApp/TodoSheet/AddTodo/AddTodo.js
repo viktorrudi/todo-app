@@ -19,7 +19,7 @@ export default function AddTodo () {
   const type = 'AddTodo'
   return (
     <form
-      className={`${type} ${viewItems === 'important' ? 'visible' : 'hidden'}`}
+      className={`${type} ${viewItems === 'important' ? 'hidden' : 'visible'}`}
       onSubmit={handleSubmit}
     >
       <input

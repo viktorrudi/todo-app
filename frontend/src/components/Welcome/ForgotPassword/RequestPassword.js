@@ -27,6 +27,8 @@ export default function RequestPassword ({ setSentToken, setEmailRequester }) {
 
     try {
       setLoading(true)
+
+      // Checks if email exists in DB and sends the email
       const sent = await resetPassword.requestReset(email)
 
       if (sent.status === 200) {

@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const log = require('../utilities/logger')
 let TodoFolder = require('../models/folder.model')
 let TodoItem = require('../models/item.model')
 
@@ -8,8 +9,10 @@ let TodoItem = require('../models/item.model')
 router.route('/').get((req, res) => {
   const userID = req.headers['x-user-id']
   TodoFolder.find((err, todoFolders) => {
-    if (err)
+    if (err) {
+      log.error('Error fetching all folders:', err)
       return res.status(500).json({ message: 'Unable to retrieve folders' })
+    }
     const folders = todoFolders.filter(folder => folder.ownerID === userID)
     return res.status(200).json(folders)
   })

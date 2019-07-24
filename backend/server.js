@@ -13,7 +13,7 @@ const foldersRouter = require('./routes/folders')
 const userController = require('./controllers/user')
 
 // Setting secret
-// app.set('secretKey', config.auth.secret)
+app.set('secretKey', config.auth.secret)
 
 // Mongoose connection
 mongoose
@@ -36,7 +36,6 @@ app.use('/api/register', userController.register)
 app.use('/api/login', userController.login)
 // Password reset routes
 app.use('/api/user/request_password_reset', userController.requestPasswordReset)
-// app.use('/api/user/check_reset_token', userController.checkResetToken)
 app.use('/api/user/password_reset', userController.passwordReset)
 
 // SERVER connection
@@ -46,7 +45,8 @@ app.listen(config.server.port, function () {
 
 // Global error catcher
 app.use((err, req, res, next) => {
-  res.json(err)
+  log.error('Entered global error catcher with:', err)
+  res.status(500).json(err)
 })
 
 // App stop

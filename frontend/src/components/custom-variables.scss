@@ -47,17 +47,19 @@ $hoverGrow: scale(1.08) translateX(6px);
 @include keyframes(fadeInGrow) {
   0% {
     opacity: 0;
+    transform: scale(0.5);
     max-height: 0px;
   }
   50% {
     opacity: 0;
     max-height: 0px;
   }
-  99% {
-    max-height: 300px;
+  80% {
+    max-height: 400px;
   }
   100% {
+    transform: scale(1);
     opacity: 1;
-    max-height: 600px;
+    max-height: 500px;
   }
 }
