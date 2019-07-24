@@ -1,19 +1,17 @@
-@import "../../../custom-variables.scss";
+@import '../../../custom-variables.scss';
 
 .ListHeader {
   position: relative;
-  padding: 10px 0;
+  margin: 10px 0 0;
+  overflow: hidden;
   form {
     display: flex;
   }
   &__folder--input {
-    background: none;
     width: 100%;
-    padding: 10px 3px;
+    padding: 20px 40px 20px 20px;
     font-size: 1.3rem;
-    font-weight: 700;
     border-radius: 5px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0);
     border: none;
     transition: all 0.1s ease-in-out;
     &:hover {
@@ -21,47 +19,79 @@
     }
     &:focus {
       outline: none;
-      padding: 10px 10px;
-      background: #fff;
       box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
     }
   }
   &__folder--delete {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0;
-    background: $main-background;
-    padding: 4px 0px;
+    top: 20px;
+    right: 10px;
     font-weight: 700;
-    font-size: 1rem;
+    min-width: 30px;
     color: $gray;
-    margin: 0 5px;
-    float: right;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    .confirm {
-      color: $red;
-      position: relative;
-      transition: all 0.2s ease-in-out;
-      svg {
-        font-size: 1.3rem;
-        position: relative;
-        margin-left: 5px;
-        top: 5px;
+    text-align: right;
+    transition: all 0.2s ease-in-out;
+  }
+  svg {
+    color: #fff;
+    font-size: 1.3rem;
+    position: relative;
+    top: 3px;
+  }
+  span {
+    position: relative;
+    bottom: 2px;
+  }
+  .confirm {
+    padding: 10px;
+    position: relative;
+    display: block;
+    text-align: right;
+    transition: all 0.4s ease-in-out;
+    // background: $light-gray;
+    &.open {
+      max-height: 200px;
+    }
+    &.closed {
+      padding: 0 10px;
+      max-height: 0px;
+      .delete {
+        pointer-events: none;
+      }
+    }
+    span {
+      margin: 5px 5px 0 0;
+      transition: all 0.1s ease-in-out;
+      &.delete {
+        border-color: $red;
+        background: none;
+        color: $red;
+
+        &:hover {
+          background: $red;
+          color: #fff;
+        }
+      }
+      &.cancel {
+        border: none;
+        color: $gray;
+        &:hover {
+          background: $gray;
+          color: #fff;
+        }
       }
     }
     svg {
       font-size: 1.3rem;
       position: relative;
-      top: 3px;
-    }
-    span {
-      position: relative;
-      bottom: 2px;
+      margin-left: 5px;
+      top: 5px;
     }
   }
-  button[type="submit"] {
+  button[type='submit'] {
     cursor: pointer;
     max-width: 0px;
     transition: all 0.2s ease-in-out;
@@ -72,6 +102,7 @@
       opacity: 0;
       max-width: 0px;
       padding: 0;
+      pointer-events: none;
     }
     &.visible {
       max-width: 100px;

@@ -10,7 +10,7 @@ export default function FolderOptions () {
     openFolder
   } = useContext(TodoContext)
 
-  const toggleDelete = () => {
+  const handleDelete = () => {
     if (markedForDelete) {
       removeFolder(openFolder)
     }
@@ -19,19 +19,26 @@ export default function FolderOptions () {
 
   const type = 'ListHeader'
   return (
-    <div
-      className={`${type}__folder--delete`}
-      onClick={toggleDelete}
-      onMouseLeave={() => setMarkedForDelete(false)}
-    >
-      {markedForDelete ? (
-        <span className="confirm">
-          Delete folder & items?
-          <MdWarning />
+    <>
+      <span className={`confirm ${markedForDelete ? 'open' : 'closed'}`}>
+        <p>Delete folder and all its items? This cannot be undone</p>
+        <br />
+        <span className="mini-btn delete" onClick={handleDelete}>
+          Delete folder & items
         </span>
-      ) : (
+        <span
+          className="mini-btn cancel"
+          onClick={() => setMarkedForDelete(false)}
+        >
+          Cancel
+        </span>
+      </span>
+      <div
+        className={`${type}__folder--delete`}
+        onClick={() => setMarkedForDelete(true)}
+      >
         <MdDelete />
-      )}
-    </div>
+      </div>
+    </>
   )
 }

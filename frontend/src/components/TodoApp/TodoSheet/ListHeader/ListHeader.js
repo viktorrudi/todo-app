@@ -10,16 +10,19 @@ export default function ListHeader () {
     TodoContext
   )
   const [openFolderNewName, setOpenFolderNewName] = useState('')
+  const [thisFolder, setThisFolder] = useState({})
   const [showEditButton, setShowEditButton] = useState(false)
 
   useEffect(() => {
     const thisFolder = findFromID.folder(openFolder, folders)
+    setThisFolder(thisFolder)
     setOpenFolderNewName(thisFolder.name)
     setMarkedForDelete(false)
     setShowEditButton(false)
   }, [openFolder, folders, setMarkedForDelete])
 
   const type = 'ListHeader'
+  console.log(thisFolder)
   return (
     <div className={type}>
       <form
@@ -33,7 +36,7 @@ export default function ListHeader () {
           <MdEdit />
         </button>
         <input
-          className={`${type}__folder--input`}
+          className={`${type}__folder--input ${thisFolder.color}`}
           type="text"
           value={openFolderNewName}
           onChange={e => {

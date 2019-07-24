@@ -17,6 +17,10 @@ textarea {
     sans-serif;
 }
 
+p {
+  margin: 0;
+}
+
 // Spinner
 .css-12imlsk-wrapper-wrapper {
   position: fixed !important;
@@ -36,6 +40,15 @@ textarea {
 }
 
 // Global colors
+.red,
+.green,
+.blue,
+.yellow,
+.gray,
+.orange,
+.pink {
+  color: #fff;
+}
 .red {
   background: $red;
 }
@@ -56,4 +69,11 @@ textarea {
 }
 .pink {
   background: $pink;
+}
+
+.mini-btn {
+  font-size: 1rem;
+  padding: 5px 8px;
+  border: 1px solid $light-gray;
+  cursor: pointer;
 }
