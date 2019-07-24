@@ -36,7 +36,10 @@ export default function ChangeView () {
         className={`Important option ${
           viewItems === 'important' ? 'active' : ''
         }`}
-        onClick={() => setItemView('important')}
+        onClick={() => {
+          setItemView('important')
+          setOpenFolder(null)
+        }}
       >
         <MdStar /> Important items
       </div>

@@ -11,8 +11,8 @@
   box-shadow: 0px 0 10px 0 rgba(0, 0, 0, 0.05);
   margin: $item-spacing 0;
   cursor: pointer;
-  transform: translateY(0px);
-  transition: all 0.3s ease-in-out;
+  transform: translateY(0px) scale(1);
+  transition: all 0.2s ease-in-out;
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0px 5px 30px 0 rgba(0, 0, 0, 0.1);
@@ -107,6 +107,10 @@
   }
   &.visible {
     opacity: 1;
+  }
+  &.open {
+    box-shadow: 0px 5px 30px 0 rgba(0, 0, 0, 0.1);
+    transform: scale(1.04);
   }
   &.completed {
     opacity: 0.5;

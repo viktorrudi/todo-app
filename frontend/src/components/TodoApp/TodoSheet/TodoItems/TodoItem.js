@@ -8,7 +8,7 @@ import { MdStar } from 'react-icons/md'
 import './TodoItem.scss'
 
 export default function TodoItem ({ item }) {
-  const { openFolder, updateItem, setOpenItem, folders } = useContext(
+  const { openItem, openFolder, updateItem, setOpenItem, folders } = useContext(
     TodoContext
   )
   const [itemVisible, setItemVisible] = useState(false)
@@ -51,6 +51,7 @@ export default function TodoItem ({ item }) {
         ${itemVisible ? 'visible' : ''} 
         ${item.important ? 'important' : ''}
         ${item.completed ? 'completed' : ''}
+        ${item._id === openItem ? 'open' : ''}
       `}
       onClick={e => handleClick(e, item)}
       style={

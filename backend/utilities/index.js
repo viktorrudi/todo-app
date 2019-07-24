@@ -9,24 +9,26 @@ module.exports = {
       // Access token collected from browser cookies
       req.headers['x-access-token'],
       req.app.get('secretKey'),
-      async (err, decoded) => {
+      async (decodeError, decoded) => {
+        // if (err && err.message === "jwt malformed") {
+        //   log.error('Error testing. Getting this:', err)
+        // }
         try {
           req.body.userId = await decoded.id
           next()
         } catch (err) {
-          log.error('Error validating user:', err)
-          next(err)
+          log.error('Error validating user:', decodeError)
+          next(decodeError)
         }
       }
     )
   },
 }
 
-
 // function cleanseError(err) {
-//   // handle if err is not passed in :'(
+//   // handle if err is not passed in
 
-//   // this function would maintain a consistent format so you can safely call 
+//   // this function would maintain a consistent format so you can safely call
 //   // err.response.status anywhere once you pass it via this function
 //   const somedefaultstatus = 200; // probably not a 200 :)
 //   return Object.assign({}, { response: { status: somedefaultstatus } }, err);

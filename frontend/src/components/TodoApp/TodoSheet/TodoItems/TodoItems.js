@@ -6,18 +6,33 @@ import _ from 'lodash'
 import { TodoContext } from '../../TodoContext'
 
 export default function TodoItems () {
-  const { viewItems, showCompleted, openFolder, items } = useContext(TodoContext)
+  const { viewItems, showCompleted, openFolder, items } = useContext(
+    TodoContext
+  )
 
   // Toggeling the view of the items
   let selectedView
   switch (viewItems) {
-    case 'all': selectedView = items
+    case 'all':
+      const sortByFolder = items => {
+        const itemsWithoutFolder = items.filter(item => item.folder === null)
+        const itemsWithFolder = items
+          .filter(item => item.folder !== null)
+          .sort((a, b) => (a.folder > b.folder ? 1 : -1))
+
+        // Returns a sorted array separating items with and without folders
+        return [...itemsWithFolder, ...itemsWithoutFolder]
+      }
+      selectedView = sortByFolder(items)
       break
-    case 'important': selectedView = items.filter(item => item.important)
+    case 'important':
+      selectedView = items.filter(item => item.important)
       break
-    case 'folder': selectedView = items.filter(item => item.folder === openFolder)
+    case 'folder':
+      selectedView = items.filter(item => item.folder === openFolder)
       break
-    case 'no-completed': selectedView = items.filter(item => !item.completed)
+    case 'no-completed':
+      selectedView = items.filter(item => !item.completed)
       break
     default:
       break

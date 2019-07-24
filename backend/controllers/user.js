@@ -26,7 +26,15 @@ module.exports = {
   login: (req, res) => {
     const { email, password } = req.body
     if (email && password) {
-      return User.findOne({ email }, async (err, user) => {
+      User.findOne({ email }, async (err, user) => {
+        if (!user) {
+          // Wrong email or password
+          log.info('User attempted login, but with incorrect details:', email)
+
+          return res
+            .status(401)
+            .json({ message: 'Wrong Email/Password', data: null })
+        }
         if (err) return res.status(500).json(err)
         if (user.isDisabled) {
           log.info('Disabled user attempted login', email)
@@ -53,21 +61,13 @@ module.exports = {
             data: { user, token },
           })
         }
-        // Wrong email or password
-        log.info(
-          'User attempted login, but with incorrect details:',
-          user.email
-        )
-        return res
-          .status(401)
-          .json({ message: 'Wrong Email/Password', data: null })
       })
+    } else {
+      log.error('Error on login, missing email/password field')
+      return res
+        .status(400)
+        .json({ message: 'Email & Password fields are required' })
     }
-
-    log.error('Error on login, missing email/password field')
-    return res
-      .status(400)
-      .json({ message: 'Email & Password fields are required' })
   },
 
   // Reset password initializing (storing token in DB and sending it via email)
